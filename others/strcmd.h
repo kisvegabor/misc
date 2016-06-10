@@ -19,6 +19,8 @@
  *********************/
 #define STRCMD_NOT_READY    (-1)
 #define STRCMD_UNKNOWN  (-2)
+#define STRCMD_FORMAT_ERR  (-3)
+#define STRCMD_OVERFLOW  (-4)
 
 /**********************
  *      TYPEDEFS
@@ -26,7 +28,8 @@
 typedef enum
 {
     SC_WAIT,        /*Wait for the first data*/
-    SC_DATA_REC,    /*Receiving data*/
+    SC_CMD_REC,     /*Receiving command*/
+    SC_PAR_REC,     /*Receiving paramter*/
     SC_N_REC,       /*Wait for \n*/ 
 }sc_state_t;
 
@@ -37,6 +40,8 @@ typedef struct
     uint16_t buf_len;
     uint16_t bufi;
     sc_state_t state;
+    int16_t last_cmd;
+    uint8_t par :1; /*The command has paramter*/
 }sc_t;
 
 /**********************
@@ -44,6 +49,7 @@ typedef struct
  **********************/
 void strcmd_init(sc_t * sc_p, const char ** cmds, char *buf, uint16_t buf_len);
 int16_t strcmd_add(sc_t * sc_p, char c);
+const char * strcmd_get_par(sc_t * sc_p);
 
 /**********************
  *      MACROS

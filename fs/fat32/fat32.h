@@ -10,7 +10,7 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "../../../misc_conf.h"
+#include "misc_conf.h"
 #if USE_FAT32 != 0
 
 #include "../fsint.h"

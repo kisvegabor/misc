@@ -7,12 +7,12 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "../../../misc_conf.h"
+#include "misc_conf.h"
 #if USE_FAT32 != 0
 
-#include "hw/dev/data_store/sdcard.h"
 #include "fat32.h"
 #include "ff.h"
+#include "hw/dev/ext_mem/sdcard.h"
 
 /*********************
  *      DEFINES
