@@ -39,6 +39,9 @@ fs_res_t fat32_tell (void * file_p, uint32_t * pos_p);
 fs_res_t fat32_trunc (void * file_p);
 fs_res_t fat32_size (void * file_p, uint32_t * size_p);
 
+fs_res_t fat32_readdir_init(void * rddir_p, const char * path);
+fs_res_t fat32_readdir(void * rddir_p, char * fn);
+fs_res_t fat32_readdir_close(void * rddir_p);
 /**********************
  *      MACROS
  **********************/

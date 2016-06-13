@@ -44,6 +44,11 @@ typedef struct
     uint8_t aw :1;  /*1: Access for write is enabled */
 }ufs_file_t;
 
+typedef struct
+{
+    ufs_ent_t * last_ent_dp;
+}ufs_read_dir_t;
+
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
@@ -62,6 +67,10 @@ fs_res_t ufs_seek (void * file_p, uint32_t pos);
 fs_res_t ufs_tell (void * file_p, uint32_t * pos_p);
 fs_res_t ufs_trunc (void * file_p);
 fs_res_t ufs_size (void * file_p, uint32_t * size_p);
+
+fs_res_t ufs_readdir_init(void * rddir_p, const char * path);
+fs_res_t ufs_readdir(void * rddir_p, char * fn);
+fs_res_t ufs_readdir_close(void * rddir_p);
 
 /**********************
  *      MACROS

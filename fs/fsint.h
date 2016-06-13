@@ -48,6 +48,13 @@ typedef struct
     struct __fs_drv_struct* drv_dp;
 }fs_file_t;
 
+
+typedef struct
+{
+    void * rddir_dp;
+    struct __fs_drv_struct* drv_dp;
+}fs_read_dir_t;
+
 typedef enum
 {
     FS_MODE_WR = 0x01,
@@ -58,6 +65,7 @@ typedef struct __fs_drv_struct
 {
     char letter;
     uint16_t file_size;
+    uint16_t rddir_size;
     bool (*ready) (void);
     
     fs_res_t (*open) (void * file_p, const char * path, fs_mode_t mode);
@@ -69,6 +77,10 @@ typedef struct __fs_drv_struct
     fs_res_t (*tell) (void * file_p, uint32_t * pos_p);
     fs_res_t (*trunc) (void * file_p);
     fs_res_t (*size) (void * file_p, uint32_t * size_p);
+    
+    fs_res_t (*rddir_init) (void * rddir_p, const char * path);
+    fs_res_t (*rddir) (void * rddir_p, char * fn);
+    fs_res_t (*rddir_close) (void * rddir_p);
 }fs_drv_t;
 
 /**********************
@@ -84,6 +96,10 @@ fs_res_t fs_read (fs_file_t * file_p, void * buf, uint32_t btr, uint32_t * br);
 fs_res_t fs_write (fs_file_t * file_p, const void * buf, uint32_t btw, uint32_t * bw);
 fs_res_t fs_seek (fs_file_t * file_p, uint32_t pos);
 fs_res_t fs_tell (fs_file_t * file_p, uint32_t * pos);
+
+fs_res_t fs_readdir_init(fs_read_dir_t * rddir_p, const char * path);
+fs_res_t fs_readdir (fs_read_dir_t * rddir_p, char * fn);
+fs_res_t fs_readdir_close (fs_read_dir_t * rddir_p);
 
 char *  fs_get_letters(char * buf);
 const char * fs_get_ext(const char * fn);

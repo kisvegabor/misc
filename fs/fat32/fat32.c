@@ -10,6 +10,8 @@
 #include "misc_conf.h"
 #if USE_FAT32 != 0
 
+#include <string.h>
+#include <stdio.h>
 #include "fat32.h"
 #include "ff.h"
 #include "hw/dev/ext_mem/sdcard.h"
@@ -47,6 +49,7 @@ void fat32_init(void)
     fs_drv_t fat_drv;
         
     fat_drv.file_size = sizeof(FIL);
+    fat_drv.rddir_size = sizeof(DIR);
     fat_drv.letter = FAT32_LETTER;
     fat_drv.ready = fat32_ready;
     
@@ -59,6 +62,10 @@ void fat32_init(void)
     fat_drv.tell = fat32_tell;
     fat_drv.size = fat32_size;
     fat_drv.trunc = fat32_trunc;
+    
+    fat_drv.rddir_init = fat32_readdir_init;
+    fat_drv.rddir = fat32_readdir;
+    fat_drv.rddir_close = fat32_readdir_close;
     
     fs_add_drv(&fat_drv);
 }
@@ -192,6 +199,56 @@ fs_res_t fat32_size (void * file_p, uint32_t * size_p)
 {
     *size_p = f_size((FIL *)file_p);
     return FS_RES_OK;   
+}
+
+
+/**
+ * Initialize a variable for directory reading
+ * @param rddir_p pointer to a 'DIR' variable
+ * @param path path to a directory
+ * @return FS_RES_OK or any error from fs_res_t enum
+ */
+fs_res_t fat32_readdir_init(void * rddir_p, const char * path)
+{
+    FRESULT res = f_opendir(rddir_p, path);
+    
+    return fat32_res_trans(res);
+}
+
+/**
+ * Read the next filename form a directory. 
+ * The name of the directories will begin with '/'
+ * @param rddir_p pointer to an initialized 'DIR' variable
+ * @param fn pointer to a buffer to store the filename
+ * @return FS_RES_OK or any error from fs_res_t enum
+ */
+fs_res_t fat32_readdir(void * rddir_p, char * fn)
+{
+    FRESULT res;
+    FILINFO fno;
+    res = f_readdir(rddir_p, &fno);
+    if(res == FR_OK && fno.fname[0] != '\0') {
+        if (fno.fattrib & AM_DIR) {              /* It is a directory */
+            sprintf(fn, "/%s", fno.fname);
+        } else {                                 /* It is a file. */
+            strcpy(fn, fno.fname);
+        }
+    } else {
+        fn[0] = '\0';
+    }
+    
+    return fat32_res_trans(res);
+}
+
+/**
+ * Close the directory reading
+ * @param rddir_p pointer to an initialized 'DIR' variable
+ * @return FS_RES_OK or any error from fs_res_t enum
+ */
+fs_res_t fat32_readdir_close(void * rddir_p)
+{
+    f_closedir(rddir_p);
+    return FS_RES_OK;
 }
 
 /**********************

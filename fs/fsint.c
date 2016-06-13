@@ -122,17 +122,11 @@ fs_res_t fs_close (fs_file_t * file_p)
  */
 fs_res_t fs_read (fs_file_t * file_p, void * buf, uint32_t btr, uint32_t * br)
 {
-    if(file_p->drv_dp == NULL || file_p->drv_dp == NULL) {
-        if(br != NULL) *br = 0;
-        return FS_RES_INV_PARAM;
-    }
+    if(br != NULL) *br = 0;
+    if(file_p->drv_dp == NULL || file_p->drv_dp == NULL) return FS_RES_INV_PARAM;
+    if(file_p->drv_dp->read == NULL) return FS_RES_NOT_IMP;
     
-    if(file_p->drv_dp->read == NULL) {
-        if(br != NULL) *br = 0;
-        return FS_RES_NOT_IMP;
-    }
-    
-    uint32_t br_tmp;
+    uint32_t br_tmp = 0;
     fs_res_t res = file_p->drv_dp->read(file_p->file_dp, buf, btr, &br_tmp);
     if(br != NULL) *br = br_tmp;
     
@@ -149,17 +143,17 @@ fs_res_t fs_read (fs_file_t * file_p, void * buf, uint32_t btr, uint32_t * br)
  */
 fs_res_t fs_write (fs_file_t * file_p, const void * buf, uint32_t btw, uint32_t * bw)
 {
+    if(bw != NULL) *bw = 0;
+    
     if(file_p->drv_dp == NULL || file_p->drv_dp == NULL) {
-        if(bw != NULL) *bw = 0;
         return FS_RES_INV_PARAM;
     }
     
     if(file_p->drv_dp->write == NULL) {
-        if(bw != NULL) *bw = 0;
         return FS_RES_NOT_IMP;
     }
     
-    uint32_t bw_tmp;
+    uint32_t bw_tmp = 0;
     fs_res_t res = file_p->drv_dp->write(file_p->file_dp, buf, btw, &bw_tmp);
     if(bw != NULL)  *bw = bw_tmp;
     
@@ -206,6 +200,89 @@ fs_res_t fs_tell (fs_file_t * file_p, uint32_t  * pos)
     }
         
     fs_res_t res = file_p->drv_dp->tell(file_p->file_dp, pos);
+    
+    return res;
+}
+
+/**
+ * Initialize a 'fs_read_dir_t' variable for directory reading
+ * @param rddir_p pointer to a 'fs_read_dir_t' variable
+ * @param path path to a directory
+ * @return FS_RES_OK or any error from fs_res_t enum
+ */
+fs_res_t fs_readdir_init(fs_read_dir_t * rddir_p, const char * path)
+{
+    if(path == NULL) return FS_RES_INV_PARAM;
+
+    char letter = path[0];
+    
+    rddir_p->drv_dp = fs_get_drv(letter);
+    
+    if(rddir_p->drv_dp == NULL) {
+        rddir_p->rddir_dp = NULL;
+        return FS_RES_NOT_EX;
+    }
+    
+    rddir_p->rddir_dp = dm_alloc(rddir_p->drv_dp->file_size);
+    if(rddir_p->rddir_dp == NULL) {   
+        rddir_p->rddir_dp = NULL;
+        return FS_RES_OUT_OF_MEM;  /* Out of memory */
+    }        
+    
+    if(rddir_p->drv_dp->rddir_init == NULL) {
+        return FS_RES_NOT_IMP;
+    }
+    
+    const char * real_path = fs_get_real_path(path);
+    fs_res_t res = rddir_p->drv_dp->rddir_init(rddir_p->rddir_dp, real_path);
+    
+    return res;
+}
+
+/**
+ * Read the next filename form a directory. 
+ * The name of the directories will begin with '/'
+ * @param rddir_p pointer to an initialized 'fs_read_dir_t' variable
+ * @param fn pointer to a buffer to store the filename
+ * @return FS_RES_OK or any error from fs_res_t enum
+ */
+fs_res_t fs_readdir (fs_read_dir_t * rddir_p, char * fn)
+{
+    if(rddir_p->drv_dp == NULL || rddir_p->rddir_dp == NULL) {
+        return FS_RES_INV_PARAM;
+    }
+    
+    if(rddir_p->drv_dp->rddir == NULL) {
+        return FS_RES_NOT_IMP;
+    }
+    
+    fs_res_t res = rddir_p->drv_dp->rddir(rddir_p->rddir_dp, fn);
+    
+    return res;   
+}
+
+/**
+ * Close the directory reading
+ * @param rddir_p pointer to an initialized 'fs_read_dir_t' variable
+ * @return FS_RES_OK or any error from fs_res_t enum
+ */
+fs_res_t fs_readdir_close (fs_read_dir_t * rddir_p)
+{
+    if(rddir_p->drv_dp == NULL || rddir_p->rddir_dp == NULL) {
+        return FS_RES_INV_PARAM;
+    }
+    
+    fs_res_t res;
+           
+    if(rddir_p->drv_dp->rddir_close == NULL) {
+        res =  FS_RES_NOT_IMP;
+    } else {
+        res = rddir_p->drv_dp->close(rddir_p->rddir_dp);
+    }
+    
+    dm_free(rddir_p->rddir_dp);   /*Clean up*/
+    rddir_p->drv_dp = NULL;
+    rddir_p->rddir_dp = NULL;
     
     return res;
 }

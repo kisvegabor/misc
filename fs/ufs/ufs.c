@@ -12,6 +12,7 @@
 #if USE_UFS != 0
 
 #include <string.h>
+#include <stdio.h>
 #include "misc/mem/linked_list.h"
 #include "ufs.h"
 
@@ -53,6 +54,7 @@ void ufs_init(void)
     ll_init(&file_ll, sizeof(ufs_ent_t));
     
     ufs_drv.file_size = sizeof(ufs_file_t);
+    ufs_drv.rddir_size = sizeof(ufs_read_dir_t);
     ufs_drv.letter = UFS_LETTER;
     ufs_drv.ready = ufs_ready;
     
@@ -65,6 +67,10 @@ void ufs_init(void)
     ufs_drv.tell = ufs_tell;
     ufs_drv.size = ufs_size;
     ufs_drv.trunc = ufs_trunc;
+    
+    ufs_drv.rddir_init = ufs_readdir_init;
+    ufs_drv.rddir = ufs_readdir;
+    ufs_drv.rddir_close = ufs_readdir_close;
     
     fs_add_drv(&ufs_drv);
     
@@ -367,6 +373,56 @@ fs_res_t ufs_size (void * file_p, uint32_t * size_p)
     
     *size_p = ent_dp->size;
     
+    return FS_RES_OK;
+}
+
+/**
+ * Initialize a ufs_read_dir_t variable to directory reading
+ * @param rddir_p pointer to a 'ufs_read_dir_t' variable
+ * @param path uFS doesn't support folders so the path is ignored
+ * @return FS_RES_OK or any error from fs_res_t enum
+ */
+fs_res_t ufs_readdir_init(void * rddir_p, const char * path)
+{
+    ufs_read_dir_t * ufs_rddir_p = rddir_p;
+    
+    ufs_rddir_p->last_ent_dp = NULL;
+    
+    return FS_RES_OK;
+}
+
+/**
+ * Read the next file name
+ * @param rddir_p pointer to an initialized 'ufs_read_dir_t' variable
+ * @param fn pointer to buffer to sore the file name
+ * @return FS_RES_OK or any error from fs_res_t enum
+ */
+fs_res_t ufs_readdir(void * rddir_p, char * fn)
+{
+    ufs_read_dir_t * ufs_rddir_p = rddir_p;
+    
+    if(ufs_rddir_p->last_ent_dp == NULL) {
+        ufs_rddir_p->last_ent_dp = ll_get_head(&file_ll);
+    } else {
+        ufs_rddir_p->last_ent_dp = ll_get_next(&file_ll, ufs_rddir_p->last_ent_dp);
+    }
+    
+    if(ufs_rddir_p->last_ent_dp != NULL) {
+       strcpy(fn, ufs_rddir_p->last_ent_dp->fn_dp); 
+    } else {
+        fn[0] = '\0';
+    }
+    
+    return FS_RES_OK;
+}
+
+/**
+ * Close the directory reading
+ * @param rddir_p pointer to an initialized 'ufs_read_dir_t' variable
+ * @return FS_RES_OK or any error from fs_res_t enum
+ */
+fs_res_t ufs_readdir_close(void * rddir_p)
+{
     return FS_RES_OK;
 }
 
