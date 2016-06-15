@@ -72,6 +72,14 @@ fs_res_t fs_open (fs_file_t * file_p, const char * path, fs_mode_t mode)
         return FS_RES_NOT_EX;
     }
     
+    if(file_p->drv_dp->ready != NULL) {
+        if(file_p->drv_dp->ready() == false) {
+            file_p->drv_dp = NULL;
+            file_p->file_dp = NULL;
+            return FS_RES_HW_ERR;
+        }
+    }
+    
     file_p->file_dp = dm_alloc(file_p->drv_dp->file_size);
     if(file_p->file_dp == NULL) {   
         file_p->drv_dp = NULL;
@@ -95,7 +103,7 @@ fs_res_t fs_open (fs_file_t * file_p, const char * path, fs_mode_t mode)
  */
 fs_res_t fs_close (fs_file_t * file_p)
 {
-    if(file_p->drv_dp == NULL || file_p->drv_dp == NULL) {
+    if(file_p->drv_dp == NULL) {
         return FS_RES_INV_PARAM;
     }
     

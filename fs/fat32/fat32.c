@@ -260,6 +260,7 @@ fs_res_t fat32_readdir_close(void * rddir_p)
  * @param fat32_res the original fat_32 result
  * @return the converted, fs_res_t return code
  */
+
 static fs_res_t fat32_res_trans(FRESULT fat32_res)
 {
     switch(fat32_res) {
