@@ -218,7 +218,7 @@ fs_res_t fs_tell (fs_file_t * file_p, uint32_t  * pos)
  * @param path path to a directory
  * @return FS_RES_OK or any error from fs_res_t enum
  */
-fs_res_t fs_readdir_init(fs_read_dir_t * rddir_p, const char * path)
+fs_res_t fs_readdir_init(fs_readdir_t * rddir_p, const char * path)
 {
     if(path == NULL) return FS_RES_INV_PARAM;
 
@@ -254,7 +254,7 @@ fs_res_t fs_readdir_init(fs_read_dir_t * rddir_p, const char * path)
  * @param fn pointer to a buffer to store the filename
  * @return FS_RES_OK or any error from fs_res_t enum
  */
-fs_res_t fs_readdir (fs_read_dir_t * rddir_p, char * fn)
+fs_res_t fs_readdir (fs_readdir_t * rddir_p, char * fn)
 {
     if(rddir_p->drv_dp == NULL || rddir_p->rddir_dp == NULL) {
         return FS_RES_INV_PARAM;
@@ -274,7 +274,7 @@ fs_res_t fs_readdir (fs_read_dir_t * rddir_p, char * fn)
  * @param rddir_p pointer to an initialized 'fs_read_dir_t' variable
  * @return FS_RES_OK or any error from fs_res_t enum
  */
-fs_res_t fs_readdir_close (fs_read_dir_t * rddir_p)
+fs_res_t fs_readdir_close (fs_readdir_t * rddir_p)
 {
     if(rddir_p->drv_dp == NULL || rddir_p->rddir_dp == NULL) {
         return FS_RES_INV_PARAM;

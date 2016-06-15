@@ -226,12 +226,22 @@ fs_res_t fat32_readdir(void * rddir_p, char * fn)
 {
     FRESULT res;
     FILINFO fno;
+    fno.lfname = fn;
+    fno.lfsize = FSINT_MAX_FN_LENGTH;
     res = f_readdir(rddir_p, &fno);
     if(res == FR_OK && fno.fname[0] != '\0') {
         if (fno.fattrib & AM_DIR) {              /* It is a directory */
+#if _USE_LFN != 0
+            sprintf(fn, "/%s", fno.lfname[0] != '\0' ? fno.lfname : fno.fname);
+#else
             sprintf(fn, "/%s", fno.fname);
+#endif
         } else {                                 /* It is a file. */
-            strcpy(fn, fno.fname);
+#if _USE_LFN != 0
+            strcpy(fn, fno.lfname[0] != '\0' ? fno.lfname : fno.fname);
+#else
+             strcpy(fn, fno.fname);
+#endif
         }
     } else {
         fn[0] = '\0';

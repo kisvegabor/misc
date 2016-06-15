@@ -19,6 +19,7 @@
 /*********************
  *      DEFINES
  *********************/
+#define FSINT_MAX_FN_LENGTH  64
 
 /**********************
  *      TYPEDEFS
@@ -53,7 +54,7 @@ typedef struct
 {
     void * rddir_dp;
     struct __fs_drv_struct* drv_dp;
-}fs_read_dir_t;
+}fs_readdir_t;
 
 typedef enum
 {
@@ -97,9 +98,9 @@ fs_res_t fs_write (fs_file_t * file_p, const void * buf, uint32_t btw, uint32_t 
 fs_res_t fs_seek (fs_file_t * file_p, uint32_t pos);
 fs_res_t fs_tell (fs_file_t * file_p, uint32_t * pos);
 
-fs_res_t fs_readdir_init(fs_read_dir_t * rddir_p, const char * path);
-fs_res_t fs_readdir (fs_read_dir_t * rddir_p, char * fn);
-fs_res_t fs_readdir_close (fs_read_dir_t * rddir_p);
+fs_res_t fs_readdir_init(fs_readdir_t * rddir_p, const char * path);
+fs_res_t fs_readdir (fs_readdir_t * rddir_p, char * fn);
+fs_res_t fs_readdir_close (fs_readdir_t * rddir_p);
 
 char *  fs_get_letters(char * buf);
 const char * fs_get_ext(const char * fn);
