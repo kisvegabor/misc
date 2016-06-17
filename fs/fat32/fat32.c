@@ -226,7 +226,8 @@ fs_res_t fat32_readdir(void * rddir_p, char * fn)
 {
     FRESULT res;
     FILINFO fno;
-    fno.lfname = fn;
+    char lfn_buf[FSINT_MAX_FN_LENGTH];
+    fno.lfname = lfn_buf;
     fno.lfsize = FSINT_MAX_FN_LENGTH;
     res = f_readdir(rddir_p, &fno);
     if(res == FR_OK && fno.fname[0] != '\0') {
