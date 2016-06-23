@@ -15,7 +15,7 @@
  *********************/
 #define MISC_VERSION_MAJOR  1
 #define MISC_VERSION_MINOR  1
-#define MISC_VERSION_BUGFIX 1
+#define MISC_VERSION_BUGFIX 2
 
 /**********************
  *      TYPEDEFS

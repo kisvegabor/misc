@@ -77,6 +77,7 @@ int16_t strcmd_add(sc_t * sc_p, char c)
         case SC_CMD_REC:
             if(sc_p->bufi >= sc_p->buf_len) {
                 sc_p->state = SC_WAIT;  /*Buffer overflow*/
+                sc_p->bufp[0] = '\0';
                 res = STRCMD_OVERFLOW;
             } else {
                 if(c == '\r') {
@@ -101,6 +102,7 @@ int16_t strcmd_add(sc_t * sc_p, char c)
         case SC_PAR_REC: 
             if(sc_p->bufi >= sc_p->buf_len) {
                 sc_p->state = SC_WAIT;  /*Buffer overflow*/
+                sc_p->bufp[0] = '\0';
                 res = STRCMD_OVERFLOW;
             } else {
                 if(c == '\r') {
