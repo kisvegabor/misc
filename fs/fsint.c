@@ -285,7 +285,7 @@ fs_res_t fs_readdir_close (fs_readdir_t * rddir_p)
     if(rddir_p->drv_dp->rddir_close == NULL) {
         res =  FS_RES_NOT_IMP;
     } else {
-        res = rddir_p->drv_dp->close(rddir_p->rddir_dp);
+        res = rddir_p->drv_dp->rddir_close(rddir_p->rddir_dp);
     }
     
     dm_free(rddir_p->rddir_dp);   /*Clean up*/
