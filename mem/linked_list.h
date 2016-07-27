@@ -58,10 +58,6 @@ void ll_swap(ll_dsc_t * ll_p, void * n1_p, void * n2_p);
 
 #define LL_READ_BACK(list, i) for(i = ll_get_tail(&list); i != NULL; i = ll_get_prev(&list, i))
 
-#define LL_READ_DEL
-
-#define LL_READ_DEL_BACK
-
 #endif /*USE_LINKED_LIST != 0*/
 
 #endif
