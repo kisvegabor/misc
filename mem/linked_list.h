@@ -42,6 +42,7 @@ void * ll_ins_tail(ll_dsc_t * ll);
 void * ll_ins_after(ll_dsc_t * ll, void * n_act);
 void * ll_ins_before(ll_dsc_t * ll, void * n_act);
 void ll_rem(ll_dsc_t * ll, void * n_act);
+void ll_clear(ll_dsc_t * ll_p);
 void ll_chg_list(ll_dsc_t * ll_ori_p, ll_dsc_t * ll_new_p, void * node_dp);
 void * ll_get_head(ll_dsc_t * ll);
 void * ll_get_tail(ll_dsc_t * ll);
