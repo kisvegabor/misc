@@ -168,7 +168,7 @@ void ll_clear(ll_dsc_t * ll_p)
 	i_next = NULL;
 
 	while(i != NULL) {
-		i_next = ll_get_next(ll_p);
+		i_next = ll_get_next(ll_p, i);
 
 		ll_rem(ll_p, i);
 		dm_free(i);
