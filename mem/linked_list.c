@@ -156,6 +156,28 @@ void ll_rem(ll_dsc_t  * ll_p, void * node_p)
 }
 
 /**
+ * Remove and free all elements from a linked list.
+ * @param ll_p pointer to linked list
+ */
+void ll_clear(ll_dsc_t * ll_p)
+{
+	void * i;
+	void * i_next;
+
+	i = ll_get_head(ll_p);
+	i_next = NULL;
+
+	while(i != NULL) {
+		i_next = ll_get_next(ll_p, i);
+
+		ll_rem(ll_p, i);
+		dm_free(i);
+
+		i = i_next;
+	}
+}
+
+/**
  * Move a node to a new linked list
  * @param ll_ori_p pointer to the original (old) linked list
  * @param ll_new_p pointer to the new linked list
