@@ -65,33 +65,33 @@ fs_res_t fs_open (fs_file_t * file_p, const char * path, fs_mode_t mode)
 
     char letter = path[0];
     
-    file_p->drv_dp = fs_get_drv(letter);
+    file_p->drv = fs_get_drv(letter);
     
-    if(file_p->drv_dp == NULL) {
-        file_p->file_dp = NULL;
+    if(file_p->drv == NULL) {
+        file_p->file = NULL;
         return FS_RES_NOT_EX;
     }
     
-    if(file_p->drv_dp->ready != NULL) {
-        if(file_p->drv_dp->ready() == false) {
-            file_p->drv_dp = NULL;
-            file_p->file_dp = NULL;
+    if(file_p->drv->ready != NULL) {
+        if(file_p->drv->ready() == false) {
+            file_p->drv = NULL;
+            file_p->file = NULL;
             return FS_RES_HW_ERR;
         }
     }
     
-    file_p->file_dp = dm_alloc(file_p->drv_dp->file_size);
-    if(file_p->file_dp == NULL) {   
-        file_p->drv_dp = NULL;
+    file_p->file = dm_alloc(file_p->drv->file_size);
+    if(file_p->file == NULL) {   
+        file_p->drv = NULL;
         return FS_RES_OUT_OF_MEM;  /* Out of memory */
     }        
     
-    if(file_p->drv_dp->open == NULL) {
+    if(file_p->drv->open == NULL) {
         return FS_RES_NOT_IMP;
     }
     
     const char * real_path = fs_get_real_path(path);
-    fs_res_t res = file_p->drv_dp->open(file_p->file_dp, real_path, mode);
+    fs_res_t res = file_p->drv->open(file_p->file, real_path, mode);
     
     return res;
 }
@@ -103,19 +103,19 @@ fs_res_t fs_open (fs_file_t * file_p, const char * path, fs_mode_t mode)
  */
 fs_res_t fs_close (fs_file_t * file_p)
 {
-    if(file_p->drv_dp == NULL) {
+    if(file_p->drv == NULL) {
         return FS_RES_INV_PARAM;
     }
     
-    if(file_p->drv_dp->close == NULL) {
+    if(file_p->drv->close == NULL) {
         return FS_RES_NOT_IMP;
     }
     
-    fs_res_t res = file_p->drv_dp->close(file_p->file_dp);
+    fs_res_t res = file_p->drv->close(file_p->file);
     
-    dm_free(file_p->file_dp);   /*Clean up*/
-    file_p->drv_dp = NULL;
-    file_p->file_dp = NULL;
+    dm_free(file_p->file);   /*Clean up*/
+    file_p->drv = NULL;
+    file_p->file = NULL;
     
     return res;
 }
@@ -131,11 +131,11 @@ fs_res_t fs_close (fs_file_t * file_p)
 fs_res_t fs_read (fs_file_t * file_p, void * buf, uint32_t btr, uint32_t * br)
 {
     if(br != NULL) *br = 0;
-    if(file_p->drv_dp == NULL || file_p->drv_dp == NULL) return FS_RES_INV_PARAM;
-    if(file_p->drv_dp->read == NULL) return FS_RES_NOT_IMP;
+    if(file_p->drv == NULL || file_p->drv == NULL) return FS_RES_INV_PARAM;
+    if(file_p->drv->read == NULL) return FS_RES_NOT_IMP;
     
     uint32_t br_tmp = 0;
-    fs_res_t res = file_p->drv_dp->read(file_p->file_dp, buf, btr, &br_tmp);
+    fs_res_t res = file_p->drv->read(file_p->file, buf, btr, &br_tmp);
     if(br != NULL) *br = br_tmp;
     
     return res;
@@ -153,16 +153,16 @@ fs_res_t fs_write (fs_file_t * file_p, const void * buf, uint32_t btw, uint32_t 
 {
     if(bw != NULL) *bw = 0;
     
-    if(file_p->drv_dp == NULL || file_p->drv_dp == NULL) {
+    if(file_p->drv == NULL || file_p->drv == NULL) {
         return FS_RES_INV_PARAM;
     }
     
-    if(file_p->drv_dp->write == NULL) {
+    if(file_p->drv->write == NULL) {
         return FS_RES_NOT_IMP;
     }
     
     uint32_t bw_tmp = 0;
-    fs_res_t res = file_p->drv_dp->write(file_p->file_dp, buf, btw, &bw_tmp);
+    fs_res_t res = file_p->drv->write(file_p->file, buf, btw, &bw_tmp);
     if(bw != NULL)  *bw = bw_tmp;
     
     return res;
@@ -176,15 +176,15 @@ fs_res_t fs_write (fs_file_t * file_p, const void * buf, uint32_t btw, uint32_t 
  */
 fs_res_t fs_seek (fs_file_t * file_p, uint32_t pos)
 {
-    if(file_p->drv_dp == NULL || file_p->drv_dp == NULL) {
+    if(file_p->drv == NULL || file_p->drv == NULL) {
         return FS_RES_INV_PARAM;
     }
     
-    if(file_p->drv_dp->seek == NULL) {
+    if(file_p->drv->seek == NULL) {
         return FS_RES_NOT_IMP;
     }
         
-    fs_res_t res = file_p->drv_dp->seek(file_p->file_dp, pos);
+    fs_res_t res = file_p->drv->seek(file_p->file, pos);
     
     return res;
 }
@@ -197,17 +197,17 @@ fs_res_t fs_seek (fs_file_t * file_p, uint32_t pos)
  */
 fs_res_t fs_tell (fs_file_t * file_p, uint32_t  * pos)
 {
-    if(file_p->drv_dp == NULL || file_p->drv_dp == NULL) {
+    if(file_p->drv == NULL || file_p->drv == NULL) {
         pos = 0;
         return FS_RES_INV_PARAM;
     }
     
-    if(file_p->drv_dp->tell == NULL) {
+    if(file_p->drv->tell == NULL) {
         pos = 0;
         return FS_RES_NOT_IMP;
     }
         
-    fs_res_t res = file_p->drv_dp->tell(file_p->file_dp, pos);
+    fs_res_t res = file_p->drv->tell(file_p->file, pos);
     
     return res;
 }
@@ -224,25 +224,25 @@ fs_res_t fs_readdir_init(fs_readdir_t * rddir_p, const char * path)
 
     char letter = path[0];
     
-    rddir_p->drv_dp = fs_get_drv(letter);
+    rddir_p->drv = fs_get_drv(letter);
     
-    if(rddir_p->drv_dp == NULL) {
-        rddir_p->rddir_dp = NULL;
+    if(rddir_p->drv == NULL) {
+        rddir_p->rddir = NULL;
         return FS_RES_NOT_EX;
     }
     
-    rddir_p->rddir_dp = dm_alloc(rddir_p->drv_dp->file_size);
-    if(rddir_p->rddir_dp == NULL) {   
-        rddir_p->rddir_dp = NULL;
+    rddir_p->rddir = dm_alloc(rddir_p->drv->file_size);
+    if(rddir_p->rddir == NULL) {   
+        rddir_p->rddir = NULL;
         return FS_RES_OUT_OF_MEM;  /* Out of memory */
     }        
     
-    if(rddir_p->drv_dp->rddir_init == NULL) {
+    if(rddir_p->drv->rddir_init == NULL) {
         return FS_RES_NOT_IMP;
     }
     
     const char * real_path = fs_get_real_path(path);
-    fs_res_t res = rddir_p->drv_dp->rddir_init(rddir_p->rddir_dp, real_path);
+    fs_res_t res = rddir_p->drv->rddir_init(rddir_p->rddir, real_path);
     
     return res;
 }
@@ -256,15 +256,15 @@ fs_res_t fs_readdir_init(fs_readdir_t * rddir_p, const char * path)
  */
 fs_res_t fs_readdir (fs_readdir_t * rddir_p, char * fn)
 {
-    if(rddir_p->drv_dp == NULL || rddir_p->rddir_dp == NULL) {
+    if(rddir_p->drv == NULL || rddir_p->rddir == NULL) {
         return FS_RES_INV_PARAM;
     }
     
-    if(rddir_p->drv_dp->rddir == NULL) {
+    if(rddir_p->drv->rddir == NULL) {
         return FS_RES_NOT_IMP;
     }
     
-    fs_res_t res = rddir_p->drv_dp->rddir(rddir_p->rddir_dp, fn);
+    fs_res_t res = rddir_p->drv->rddir(rddir_p->rddir, fn);
     
     return res;   
 }
@@ -276,21 +276,21 @@ fs_res_t fs_readdir (fs_readdir_t * rddir_p, char * fn)
  */
 fs_res_t fs_readdir_close (fs_readdir_t * rddir_p)
 {
-    if(rddir_p->drv_dp == NULL || rddir_p->rddir_dp == NULL) {
+    if(rddir_p->drv == NULL || rddir_p->rddir == NULL) {
         return FS_RES_INV_PARAM;
     }
     
     fs_res_t res;
            
-    if(rddir_p->drv_dp->rddir_close == NULL) {
+    if(rddir_p->drv->rddir_close == NULL) {
         res =  FS_RES_NOT_IMP;
     } else {
-        res = rddir_p->drv_dp->rddir_close(rddir_p->rddir_dp);
+        res = rddir_p->drv->rddir_close(rddir_p->rddir);
     }
     
-    dm_free(rddir_p->rddir_dp);   /*Clean up*/
-    rddir_p->drv_dp = NULL;
-    rddir_p->rddir_dp = NULL;
+    dm_free(rddir_p->rddir);   /*Clean up*/
+    rddir_p->drv = NULL;
+    rddir_p->rddir = NULL;
     
     return res;
 }
@@ -303,10 +303,10 @@ fs_res_t fs_readdir_close (fs_readdir_t * rddir_p)
 void fs_add_drv(fs_drv_t * drv_p)
 {
    /*Save the new driver*/
-   fs_drv_t* new_drv_dp;
-   new_drv_dp =  ll_ins_head(&drv_ll); 
-   dm_assert(new_drv_dp);
-   memcpy(new_drv_dp, drv_p, sizeof(fs_drv_t));
+   fs_drv_t* new_drv;
+   new_drv =  ll_ins_head(&drv_ll); 
+   dm_assert(new_drv);
+   memcpy(new_drv, drv_p, sizeof(fs_drv_t));
    
 }
 
@@ -317,11 +317,11 @@ void fs_add_drv(fs_drv_t * drv_p)
  */
 char *  fs_get_letters(char * buf)
 {
-   fs_drv_t* drv_dp;
+   fs_drv_t* drv;
    uint8_t i = 0;
    
-   LL_READ(drv_ll, drv_dp) {
-       buf[i] = drv_dp->letter;
+   LL_READ(drv_ll, drv) {
+       buf[i] = drv->letter;
        i++;
    }
    
@@ -384,11 +384,11 @@ static const char * fs_get_real_path(const char * path)
  */
 static fs_drv_t* fs_get_drv(char letter)
 {
-    fs_drv_t* drv_dp;
+    fs_drv_t* drv;
     
-    LL_READ(drv_ll, drv_dp) {
-        if(drv_dp->letter == letter) {
-            return drv_dp;
+    LL_READ(drv_ll, drv) {
+        if(drv->letter == letter) {
+            return drv;
         }
     }
     

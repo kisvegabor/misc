@@ -97,15 +97,15 @@ bool ufs_ready(void)
 fs_res_t ufs_open (void * file_p, const char * fn, fs_mode_t mode)
 {
     ufs_file_t * fp = file_p;    /*Convert type*/
-    ufs_ent_t* ent_dp = ufs_ent_get(fn);
+    ufs_ent_t* ent = ufs_ent_get(fn);
     
-    fp->ent_dp = NULL;
+    fp->ent = NULL;
     
     /*If the file not exists ...*/
-    if( ent_dp == NULL) { 
+    if( ent == NULL) { 
         if((mode & FS_MODE_WR) != 0) {  /*Create the file if opened for write*/
-            ent_dp = ufs_ent_new(fn);   
-            if(ent_dp == NULL) return FS_RES_FULL; /*No space for the new file*/
+            ent = ufs_ent_new(fn);   
+            if(ent == NULL) return FS_RES_FULL; /*No space for the new file*/
         } else { 
             return FS_RES_NOT_EX;       /*Can not read not existing file*/
         }
@@ -113,16 +113,16 @@ fs_res_t ufs_open (void * file_p, const char * fn, fs_mode_t mode)
     
     /*Can not write already opened and const data files*/
     if((mode & FS_MODE_WR) != 0) {
-        if(ent_dp->oc != 0) return FS_RES_LOCKED;
-        if(ent_dp->const_data != 0) return FS_RES_DENIED;
+        if(ent->oc != 0) return FS_RES_LOCKED;
+        if(ent->const_data != 0) return FS_RES_DENIED;
     }
     
     /*No error, the file can be opened*/
-    fp->ent_dp = ent_dp;
+    fp->ent = ent;
     fp->ar = mode & FS_MODE_RD ? 1 : 0;
     fp->aw = mode & FS_MODE_WR ? 1 : 0;
     fp->rwp = 0;
-    ent_dp->oc ++;
+    ent->oc ++;
     
     return FS_RES_OK;
 }
@@ -153,13 +153,13 @@ fs_res_t ufs_create_const(const char * fn, const void * const_p, uint32_t len)
     res = ufs_open(&file, fn, FS_MODE_WR);
     if(res != FS_RES_OK) return res;
     
-    ufs_ent_t* ent_dp = file.ent_dp;
+    ufs_ent_t* ent = file.ent;
     
-    if(ent_dp->data_dp != NULL) return FS_RES_DENIED;
+    if(ent->data != NULL) return FS_RES_DENIED;
     
-    ent_dp->data_dp = (void *) const_p;
-    ent_dp->size = len;
-    ent_dp->const_data = 1;
+    ent->data = (void *) const_p;
+    ent->size = len;
+    ent->const_data = 1;
     
     res = ufs_close(&file);
     if(res != FS_RES_OK) return res;
@@ -177,11 +177,11 @@ fs_res_t ufs_close (void * file_p)
 {
     ufs_file_t * fp = file_p;    /*Convert type*/
     
-    if(fp->ent_dp == NULL) return FS_RES_OK;
+    if(fp->ent == NULL) return FS_RES_OK;
     
     /*Decrement the Open counter*/
-    if(fp->ent_dp->oc > 0) {
-        fp->ent_dp->oc--;
+    if(fp->ent->oc > 0) {
+        fp->ent->oc--;
     }
     
     return FS_RES_OK;
@@ -195,16 +195,16 @@ fs_res_t ufs_close (void * file_p)
  */
 fs_res_t ufs_remove(const char * fn) 
 {
-    ufs_ent_t* ent_dp = ufs_ent_get(fn);
+    ufs_ent_t* ent = ufs_ent_get(fn);
     
     /*Can not be deleted is opened*/
-    if(ent_dp->oc != 0) return FS_RES_DENIED;
+    if(ent->oc != 0) return FS_RES_DENIED;
     
-    ll_rem(&file_ll, ent_dp);
-    dm_free(ent_dp->fn_dp);
-    if(ent_dp->const_data == 0) dm_free(ent_dp->data_dp);
+    ll_rem(&file_ll, ent);
+    dm_free(ent->fn);
+    if(ent->const_data == 0) dm_free(ent->data);
     
-    dm_free(ent_dp);
+    dm_free(ent);
     
     return FS_RES_OK;
 }
@@ -222,28 +222,28 @@ fs_res_t ufs_read (void * file_p, void * buf, uint32_t btr, uint32_t * br)
 {
     ufs_file_t * fp = file_p;    /*Convert type*/
     
-    ufs_ent_t* ent_dp = fp->ent_dp;
+    ufs_ent_t* ent = fp->ent;
     *br = 0;
     
-    if(ent_dp->data_dp == NULL || ent_dp->size == 0) { /*Don't read empty files*/
+    if(ent->data == NULL || ent->size == 0) { /*Don't read empty files*/
         return FS_RES_OK;
     } else if(fp->ar == 0) {    /*The file is not opened for read*/
         return FS_RES_DENIED;   
     } 
 
     /*No error, read the file*/
-    if(fp->rwp + btr > ent_dp->size) {  /*Check too much bytes read*/
-       *br =  ent_dp->size - fp->rwp;
+    if(fp->rwp + btr > ent->size) {  /*Check too much bytes read*/
+       *br =  ent->size - fp->rwp;
     } else {
        *br = btr;
     }
 
     /*Read the data*/    
     uint8_t * data8_p;
-    if(ent_dp->const_data == 0) {
-        data8_p = (uint8_t*) ent_dp->data_dp;
+    if(ent->const_data == 0) {
+        data8_p = (uint8_t*) ent->data;
     } else {
-        data8_p = ent_dp->data_dp;
+        data8_p = ent->data;
     }
     
     data8_p += fp->rwp;
@@ -270,20 +270,20 @@ fs_res_t ufs_write (void * file_p, const void * buf, uint32_t btw, uint32_t * bw
     
     if(fp->aw == 0) return FS_RES_DENIED; /*Not opened for write*/
     
-    ufs_ent_t* ent_dp = fp->ent_dp;
+    ufs_ent_t* ent = fp->ent;
     
     /*Reallocate data array if it necessary*/
     uint32_t new_size = fp->rwp + btw;
-    if(new_size > ent_dp->size) {
-        uint8_t* new_data_dp = dm_realloc(ent_dp->data_dp, new_size);
-        if(new_data_dp == NULL) return FS_RES_FULL; /*Cannot allocate the new memory*/
+    if(new_size > ent->size) {
+        uint8_t* new_data = dm_realloc(ent->data, new_size);
+        if(new_data == NULL) return FS_RES_FULL; /*Cannot allocate the new memory*/
             
-        ent_dp->data_dp = new_data_dp;
-        ent_dp->size = new_size;
+        ent->data = new_data;
+        ent->size = new_size;
     }
     
     /*Write the file*/
-    uint8_t * data8_p = (uint8_t*) ent_dp->data_dp;
+    uint8_t * data8_p = (uint8_t*) ent->data;
     data8_p += fp->rwp;
     memcpy(data8_p, buf, btw);
     *bw = btw;
@@ -302,19 +302,19 @@ fs_res_t ufs_write (void * file_p, const void * buf, uint32_t btw, uint32_t * bw
 fs_res_t ufs_seek (void * file_p, uint32_t pos)
 {    
     ufs_file_t * fp = file_p;    /*Convert type*/
-    ufs_ent_t* ent_dp = fp->ent_dp;
+    ufs_ent_t* ent = fp->ent;
 
     /*Simply move the rwp before EOF*/
-    if(pos < ent_dp->size) {
+    if(pos < ent->size) {
         fp->rwp = pos;
     } else { /*Expand the file size*/
         if(fp->aw == 0) return FS_RES_DENIED;       /*Not opend for write*/
         
-        uint8_t* new_data_dp = dm_realloc(ent_dp->data_dp, pos);
-        if(new_data_dp == NULL) return FS_RES_FULL; /*Out of memory*/
+        uint8_t* new_data = dm_realloc(ent->data, pos);
+        if(new_data == NULL) return FS_RES_FULL; /*Out of memory*/
             
-        ent_dp->data_dp = new_data_dp;
-        ent_dp->size = pos;
+        ent->data = new_data;
+        ent->size = pos;
         fp->rwp = pos; 
     }
     
@@ -346,15 +346,15 @@ fs_res_t ufs_tell (void * file_p, uint32_t * pos_p)
 fs_res_t ufs_trunc (void * file_p)
 {
     ufs_file_t * fp = file_p;    /*Convert type*/
-    ufs_ent_t* ent_dp = fp->ent_dp;
+    ufs_ent_t* ent = fp->ent;
     
     if(fp->aw == 0) return FS_RES_DENIED; /*Not opened for write*/
     
-    void * new_data_dp = dm_realloc(ent_dp->data_dp, fp->rwp);
-    if(new_data_dp == NULL) return FS_RES_FULL; /*Out of memory*/
+    void * new_data = dm_realloc(ent->data, fp->rwp);
+    if(new_data == NULL) return FS_RES_FULL; /*Out of memory*/
     
-    ent_dp->data_dp = new_data_dp;
-    ent_dp->size = fp->rwp;
+    ent->data = new_data;
+    ent->size = fp->rwp;
     
     return FS_RES_OK;
 }
@@ -369,9 +369,9 @@ fs_res_t ufs_trunc (void * file_p)
 fs_res_t ufs_size (void * file_p, uint32_t * size_p)
 {
     ufs_file_t * fp = file_p;    /*Convert type*/
-    ufs_ent_t* ent_dp = fp->ent_dp;
+    ufs_ent_t* ent = fp->ent;
     
-    *size_p = ent_dp->size;
+    *size_p = ent->size;
     
     return FS_RES_OK;
 }
@@ -386,7 +386,7 @@ fs_res_t ufs_readdir_init(void * rddir_p, const char * path)
 {
     ufs_read_dir_t * ufs_rddir_p = rddir_p;
     
-    ufs_rddir_p->last_ent_dp = NULL;
+    ufs_rddir_p->last_ent = NULL;
     
     return FS_RES_OK;
 }
@@ -401,14 +401,14 @@ fs_res_t ufs_readdir(void * rddir_p, char * fn)
 {
     ufs_read_dir_t * ufs_rddir_p = rddir_p;
     
-    if(ufs_rddir_p->last_ent_dp == NULL) {
-        ufs_rddir_p->last_ent_dp = ll_get_head(&file_ll);
+    if(ufs_rddir_p->last_ent == NULL) {
+        ufs_rddir_p->last_ent = ll_get_head(&file_ll);
     } else {
-        ufs_rddir_p->last_ent_dp = ll_get_next(&file_ll, ufs_rddir_p->last_ent_dp);
+        ufs_rddir_p->last_ent = ll_get_next(&file_ll, ufs_rddir_p->last_ent);
     }
     
-    if(ufs_rddir_p->last_ent_dp != NULL) {
-       strcpy(fn, ufs_rddir_p->last_ent_dp->fn_dp); 
+    if(ufs_rddir_p->last_ent != NULL) {
+       strcpy(fn, ufs_rddir_p->last_ent->fn); 
     } else {
         fn[0] = '\0';
     }
@@ -438,11 +438,11 @@ fs_res_t ufs_readdir_close(void * rddir_p)
  */
 static ufs_ent_t* ufs_ent_get(const char * fn)
 {
-    ufs_ent_t* fp_dp;
+    ufs_ent_t* fp;
     
-    LL_READ(file_ll, fp_dp) {
-        if(strcmp(fp_dp->fn_dp, fn) == 0) {
-            return fp_dp;
+    LL_READ(file_ll, fp) {
+        if(strcmp(fp->fn, fn) == 0) {
+            return fp;
         } 
     }
     
@@ -457,20 +457,20 @@ static ufs_ent_t* ufs_ent_get(const char * fn)
  */
 static ufs_ent_t* ufs_ent_new(const char * fn)
 {
-    ufs_ent_t* new_ent_dp = NULL;
-    new_ent_dp = ll_ins_head(&file_ll);                 /*Create a new file*/
-    if(new_ent_dp == NULL) {
+    ufs_ent_t* new_ent = NULL;
+    new_ent = ll_ins_head(&file_ll);                 /*Create a new file*/
+    if(new_ent == NULL) {
         return NULL;
     }
     
-    new_ent_dp->fn_dp = dm_alloc(strlen(fn)  + 1); /*Save the name*/
-    strcpy(new_ent_dp->fn_dp, fn);
-    new_ent_dp->data_dp = NULL;
-    new_ent_dp->size = 0;
-    new_ent_dp->oc = 0;
-    new_ent_dp->const_data = 0;
+    new_ent->fn = dm_alloc(strlen(fn)  + 1); /*Save the name*/
+    strcpy(new_ent->fn, fn);
+    new_ent->data = NULL;
+    new_ent->size = 0;
+    new_ent->oc = 0;
+    new_ent->const_data = 0;
     
-    return new_ent_dp;
+    return new_ent;
 }
 
 #endif

@@ -28,8 +28,8 @@
 /**********************
  *  STATIC PROTOTYPES
  **********************/
-static void node_set_prev(ll_dsc_t * ll_p, ll_node_t* act_dp, ll_node_t* prev_dp);
-static void node_set_next(ll_dsc_t * ll_p, ll_node_t* act_dp, ll_node_t* next_dp);
+static void node_set_prev(ll_dsc_t * ll_p, ll_node_t* act, ll_node_t* prev);
+static void node_set_next(ll_dsc_t * ll_p, ll_node_t* act, ll_node_t* next);
 
 /**********************
  *  STATIC VARIABLES
@@ -50,8 +50,8 @@ static void node_set_next(ll_dsc_t * ll_p, ll_node_t* act_dp, ll_node_t* next_dp
  */
 void ll_init(ll_dsc_t * ll_p, uint32_t n_size)
 {
-    ll_p->head_dp = NULL;
-    ll_p->tail_dp = NULL;
+    ll_p->head = NULL;
+    ll_p->tail = NULL;
 
     if(n_size & 0b11) {
         n_size &= ~0b11;
@@ -74,15 +74,15 @@ void * ll_ins_head(ll_dsc_t * ll_p)
     
     if(n_new != NULL) { 
         node_set_prev(ll_p, n_new, NULL);           /*No prev. before the new head*/
-        node_set_next(ll_p, n_new, ll_p->head_dp);     /*After new comes the old head*/
+        node_set_next(ll_p, n_new, ll_p->head);     /*After new comes the old head*/
         
-        if(ll_p->head_dp != NULL) { /*If there is old head then before it goes the new*/
-            node_set_prev(ll_p, ll_p->head_dp, n_new);
+        if(ll_p->head != NULL) { /*If there is old head then before it goes the new*/
+            node_set_prev(ll_p, ll_p->head, n_new);
         }
         
-        ll_p->head_dp = n_new;         /*Set the new head in the dsc.*/
-        if(ll_p->tail_dp == NULL) {/*If there is no tail (1. node) set the tail too*/
-            ll_p->tail_dp = n_new;
+        ll_p->head = n_new;         /*Set the new head in the dsc.*/
+        if(ll_p->tail == NULL) {/*If there is no tail (1. node) set the tail too*/
+            ll_p->tail = n_new;
         }
     }
     
@@ -102,14 +102,14 @@ void * ll_ins_tail(ll_dsc_t * ll_p)
     
     if(n_new != NULL) {
         node_set_next(ll_p, n_new, NULL); /*No next after the new tail*/
-        node_set_prev(ll_p, n_new, ll_p->tail_dp); /*The prev. before new is tho old tail*/
-        if(ll_p->tail_dp != NULL) {    /*If there is old tail then the new comes after it*/
-            node_set_next(ll_p, ll_p->tail_dp, n_new);
+        node_set_prev(ll_p, n_new, ll_p->tail); /*The prev. before new is tho old tail*/
+        if(ll_p->tail != NULL) {    /*If there is old tail then the new comes after it*/
+            node_set_next(ll_p, ll_p->tail, n_new);
         }
         
-        ll_p->tail_dp = n_new;      /*Set the new tail in the dsc.*/
-        if(ll_p->head_dp == NULL) { /*If there is no head (1. node) set the head too*/
-            ll_p->head_dp = n_new;
+        ll_p->tail = n_new;      /*Set the new tail in the dsc.*/
+        if(ll_p->head == NULL) { /*If there is no head (1. node) set the head too*/
+            ll_p->head = n_new;
         }
     }
     
@@ -127,22 +127,22 @@ void ll_rem(ll_dsc_t  * ll_p, void * node_p)
 {
     if(ll_get_head(ll_p) == node_p) {
         /*The new head will be the node after 'n_act'*/
-        ll_p->head_dp = ll_get_next(ll_p, node_p);
-        if(ll_p->head_dp == NULL) {
-            ll_p->tail_dp = NULL;
+        ll_p->head = ll_get_next(ll_p, node_p);
+        if(ll_p->head == NULL) {
+            ll_p->tail = NULL;
         }
         else {
-            node_set_prev(ll_p, ll_p->head_dp, NULL);
+            node_set_prev(ll_p, ll_p->head, NULL);
         }   
     }
     else if(ll_get_tail(ll_p) == node_p) {
         /*The new tail will be the  node before 'n_act'*/
-        ll_p->tail_dp = ll_get_prev(ll_p, node_p);
-        if(ll_p->tail_dp == NULL) {
-            ll_p->head_dp = NULL;
+        ll_p->tail = ll_get_prev(ll_p, node_p);
+        if(ll_p->tail == NULL) {
+            ll_p->head = NULL;
         }
         else {
-            node_set_next(ll_p, ll_p->tail_dp, NULL);
+            node_set_next(ll_p, ll_p->tail, NULL);
         }
     }
     else
@@ -181,23 +181,23 @@ void ll_clear(ll_dsc_t * ll_p)
  * Move a node to a new linked list
  * @param ll_ori_p pointer to the original (old) linked list
  * @param ll_new_p pointer to the new linked list
- * @param node_dp pointer to a node
+ * @param node pointer to a node
  */
-void ll_chg_list(ll_dsc_t * ll_ori_p, ll_dsc_t * ll_new_p, void * node_dp)
+void ll_chg_list(ll_dsc_t * ll_ori_p, ll_dsc_t * ll_new_p, void * node)
 {
-    ll_rem(ll_ori_p, node_dp);
+    ll_rem(ll_ori_p, node);
     
-    /*Set node_dp as head*/
-    node_set_prev(ll_new_p, node_dp, NULL);      
-    node_set_next(ll_new_p, node_dp, ll_new_p->head_dp);
+    /*Set node as head*/
+    node_set_prev(ll_new_p, node, NULL);      
+    node_set_next(ll_new_p, node, ll_new_p->head);
     
-    if(ll_new_p->head_dp != NULL) { /*If there is old head then before it goes the new*/
-        node_set_prev(ll_new_p, ll_new_p->head_dp, node_dp);
+    if(ll_new_p->head != NULL) { /*If there is old head then before it goes the new*/
+        node_set_prev(ll_new_p, ll_new_p->head, node);
     }
 
-    ll_new_p->head_dp = node_dp;        /*Set the new head in the dsc.*/
-    if(ll_new_p->tail_dp == NULL) {     /*If there is no tail (first node) set the tail too*/
-        ll_new_p->tail_dp = node_dp;
+    ll_new_p->head = node;        /*Set the new head in the dsc.*/
+    if(ll_new_p->tail == NULL) {     /*If there is no tail (first node) set the tail too*/
+        ll_new_p->tail = node;
     }
 }
 
@@ -211,7 +211,7 @@ void * ll_get_head(ll_dsc_t * ll_p)
     void * head = NULL;
     
     if(ll_p != NULL)    {
-        head = ll_p->head_dp;
+        head = ll_p->head;
     }
     
     return head;
@@ -227,24 +227,24 @@ void * ll_get_tail(ll_dsc_t * ll_p)
     void * tail = NULL;
     
     if(ll_p != NULL)    {
-        tail = ll_p->tail_dp;
+        tail = ll_p->tail;
     }
     
     return tail;
 }
 
 /**
- * Return with the pointer of the next node after 'n_act_dp' 
+ * Return with the pointer of the next node after 'n_act' 
  * @param ll_p pointer to linked list
  * @param n_act pointer a node 
  * @return pointer to the next node 
  */
-void * ll_get_next(ll_dsc_t * ll_p, void * n_act_dp)
+void * ll_get_next(ll_dsc_t * ll_p, void * n_act)
 {
     void * next = NULL;
  
     if(ll_p != NULL)    {
-        ll_node_t* n_act_d = n_act_dp;
+        ll_node_t* n_act_d = n_act;
         memcpy(&next, n_act_d + LL_NEXT_P_OFFSET(ll_p), sizeof(void *));
     } 
     
@@ -252,17 +252,17 @@ void * ll_get_next(ll_dsc_t * ll_p, void * n_act_dp)
 }
 
 /**
- * Return with the pointer of the previous node after 'n_act_dp' 
+ * Return with the pointer of the previous node after 'n_act' 
  * @param ll_p pointer to linked list
  * @param n_act pointer a node 
  * @return pointer to the previous node 
  */
-void * ll_get_prev(ll_dsc_t * ll_p, void * n_act_dp)
+void * ll_get_prev(ll_dsc_t * ll_p, void * n_act)
 {
     void * prev = NULL;
  
     if(ll_p != NULL) {
-        ll_node_t* n_act_d = n_act_dp;
+        ll_node_t* n_act_d = n_act;
         memcpy(&prev, n_act_d + LL_PREV_P_OFFSET(ll_p), sizeof(void *));
     }
     
@@ -281,23 +281,23 @@ void ll_swap(ll_dsc_t * ll_p, void * n1_p, void * n2_p)
 /**
  * Set the 'pervious node pointer' of a node 
  * @param ll_p pointer to linked list
- * @param act_dp pointer to a node which prev. node pointer should be set
- * @param prev_dp pointer to a node which should be the previous node before 'act_dp'
+ * @param act pointer to a node which prev. node pointer should be set
+ * @param prev pointer to a node which should be the previous node before 'act'
  */
-static void node_set_prev(ll_dsc_t * ll_p, ll_node_t* act_dp, ll_node_t* prev_dp)
+static void node_set_prev(ll_dsc_t * ll_p, ll_node_t* act, ll_node_t* prev)
 {
-    memcpy(act_dp + LL_PREV_P_OFFSET(ll_p), &prev_dp, sizeof(ll_node_t*));
+    memcpy(act + LL_PREV_P_OFFSET(ll_p), &prev, sizeof(ll_node_t*));
 }
 
 /**
  * Set the 'next node pointer' of a node 
  * @param ll_p pointer to linked list
- * @param act_dp pointer to a node which next node pointer should be set
- * @param next_dp pointer to a node which should be the next node before 'act_dp'
+ * @param act pointer to a node which next node pointer should be set
+ * @param next pointer to a node which should be the next node before 'act'
  */
-static void node_set_next(ll_dsc_t * ll_p, ll_node_t* act_dp, ll_node_t* next_dp)
+static void node_set_next(ll_dsc_t * ll_p, ll_node_t* act, ll_node_t* next)
 {
-    memcpy(act_dp + LL_NEXT_P_OFFSET(ll_p), &next_dp, sizeof(ll_node_t*));
+    memcpy(act + LL_NEXT_P_OFFSET(ll_p), &next, sizeof(ll_node_t*));
 }
 
 #endif

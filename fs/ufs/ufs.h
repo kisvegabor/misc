@@ -27,8 +27,8 @@
 /*Descripton of a file entry */
 typedef struct
 {
-    char* fn_dp;
-    void * data_dp;
+    char* fn_d;
+    void * data_d;
     uint32_t size;  /*Data length in bytes*/
     uint16_t oc;    /*Open Count*/
     uint8_t const_data :1;
@@ -38,7 +38,7 @@ typedef struct
  Contains unique informations about the specific opening*/
 typedef struct
 {
-    ufs_ent_t* ent_dp;
+    ufs_ent_t* ent;
     uint32_t rwp;   /*Read Write Pointer*/
     uint8_t ar :1;  /*1: Access for read is enabled */
     uint8_t aw :1;  /*1: Access for write is enabled */
@@ -46,7 +46,7 @@ typedef struct
 
 typedef struct
 {
-    ufs_ent_t * last_ent_dp;
+    ufs_ent_t * last_ent;
 }ufs_read_dir_t;
 
 /**********************

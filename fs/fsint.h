@@ -45,15 +45,15 @@ struct __fs_drv_struct;
         
 typedef struct
 {
-    void * file_dp;
-    struct __fs_drv_struct* drv_dp;
+    void * file_d;
+    struct __fs_drv_struct* drv;
 }fs_file_t;
 
 
 typedef struct
 {
-    void * rddir_dp;
-    struct __fs_drv_struct* drv_dp;
+    void * rddir_d;
+    struct __fs_drv_struct * drv;
 }fs_readdir_t;
 
 typedef enum

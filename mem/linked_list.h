@@ -29,8 +29,8 @@ typedef uint8_t ll_node_t;
 typedef struct
 {
     uint32_t n_size;
-    ll_node_t* head_dp;
-    ll_node_t* tail_dp;
+    ll_node_t* head;
+    ll_node_t* tail;
 }ll_dsc_t;
 
 /**********************
@@ -43,11 +43,11 @@ void * ll_ins_after(ll_dsc_t * ll, void * n_act);
 void * ll_ins_before(ll_dsc_t * ll, void * n_act);
 void ll_rem(ll_dsc_t * ll, void * n_act);
 void ll_clear(ll_dsc_t * ll_p);
-void ll_chg_list(ll_dsc_t * ll_ori_p, ll_dsc_t * ll_new_p, void * node_dp);
+void ll_chg_list(ll_dsc_t * ll_ori_p, ll_dsc_t * ll_new_p, void * node);
 void * ll_get_head(ll_dsc_t * ll);
 void * ll_get_tail(ll_dsc_t * ll);
-void * ll_get_next(ll_dsc_t * ll, void * n_act_dp);
-void * ll_get_prev(ll_dsc_t * ll, void * n_act_dp);
+void * ll_get_next(ll_dsc_t * ll, void * n_act);
+void * ll_get_prev(ll_dsc_t * ll, void * n_act);
 void ll_swap(ll_dsc_t * ll_p, void * n1_p, void * n2_p);
 
 

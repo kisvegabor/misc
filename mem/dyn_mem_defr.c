@@ -114,16 +114,16 @@ void * dmd_alloc(uint32_t size)
 
 /**
  * Free an allocated data
- * @param data_dp pointer to an allocated memory 
+ * @param data pointer to an allocated memory 
  * (without da() tag, see file header for more information)
  */
-void dmd_free(void * data_dp)
+void dmd_free(void * data)
 {    
-    if(data_dp == &zero_mem) return;
-    if(data_dp == NULL) return;
+    if(data == &zero_mem) return;
+    if(data == NULL) return;
     
     /*Mark the entry as free*/
-    dmd_ent_t * free_e = data_dp;
+    dmd_ent_t * free_e = data;
     free_e->header.used = 0;
     
     /*Join this free area into the master_e.
@@ -169,7 +169,7 @@ void dmd_free(void * data_dp)
 
 /**
  * Reallocate a memory with a the size. The old content will be kept.
- * @param data_dp pointer to an allocated memory. (without da() tag see file header for more information)
+ * @param data pointer to an allocated memory. (without da() tag see file header for more information)
  * Its content will be copied to the new memory block and freed
  * @param new_size the desires new size in byte
  * @return pointer to the new memory
@@ -229,14 +229,14 @@ void dmd_monitor(dmd_mon_t * mon_p)
 
 /**
  * Give the size a allocated memory
- * @param data_dp pointer to an allocated memory (without da() tag see file header for more information )
- * @return the size of data_dp memory in bytes 
+ * @param data pointer to an allocated memory (without da() tag see file header for more information )
+ * @return the size of data memory in bytes 
  */
-uint32_t dmd_get_size(void * data_dp)
+uint32_t dmd_get_size(void * data)
 {
-    if(data_dp == &zero_mem) return 0;
+    if(data == &zero_mem) return 0;
     
-    dmd_ent_t * e = data_dp;   /*p is entry*/
+    dmd_ent_t * e = data;   /*p is entry*/
     return e->header.d_size;
 
 }

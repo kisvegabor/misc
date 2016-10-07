@@ -113,22 +113,22 @@ void * dm_alloc(uint32_t size)
 
 /**
  * Free an allocated data
- * @param data_dp pointer to an allocated memory 
+ * @param data pointer to an allocated memory 
  */
-void dm_free(void * data_dp)
+void dm_free(void * data)
 {    
-    if(data_dp == &zero_mem) return;
-    if(data_dp == NULL) return;
+    if(data == &zero_mem) return;
+    if(data == NULL) return;
     
     /*e points to the header*/
-    dm_ent_t * e = (dm_ent_t *)((uint8_t *) data_dp - sizeof(dm_header_t));
+    dm_ent_t * e = (dm_ent_t *)((uint8_t *) data - sizeof(dm_header_t));
     
     e->header.used = 0;
 }
 
 /**
  * Reallocate a memory with a new size. The old content will be kept.
- * @param data_dp pointer to an allocated memory.
+ * @param data pointer to an allocated memory.
  * Its content will be copied to the new memory block and freed
  * @param new_size the desired new size in byte
  * @return pointer to the new memory
@@ -194,14 +194,14 @@ void dm_monitor(dm_mon_t * mon_p)
 
 /**
  * Give the size of an allocated memory
- * @param data_dp pointer to an allocated memory
- * @return the size of data_dp memory in bytes 
+ * @param data pointer to an allocated memory
+ * @return the size of data memory in bytes 
  */
-uint32_t dm_get_size(void * data_dp)
+uint32_t dm_get_size(void * data)
 {
-    if(data_dp == &zero_mem) return 0;
+    if(data == &zero_mem) return 0;
     
-    dm_ent_t * e = (dm_ent_t *)((uint8_t *) data_dp - sizeof(dm_header_t));
+    dm_ent_t * e = (dm_ent_t *)((uint8_t *) data - sizeof(dm_header_t));
     return e->header.d_size;
 }
 /**********************
