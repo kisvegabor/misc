@@ -27,7 +27,7 @@
 /*Descripton of a file entry */
 typedef struct
 {
-    char* fn_d;
+    char * fn_d;
     void * data_d;
     uint32_t size;  /*Data length in bytes*/
     uint16_t oc;    /*Open Count*/

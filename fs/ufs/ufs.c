@@ -155,9 +155,9 @@ fs_res_t ufs_create_const(const char * fn, const void * const_p, uint32_t len)
     
     ufs_ent_t* ent = file.ent;
     
-    if(ent->data != NULL) return FS_RES_DENIED;
+    if(ent->data_d != NULL) return FS_RES_DENIED;
     
-    ent->data = (void *) const_p;
+    ent->data_d = (void *) const_p;
     ent->size = len;
     ent->const_data = 1;
     
@@ -201,8 +201,8 @@ fs_res_t ufs_remove(const char * fn)
     if(ent->oc != 0) return FS_RES_DENIED;
     
     ll_rem(&file_ll, ent);
-    dm_free(ent->fn);
-    if(ent->const_data == 0) dm_free(ent->data);
+    dm_free(ent->fn_d);
+    if(ent->const_data == 0) dm_free(ent->data_d);
     
     dm_free(ent);
     
@@ -225,7 +225,7 @@ fs_res_t ufs_read (void * file_p, void * buf, uint32_t btr, uint32_t * br)
     ufs_ent_t* ent = fp->ent;
     *br = 0;
     
-    if(ent->data == NULL || ent->size == 0) { /*Don't read empty files*/
+    if(ent->data_d == NULL || ent->size == 0) { /*Don't read empty files*/
         return FS_RES_OK;
     } else if(fp->ar == 0) {    /*The file is not opened for read*/
         return FS_RES_DENIED;   
@@ -241,9 +241,9 @@ fs_res_t ufs_read (void * file_p, void * buf, uint32_t btr, uint32_t * br)
     /*Read the data*/    
     uint8_t * data8_p;
     if(ent->const_data == 0) {
-        data8_p = (uint8_t*) ent->data;
+        data8_p = (uint8_t*) ent->data_d;
     } else {
-        data8_p = ent->data;
+        data8_p = ent->data_d;
     }
     
     data8_p += fp->rwp;
@@ -275,15 +275,15 @@ fs_res_t ufs_write (void * file_p, const void * buf, uint32_t btw, uint32_t * bw
     /*Reallocate data array if it necessary*/
     uint32_t new_size = fp->rwp + btw;
     if(new_size > ent->size) {
-        uint8_t* new_data = dm_realloc(ent->data, new_size);
+        uint8_t* new_data = dm_realloc(ent->data_d, new_size);
         if(new_data == NULL) return FS_RES_FULL; /*Cannot allocate the new memory*/
             
-        ent->data = new_data;
+        ent->data_d = new_data;
         ent->size = new_size;
     }
     
     /*Write the file*/
-    uint8_t * data8_p = (uint8_t*) ent->data;
+    uint8_t * data8_p = (uint8_t*) ent->data_d;
     data8_p += fp->rwp;
     memcpy(data8_p, buf, btw);
     *bw = btw;
@@ -310,10 +310,10 @@ fs_res_t ufs_seek (void * file_p, uint32_t pos)
     } else { /*Expand the file size*/
         if(fp->aw == 0) return FS_RES_DENIED;       /*Not opend for write*/
         
-        uint8_t* new_data = dm_realloc(ent->data, pos);
+        uint8_t* new_data = dm_realloc(ent->data_d, pos);
         if(new_data == NULL) return FS_RES_FULL; /*Out of memory*/
             
-        ent->data = new_data;
+        ent->data_d = new_data;
         ent->size = pos;
         fp->rwp = pos; 
     }
@@ -350,10 +350,10 @@ fs_res_t ufs_trunc (void * file_p)
     
     if(fp->aw == 0) return FS_RES_DENIED; /*Not opened for write*/
     
-    void * new_data = dm_realloc(ent->data, fp->rwp);
+    void * new_data = dm_realloc(ent->data_d, fp->rwp);
     if(new_data == NULL) return FS_RES_FULL; /*Out of memory*/
     
-    ent->data = new_data;
+    ent->data_d = new_data;
     ent->size = fp->rwp;
     
     return FS_RES_OK;
@@ -408,7 +408,7 @@ fs_res_t ufs_readdir(void * rddir_p, char * fn)
     }
     
     if(ufs_rddir_p->last_ent != NULL) {
-       strcpy(fn, ufs_rddir_p->last_ent->fn); 
+       strcpy(fn, ufs_rddir_p->last_ent->fn_d); 
     } else {
         fn[0] = '\0';
     }
@@ -441,7 +441,7 @@ static ufs_ent_t* ufs_ent_get(const char * fn)
     ufs_ent_t* fp;
     
     LL_READ(file_ll, fp) {
-        if(strcmp(fp->fn, fn) == 0) {
+        if(strcmp(fp->fn_d, fn) == 0) {
             return fp;
         } 
     }
@@ -463,9 +463,9 @@ static ufs_ent_t* ufs_ent_new(const char * fn)
         return NULL;
     }
     
-    new_ent->fn = dm_alloc(strlen(fn)  + 1); /*Save the name*/
-    strcpy(new_ent->fn, fn);
-    new_ent->data = NULL;
+    new_ent->fn_d = dm_alloc(strlen(fn)  + 1); /*Save the name*/
+    strcpy(new_ent->fn_d, fn);
+    new_ent->data_d = NULL;
     new_ent->size = 0;
     new_ent->oc = 0;
     new_ent->const_data = 0;
