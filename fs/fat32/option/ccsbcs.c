@@ -20,7 +20,8 @@
 /   866   Russian
 /   869   Greek 2
 */
-
+#include "misc_conf.h"
+#if USE_FAT32 != 0
 #include "../ff.h"
 
 
@@ -344,3 +345,4 @@ WCHAR ff_wtoupper (	/* Returns upper converted character */
 	return chr;
 }
 
+#endif

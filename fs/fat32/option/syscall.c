@@ -3,6 +3,8 @@
 /* (C)ChaN, 2014                                                          */
 /*------------------------------------------------------------------------*/
 
+#include "misc_conf.h"
+#if USE_FAT32 != 0
 
 #include "../ff.h"
 
@@ -149,3 +151,4 @@ void ff_memfree (
 }
 
 #endif
+#endif /*USE_FAT32 != 0*/

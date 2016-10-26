@@ -14,9 +14,9 @@
 /*----------------
  * Dynamic memory
  *----------------*/
-#define USE_DYN_MEM     1
+#define USE_DYN_MEM     0
 #if USE_DYN_MEM != 0
-#define DM_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
+#define DM_MEM_SIZE    (4U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
 #define DM_AUTO_ZERO   1             /*Automatically fill-zero the allocated memory*/
 #define DM_MEM_ATTR					 /*Complier prefix for big array declaration*/
 #endif  /*USE_DYN_MEM*/
@@ -34,7 +34,7 @@
 /*------------
  *   FIFO
  *-----------*/
-#define USE_FIFO        1
+#define USE_FIFO        0
 #if USE_FIFO != 0
 /* No settings*/
 #endif /*USE_FIFO*/
@@ -54,7 +54,7 @@
 /*----------------
  * Periodic task
  *----------------*/
-#define USE_PTASK       1
+#define USE_PTASK       0
 #if USE_PTASK != 0
 /*No settings*/
 #endif /*USE_PTASK*/
@@ -89,7 +89,7 @@
 /*----------------
  *  FS interface
  *----------------*/
-#define USE_FSINT   1
+#define USE_FSINT   0
 #if USE_FSINT != 0
 /*No settings*/
 #endif  /*USE_FSINT*/
@@ -97,7 +97,7 @@
 /*----------------
  *     uFS
  *----------------*/
-#define USE_UFS   1
+#define USE_UFS   0
 #if USE_UFS != 0
 #define UFS_LETTER 'U'
 #endif  /*USE_UFS*/
@@ -117,7 +117,7 @@
 /*----------------
  *     Color
  *----------------*/
-#define  USE_COLOR 		1
+#define  USE_COLOR 		0
 #if USE_COLOR != 0
 #define COLOR_DEPTH		24
 #endif
