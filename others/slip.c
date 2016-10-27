@@ -132,9 +132,10 @@ slip_res_t slip_proc_byte(slip_proc_t  * slip_p, uint8_t next_data)
     
     if(res == SLIP_WAIT) {
         slip_p->data_cnt ++;
-        if(slip_p->data_cnt == slip_p->buf_size) {
-            res = SLIP_LONG;
-        }
+    }
+    if(slip_p->data_cnt == slip_p->buf_size) {
+        slip_p->data_cnt = 0;
+        res = SLIP_LONG;
     }
     
     return res;  
