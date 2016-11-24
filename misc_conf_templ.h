@@ -42,7 +42,7 @@
 /*----------------
  *   Linked list
  *----------------*/
-#define USE_LINKED_LIST 1
+#define USE_LINKED_LIST     0
 #if USE_LINKED_LIST != 0
 /* No settings*/
 #endif /*USE_LINKED_LIST*/

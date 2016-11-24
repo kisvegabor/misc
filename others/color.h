@@ -238,6 +238,11 @@ static inline color_t color_mix(color_t c1, color_t c2, uint8_t mix)
     return ret;
 }
 
+/**
+ * Get the brightness of a color
+ * @param color a color
+ * @return the brightness [0..255]
+ */
 static inline uint8_t color_brightness(color_t color) 
 {
     color24_t c24;

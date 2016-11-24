@@ -61,6 +61,9 @@ void fs_init(void)
  */
 fs_res_t fs_open (fs_file_t * file_p, const char * path, fs_mode_t mode)
 {
+    file_p->drv = NULL;
+    file_p->file_d = NULL;
+    
     if(path == NULL) return FS_RES_INV_PARAM;
 
     char letter = path[0];
