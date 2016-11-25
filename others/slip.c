@@ -90,7 +90,7 @@ void slip_proc_init(slip_proc_t * slip_p, void * buf_p, uint32_t buf_size)
     slip_p->buf = buf_p;
     slip_p->buf_size = buf_size;
     slip_p->data_cnt = 0;
-    slip_p->escaped = 0;
+    slip_p->escaping = 0;
     slip_p->ready = 0;
 }
 
@@ -111,7 +111,7 @@ slip_res_t slip_proc_byte(slip_proc_t  * slip_p, uint8_t next_data)
         slip_p->ready = 0;
     }
     
-    if(slip_p->escaped != 0) {          /*Handle the escaping*/
+    if(slip_p->escaping != 0) {          /*Handle the escaping*/
         switch(next_data) {
             case SLIP_ESC_ESC:
                 slip_p->buf[slip_p->data_cnt] = SLIP_ESC;
@@ -122,15 +122,18 @@ slip_res_t slip_proc_byte(slip_proc_t  * slip_p, uint8_t next_data)
             default:
                 res = SLIP_PROT_ERR;
         }
-        slip_p->escaped = 0;
+        slip_p->escaping = 0;
     } else if (next_data == SLIP_END) { /*Finish if non-escaped END*/
         slip_p->ready = 1;
         res = SLIP_READY;
-    } else {                            /*Save normal data*/
+    } else if (next_data == SLIP_ESC) {
+        slip_p->escaping = 1;
+    }
+    else {                            /*Save normal data*/
         slip_p->buf[slip_p->data_cnt] = next_data;
     }
     
-    if(res == SLIP_WAIT) {
+    if(res == SLIP_WAIT && next_data != SLIP_ESC) {
         slip_p->data_cnt ++;
     }
     if(slip_p->data_cnt == slip_p->buf_size) {

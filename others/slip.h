@@ -35,7 +35,7 @@ typedef struct
     uint8_t * buf;
     uint32_t buf_size;
     uint32_t data_cnt;
-    uint8_t escaped :1;
+    uint8_t escaping :1;
     uint8_t ready :1;
 }slip_proc_t;
 
