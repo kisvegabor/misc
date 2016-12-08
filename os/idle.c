@@ -13,7 +13,7 @@
 #if USE_IDLE != 0
 
 #include "idle.h"
-#include "hal/systick/systick.h"
+#include "hw/per/tick.h"
 
 /*********************
  *      DEFINES
@@ -54,7 +54,7 @@ void idle_init(void)
     /*Set the reference measurement time*/
     idle_meas_interval = IDLE_REF_MEAS_TIME;
     
-    systick_add_cb(idle_meas_cb);
+    tick_add_cb(idle_meas_cb);
     
     while(idle_cnt_last == 0) {
         idle_meas();
