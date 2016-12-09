@@ -11,7 +11,7 @@
 #if USE_PTASK != 0
 
 #include "ptask.h"
-#include "hw/per/tick.h"
+#include "hal/systick/systick.h"
 #include <stddef.h>
 
 /*********************
@@ -152,7 +152,7 @@ void ptask_set_prio(ptask_t* ptask_p, ptask_prio_t prio)
  */
 void ptask_ready(ptask_t* ptask_p)
 {
-    ptask_p->last_run = tick_get() - ptask_p->period - 1;
+    ptask_p->last_run = systick_get() - ptask_p->period - 1;
 }
 
 /**
@@ -162,7 +162,7 @@ void ptask_ready(ptask_t* ptask_p)
  */
 void ptask_reset(ptask_t* ptask_p)
 {
-    ptask_p->last_run = tick_get();
+    ptask_p->last_run = systick_get();
 }
 
 /**
@@ -192,9 +192,9 @@ static bool ptask_exec (ptask_t* ptask_p, ptask_prio_t prio_act)
     /*Execute ptask if its prio is 'prio_act'*/
     if(ptask_p->prio == prio_act) {
         /*Execute if at least 'period' time elapsed*/
-        uint32_t elp = tick_elaps(ptask_p->last_run);
+        uint32_t elp = systick_elaps(ptask_p->last_run);
         if(elp >= ptask_p->period) {
-            ptask_p->last_run = tick_get();
+            ptask_p->last_run = systick_get();
             ptask_p->task();
 
             exec = true;
