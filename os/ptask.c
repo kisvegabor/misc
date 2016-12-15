@@ -48,8 +48,8 @@ void ptask_init(void)
 {
     ll_init(&ptask_ll, sizeof(ptask_t));
     
-    /*Initially disable the ptask handling*/
-    ptask_en(false);
+    /*Initially enable the ptask handling*/
+    ptask_en(true);
 }
 
 /**
@@ -148,7 +148,7 @@ void ptask_set_prio(ptask_t* ptask_p, ptask_prio_t prio)
 
 /**
  * Make a ptask ready. It will not wait its period.
- * @param ptask_p
+ * @param ptask_p pointer to a ptask.
  */
 void ptask_ready(ptask_t* ptask_p)
 {
@@ -171,7 +171,7 @@ void ptask_reset(ptask_t* ptask_p)
  */
 void ptask_en(bool en)
 {
-	ptask_run =en;
+	ptask_run = en;
 }
 
 
