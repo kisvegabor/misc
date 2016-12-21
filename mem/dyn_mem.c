@@ -124,6 +124,19 @@ void dm_free(void * data)
     dm_ent_t * e = (dm_ent_t *)((uint8_t *) data - sizeof(dm_header_t));
     
     e->header.used = 0;
+
+    /*Defrag*/
+    dm_ent_t * e_next;
+    e_next = ent_get_next(e);
+    while(e_next != NULL) {
+        if(e_next->header.used == 0) {
+            e->header.d_size += e_next->header.d_size + sizeof(e->header);
+        } else {
+            break;
+        }
+
+        e_next = ent_get_next(e_next);
+    }
 }
 
 /**
@@ -156,7 +169,39 @@ void * dm_realloc(void * data_p, uint32_t new_size)
  */
 void dm_defrag(void)
 {
-    
+    dm_ent_t * e_free;
+    dm_ent_t * e_next;
+    e_free = ent_get_next(NULL);
+
+    while(1) {
+        /*Search the next free entry*/
+        while(e_free != NULL) {
+            if(e_free->header.used != 0) {
+                e_free = ent_get_next(e_free);
+            } else {
+                break;
+            }
+        }
+
+        if(e_free == NULL) return;
+
+        /*Joint the following free entries to the free*/
+        e_next = ent_get_next(e_free);
+        while(e_next != NULL) {
+            if(e_next->header.used == 0) {
+                e_free->header.d_size += e_next->header.d_size + sizeof(e_next->header);
+            } else {
+                break;
+            }
+
+            e_next = ent_get_next(e_next);
+        }
+
+        if(e_next == NULL) return;
+
+        /*Continue from the lastly checked entry*/
+        e_free = e_next;
+    }
 }
 
 /**
