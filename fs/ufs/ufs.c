@@ -379,7 +379,7 @@ fs_res_t ufs_size (void * file_p, uint32_t * size_p)
 /**
  * Initialize a ufs_read_dir_t variable to directory reading
  * @param rddir_p pointer to a 'ufs_read_dir_t' variable
- * @param path uFS doesn't support folders so the path is ignored
+ * @param path uFS doesn't support folders so it has to be ""
  * @return FS_RES_OK or any error from fs_res_t enum
  */
 fs_res_t ufs_readdir_init(void * rddir_p, const char * path)
@@ -388,7 +388,8 @@ fs_res_t ufs_readdir_init(void * rddir_p, const char * path)
     
     ufs_rddir_p->last_ent = NULL;
     
-    return FS_RES_OK;
+    if(path[0] != '\0') return FS_RES_NOT_EX;
+    else return FS_RES_OK;
 }
 
 /**

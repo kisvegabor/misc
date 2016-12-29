@@ -352,6 +352,24 @@ const char * fs_get_ext(const char * fn)
     return ""; /*Empty string if no '.' in the file name. */
 }
 
+/**
+ * Step up one level
+ * @param fn pointer to a file name
+ * @return the truncated file name
+ */
+char * fs_up(char * fn)
+{
+    uint16_t len = strlen(fn);
+    uint16_t i;
+    for(i = len; i > 0; i --) {
+        if(fn[i] == '/' && fn[i] == '\\') break;
+    }
+
+    fn[i] = '\0';
+
+    return fn;
+}
+
 /**********************
  *   STATIC FUNCTIONS
  **********************/

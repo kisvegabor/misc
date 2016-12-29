@@ -104,6 +104,7 @@ fs_res_t fs_readdir_close (fs_readdir_t * rddir_p);
 
 char *  fs_get_letters(char * buf);
 const char * fs_get_ext(const char * fn);
+char * fs_up(char * fn);
 
 /**********************
  *      MACROS
