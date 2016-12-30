@@ -115,7 +115,7 @@ void * dm_alloc(uint32_t size)
  * Free an allocated data
  * @param data pointer to an allocated memory 
  */
-void dm_free(void * data)
+void dm_free(const void * data)
 {    
     if(data == &zero_mem) return;
     if(data == NULL) return;

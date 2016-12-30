@@ -39,7 +39,7 @@ typedef struct
  **********************/
 void dm_init(void);
 void * dm_alloc(uint32_t size);
-void dm_free(void  * data);
+void dm_free(const void  * data);
 void * dm_realloc(void * data_p, uint32_t new_size);
 void dm_defrag(void);
 uint32_t dm_get_size(void * p);

@@ -118,7 +118,7 @@ static void idle_meas_cb(void)
  */
 static void idle_meas(void)
 {
-    /* Interesting: On assembly level the old value of idle_cnt can be kept so 
+    /* Interesting: On assembly level the old value of idle_cnt can be kept so
      * clear is here as well not only in the interrupt */
     if(idle_null == 1 && idle_cnt != 0)
     {
@@ -128,7 +128,7 @@ static void idle_meas(void)
 
     /* Increment the idle_cnt
      * It will show how long was the CPU in the main loop.
-     * If it is a smaller value then it was a lot of interrupt 
+     * If it is a smaller value then it was a lot of interrupt
      * so the CPU load is big */
     idle_cnt++;
 }
