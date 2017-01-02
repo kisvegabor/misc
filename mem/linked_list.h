@@ -13,6 +13,8 @@
 
 #if USE_LINKED_LIST != 0
 #include "dyn_mem.h"
+#include <stdint.h>
+#include <stddef.h>
 
 /*********************
  *      DEFINES

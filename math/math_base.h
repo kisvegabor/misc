@@ -21,9 +21,8 @@
 #define max(a,b) (a>b?a:b)
 #endif
 
-#ifndef abs
-#define abs(x) ((x)>0?(x):(-(x)))
-#endif
+#define MATH_ABS(x) ((x)>0?(x):(-(x)))
+
 /**********************
  *      TYPEDEFS
  **********************/

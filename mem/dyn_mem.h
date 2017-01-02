@@ -10,11 +10,11 @@
  *      INCLUDES
  *********************/
 #include "misc_conf.h"
-
 #if USE_DYN_MEM != 0
 
 #include <stdint.h>
 #include <stddef.h>
+
 
 /*********************
  *      DEFINES
@@ -51,7 +51,11 @@ void dm_monitor(dm_mon_t * mon_p);
 
 #define dm_assert(p) {if(p == NULL) {while(1);}}
 
+#else /*USE_DYN_MEM == 0*/
+#include <stdlib.h> /*To use normal malloc/free instead*/
+#define dm_assert(p) {if(p == NULL) {while(1);}}
+
 #endif /*USE_DYN_MEM*/
 
-#endif
+#endif /*DYN_MEM_H*/
 
