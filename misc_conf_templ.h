@@ -2,8 +2,13 @@
  * @file misc_conf.h
  * 
  */
+
 #if 0 /*Remove this to enable the content*/
 
+/**
+ * @file misc_conf.h
+ *
+ */
 #ifndef MISC_CONF_H
 #define MISC_CONF_H
 
@@ -14,16 +19,20 @@
 /*----------------
  * Dynamic memory
  *----------------*/
-#define USE_DYN_MEM     0
+#define USE_DYN_MEM     1
 #if USE_DYN_MEM != 0
-#define DM_MEM_SIZE    (4U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
+#define DM_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
 #define DM_AUTO_ZERO   1             /*Automatically fill-zero the allocated memory*/
-#define DM_MEM_ATTR					 /*Complier prefix for big array declaration*/
+#define DM_MEM_ATTR                  /*Complier prefix for big array declaration*/
+#else /*Add wrappers to normal malloc/free/malloc */
+#define dm_alloc   malloc
+#define dm_free    free
+#define dm_realloc realloc
 #endif  /*USE_DYN_MEM*/
 
- /*----------------------------
-  * Dynamic memory with Defrag
-  *--------------------------*/
+ /*--------------------------------------
+  * Dynamic memory with advanced defrag
+  *------------------------------------*/
  #define USE_DYN_MEM_DEFR     0
  #if USE_DYN_MEM_DEFR != 0
  #define DMD_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
@@ -42,7 +51,7 @@
 /*----------------
  *   Linked list
  *----------------*/
-#define USE_LINKED_LIST     0
+#define USE_LINKED_LIST 1
 #if USE_LINKED_LIST != 0
 /* No settings*/
 #endif /*USE_LINKED_LIST*/
@@ -54,7 +63,7 @@
 /*----------------
  * Periodic task
  *----------------*/
-#define USE_PTASK       0
+#define USE_PTASK       1
 #if USE_PTASK != 0
 /*No settings*/
 #endif /*USE_PTASK*/
@@ -89,7 +98,7 @@
 /*----------------
  *  FS interface
  *----------------*/
-#define USE_FSINT   0
+#define USE_FSINT   1
 #if USE_FSINT != 0
 /*No settings*/
 #endif  /*USE_FSINT*/
@@ -97,7 +106,7 @@
 /*----------------
  *     uFS
  *----------------*/
-#define USE_UFS   0
+#define USE_UFS   1
 #if USE_UFS != 0
 #define UFS_LETTER 'U'
 #endif  /*USE_UFS*/
@@ -117,11 +126,11 @@
 /*----------------
  *     Color
  *----------------*/
-#define  USE_COLOR 		0
+#define  USE_COLOR      1
 #if USE_COLOR != 0
-#define COLOR_DEPTH		24
+#define COLOR_DEPTH     16
 #endif
 
-#endif /*#ifndef MISC_CONF_H*/
+#endif /* MISC_CONF_H */
 
 #endif /*Remove this to enable the content*/
