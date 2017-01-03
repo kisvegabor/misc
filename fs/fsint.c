@@ -360,9 +360,19 @@ const char * fs_get_ext(const char * fn)
 char * fs_up(char * fn)
 {
     uint16_t len = strlen(fn);
+    if(len == 0) return fn;
+
+    len --; /*Go before the trailing '\0'*/
+
+    /*Ignore trailing '/' or '\'*/
+    while(fn[len] == '/' || fn[len] == '\\') {
+        fn[len] = '\0';
+        len --;
+    }
+
     uint16_t i;
     for(i = len; i > 0; i --) {
-        if(fn[i] == '/' && fn[i] == '\\') break;
+        if(fn[i] == '/' || fn[i] == '\\') break;
     }
 
     fn[i] = '\0';

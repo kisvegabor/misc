@@ -14,6 +14,7 @@
 #include "fs/fsint.h"
 #include "fs/ufs/ufs.h"
 #include "fs/fat32/fat32.h"
+#include "fs/linuxfs/linuxfs.h"
 
 /*********************
  *      DEFINES
@@ -67,6 +68,10 @@ void misc_init(void)
     
 #if USE_FAT32 != 0
     fat32_init();
+#endif
+
+#if USE_LINUXFS != 0
+    linuxfs_init();
 #endif
     
 }

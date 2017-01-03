@@ -19,7 +19,7 @@
 /*----------------
  * Dynamic memory
  *----------------*/
-#define USE_DYN_MEM     1
+#define USE_DYN_MEM     0
 #if USE_DYN_MEM != 0
 #define DM_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
 #define DM_AUTO_ZERO   1             /*Automatically fill-zero the allocated memory*/
@@ -51,7 +51,7 @@
 /*----------------
  *   Linked list
  *----------------*/
-#define USE_LINKED_LIST 1
+#define USE_LINKED_LIST 0
 #if USE_LINKED_LIST != 0
 /* No settings*/
 #endif /*USE_LINKED_LIST*/
@@ -63,7 +63,7 @@
 /*----------------
  * Periodic task
  *----------------*/
-#define USE_PTASK       1
+#define USE_PTASK       0
 #if USE_PTASK != 0
 /*No settings*/
 #endif /*USE_PTASK*/
@@ -98,7 +98,7 @@
 /*----------------
  *  FS interface
  *----------------*/
-#define USE_FSINT   1
+#define USE_FSINT   0
 #if USE_FSINT != 0
 /*No settings*/
 #endif  /*USE_FSINT*/
@@ -106,18 +106,29 @@
 /*----------------
  *     uFS
  *----------------*/
-#define USE_UFS   1
+#define USE_UFS   0
 #if USE_UFS != 0
 #define UFS_LETTER 'U'
 #endif  /*USE_UFS*/
 
-/*----------------
- *     FAT32
- *----------------*/
+/*------------------------
+ * FAT32 - FatFS wrappers
+ * (used on MCU)
+ *-----------------------*/
 #define USE_FAT32   0
 #if USE_FAT32 != 0
-#define FAT32_LETTER 'S'
+#define FAT32_LETTER 'S'/
 #endif  /*USE_FAT32*/
+
+/*---------------------
+ * Linux File system
+ *---------------------*/
+#define USE_LINUXFS   0
+#if USE_LINUXFS != 0
+#define LINUXFS_LETTER 'L'
+#define LINUXFS_DIR    "./" /*See this directory as root folder*/
+#endif  /*USE_LINUXFS*/
+
 
 /*===================
  *     Others
@@ -126,7 +137,7 @@
 /*----------------
  *     Color
  *----------------*/
-#define  USE_COLOR      1
+#define  USE_COLOR      0
 #if USE_COLOR != 0
 #define COLOR_DEPTH     16
 #endif

@@ -2,6 +2,9 @@
  * @file fat32.c
  * Functions to give an API to a Fat32 storage device which is compatible 
  * with the fs_int module. 
+ * It uses the FatFS as FAT32.
+ * For more information about FatFS see:
+ * http://elm-chan.org/fsw/ff/00index_e.html
  */
 
 /*********************
