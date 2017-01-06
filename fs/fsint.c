@@ -124,6 +124,32 @@ fs_res_t fs_close (fs_file_t * file_p)
 }
 
 /**
+ * Delete a file
+ * @param path path of the file to delete
+ * @return  FS_RES_OK or any error from fs_res_t enum
+ */
+fs_res_t fs_remove (const char * path)
+{
+    if(path == NULL) return FS_RES_INV_PARAM;
+    fs_drv_t * drv = NULL;
+
+    char letter = path[0];
+
+    drv = fs_get_drv(letter);
+    if(drv == NULL) return FS_RES_NOT_EX;
+    if(drv->ready != NULL) {
+       if(drv->ready() == false) return FS_RES_HW_ERR;
+    }
+
+   if(drv->remove == NULL) return FS_RES_NOT_IMP;
+
+   const char * real_path = fs_get_real_path(path);
+   fs_res_t res = drv->remove(real_path);
+
+   return res;
+}
+
+/**
  * Read from a file
  * @param file_p pointer to a fs_file_t variable
  * @param buf pointer to a buffer where the read bytes are stored
@@ -212,6 +238,28 @@ fs_res_t fs_tell (fs_file_t * file_p, uint32_t  * pos)
         
     fs_res_t res = file_p->drv->tell(file_p->file_d, pos);
     
+    return res;
+}
+
+/**
+ * Give the size of a file bytes
+ * @param file_p pointer to a fs_file_t variable
+ * @param size pointer to a variable to store the size
+ * @return FS_RES_OK or any error from fs_res_t enum
+ */
+fs_res_t fs_size (fs_file_t * file_p, uint32_t * size)
+{
+    if(file_p->drv == NULL || file_p->drv == NULL) {
+        return FS_RES_INV_PARAM;
+    }
+
+    if(file_p->drv->size == NULL) return FS_RES_NOT_IMP;
+
+
+    if(size == NULL) return FS_RES_INV_PARAM;
+
+    fs_res_t res = file_p->drv->size(file_p->file_d, size);
+
     return res;
 }
 
@@ -333,6 +381,7 @@ char *  fs_get_letters(char * buf)
    return buf;
 }
 
+
 /**
  * Return with the extension of the filename
  * @param fn string with a filename
@@ -354,32 +403,61 @@ const char * fs_get_ext(const char * fn)
 
 /**
  * Step up one level
- * @param fn pointer to a file name
+ * @param path pointer to a file name
  * @return the truncated file name
  */
-char * fs_up(char * fn)
+char * fs_up(char * path)
 {
-    uint16_t len = strlen(fn);
-    if(len == 0) return fn;
+    uint16_t len = strlen(path);
+    if(len == 0) return path;
 
     len --; /*Go before the trailing '\0'*/
 
     /*Ignore trailing '/' or '\'*/
-    while(fn[len] == '/' || fn[len] == '\\') {
-        fn[len] = '\0';
-        len --;
+    while(path[len] == '/' || path[len] == '\\') {
+        path[len] = '\0';
+        if(len > 0) len --;
+        else return path;
     }
 
     uint16_t i;
     for(i = len; i > 0; i --) {
-        if(fn[i] == '/' || fn[i] == '\\') break;
+        if(path[i] == '/' || path[i] == '\\') break;
     }
 
-    fn[i] = '\0';
+    path[i] = '\0';
 
-    return fn;
+    return path;
 }
 
+/**
+ * Get the last element of a path (e.g. U:/folder/file -> file)
+ * @param buf buffer to store the letters ('\0' added after the last letter)
+ * @return pointer to the beginning of the last element in the path
+ */
+const char * fs_get_last(const char * path)
+{
+    uint16_t len = strlen(path);
+    if(len == 0) return path;
+
+    len --; /*Go before the trailing '\0'*/
+
+    /*Ignore trailing '/' or '\'*/
+    while(path[len] == '/' || path[len] == '\\') {
+        if(len > 0) len --;
+        else return path;
+    }
+
+    uint16_t i;
+    for(i = len; i > 0; i --) {
+        if(path[i] == '/' || path[i] == '\\') break;
+    }
+
+    /*No '/' or '\' in the path so return with path itself*/
+    if(i == 0) return path;
+
+    return &path[i + 1];
+}
 /**********************
  *   STATIC FUNCTIONS
  **********************/

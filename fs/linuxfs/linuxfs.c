@@ -64,7 +64,7 @@ void linuxfs_init(void)
     fat_drv.seek = linuxfs_seek;
     fat_drv.tell = linuxfs_tell;
     fat_drv.size = linuxfs_size;
-    fat_drv.trunc = linuxfs_trunc;
+    fat_drv.trunc = NULL;
 
     fat_drv.rddir_init = linuxfs_readdir_init;
     fat_drv.rddir = linuxfs_readdir;
@@ -143,7 +143,7 @@ fs_res_t linuxfs_read (void * file_p, void * buf, uint32_t btr, uint32_t * br)
     if(*fp == NULL) return FS_RES_INV_PARAM;
 
     errno = 0;
-    (*br) = fread(buf, btr, 1, *fp);
+    (*br) = fread(buf, 1, btr, *fp);
     return linuxfs_res_trans(errno);
 }
 
@@ -161,7 +161,7 @@ fs_res_t linuxfs_write (void * file_p, const void * buf, uint32_t btw, uint32_t 
     if(*fp == NULL) return FS_RES_INV_PARAM;
 
     errno = 0;
-    (*bw) = fwrite(buf, btw, 1, *fp);
+    (*bw) = fwrite(buf, 1, btw, *fp);
     return linuxfs_res_trans(errno);
 }
 
@@ -200,23 +200,6 @@ fs_res_t linuxfs_tell (void * file_p, uint32_t * pos_p)
     return linuxfs_res_trans(errno);
 }
 
-/**
- * Truncate the file size to the current position of read write pointer
- * @param file_p pointer to a FIL type variable
- * @return FS_RES_OK or any error from 'fs_res_t'
- */
-fs_res_t linuxfs_trunc (void * file_p)
-{
-    FILE ** fp = file_p;
-    if(*fp == NULL) return FS_RES_INV_PARAM;
-
-    errno = 0;
-    long int x = ftell(*fp);
-    if(errno) return linuxfs_res_trans(errno);
-
-    ftruncate(*fp, x);
-    return linuxfs_res_trans(errno);
-}
 
 /**
  * Give the size of a file
@@ -231,20 +214,21 @@ fs_res_t linuxfs_size (void * file_p, uint32_t * size_p)
 
     errno = 0;
     /*Save the current position*/
-    long int x = ftell(*fp);
+    long int ori = ftell(*fp);
     if(errno) return linuxfs_res_trans(errno);
 
     /* Seek to the and read the position.
      * It is equal to the size*/
     fseek(*fp, 0, SEEK_END);
     if(errno) return linuxfs_res_trans(errno);
+    long int x;
     x = ftell(*fp);
     if(errno) return linuxfs_res_trans(errno);
 
     *size_p = (uint32_t)x;
 
     /*Revert the position*/
-    fseek(*fp, x, SEEK_SET); // seek back read write pointer
+    fseek(*fp, ori, SEEK_SET); // seek back read write pointer
 
     return linuxfs_res_trans(errno);
 }

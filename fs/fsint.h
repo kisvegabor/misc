@@ -92,11 +92,12 @@ void fs_add_drv(fs_drv_t * drv_p);
 
 fs_res_t fs_open (fs_file_t * file_p, const char * path, fs_mode_t mode);
 fs_res_t fs_close (fs_file_t * file_p);
-fs_res_t fs_remove (const char * fn);
+fs_res_t fs_remove (const char * path);
 fs_res_t fs_read (fs_file_t * file_p, void * buf, uint32_t btr, uint32_t * br);
 fs_res_t fs_write (fs_file_t * file_p, const void * buf, uint32_t btw, uint32_t * bw);
 fs_res_t fs_seek (fs_file_t * file_p, uint32_t pos);
 fs_res_t fs_tell (fs_file_t * file_p, uint32_t * pos);
+fs_res_t fs_size (fs_file_t * file_p, uint32_t * size);
 
 fs_res_t fs_readdir_init(fs_readdir_t * rddir_p, const char * path);
 fs_res_t fs_readdir (fs_readdir_t * rddir_p, char * fn);
@@ -104,7 +105,8 @@ fs_res_t fs_readdir_close (fs_readdir_t * rddir_p);
 
 char *  fs_get_letters(char * buf);
 const char * fs_get_ext(const char * fn);
-char * fs_up(char * fn);
+char * fs_up(char * path);
+const char * fs_get_last(const char * path);
 
 /**********************
  *      MACROS

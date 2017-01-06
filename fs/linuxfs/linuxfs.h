@@ -37,7 +37,6 @@ fs_res_t linuxfs_read (void * file_p, void * buf, uint32_t btr, uint32_t * br);
 fs_res_t linuxfs_write (void * file_p, const void * buf, uint32_t btw, uint32_t * bw);
 fs_res_t linuxfs_seek (void * file_p, uint32_t pos);
 fs_res_t linuxfs_tell (void * file_p, uint32_t * pos_p);
-fs_res_t linuxfs_trunc (void * file_p);
 fs_res_t linuxfs_size (void * file_p, uint32_t * size_p);
 
 fs_res_t linuxfs_readdir_init(void * rddir_p, const char * path);
