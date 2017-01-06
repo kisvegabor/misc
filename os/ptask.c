@@ -109,9 +109,10 @@ void ptask_handler(void)
  * @param task a function which is the task itself
  * @param period call period in ms unit
  * @param prio priority of the task (PTASK_PRIO_OFF means the task is stopped)
+ * @param param free parameter
  * @return pointer to the new task
  */
-ptask_t* ptask_create(void (*task) (void), uint32_t period, ptask_prio_t prio)
+ptask_t* ptask_create(void (*task) (void *), uint32_t period, ptask_prio_t prio, void * param)
 {
     ptask_t* new_ptask;
     
@@ -121,6 +122,7 @@ ptask_t* ptask_create(void (*task) (void), uint32_t period, ptask_prio_t prio)
     new_ptask->period = period;
     new_ptask->task = task;
     new_ptask->prio = prio;
+    new_ptask->param = param;
 
     return new_ptask;
 }
@@ -144,6 +146,16 @@ void ptask_del(ptask_t* ptask_p)
 void ptask_set_prio(ptask_t* ptask_p, ptask_prio_t prio)
 {
     ptask_p->prio = prio;
+}
+
+/**
+ * Set new period for a ptask
+ * @param ptask_p pointer to a ptask
+ * @param period the new period
+ */
+void ptask_set_period(ptask_t* ptask_p, ptask_prio_t period)
+{
+    ptask_p->period = period;
 }
 
 /**
@@ -195,7 +207,7 @@ static bool ptask_exec (ptask_t* ptask_p, ptask_prio_t prio_act)
         uint32_t elp = systick_elaps(ptask_p->last_run);
         if(elp >= ptask_p->period) {
             ptask_p->last_run = systick_get();
-            ptask_p->task();
+            ptask_p->task(ptask_p->param);
 
             exec = true;
         }

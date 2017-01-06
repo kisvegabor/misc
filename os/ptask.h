@@ -46,8 +46,9 @@ typedef struct
 {
     uint32_t period;
     uint32_t last_run;
-    void (*task) (void);
+    void (*task) (void*);
     ptask_prio_t prio;
+    void * param;
 }ptask_t;
 
 /**********************
@@ -55,9 +56,10 @@ typedef struct
  **********************/
 void ptask_init(void);
 void ptask_handler(void);
-ptask_t* ptask_create(void (*task) (void), uint32_t period, ptask_prio_t prio);
+ptask_t* ptask_create(void (*task) (void *), uint32_t period, ptask_prio_t prio, void * param);
 void ptask_del(ptask_t* ptask_p); 
 void ptask_set_prio(ptask_t* ptask_p, ptask_prio_t prio);
+void ptask_set_period(ptask_t* ptask_p, ptask_prio_t period);
 void ptask_ready(ptask_t* ptask_p);
 void ptask_reset(ptask_t* ptask_p);
 void ptask_en(bool en);
