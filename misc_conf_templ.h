@@ -77,21 +77,6 @@
 #endif /*USE_IDLE*/
 
 /*===================
- *   Communication
- *==================*/
-
-/*------------
- *    Slip
- *-----------*/
-#define USE_SLIP    0
-#if USE_SLIP != 0
-#define SLIP_ESC        0x0C
-#define SLIP_END        0xDB
-#define SLIP_ESC_END    0xDC  /*Change END char in the stream to: ESC, ESC_END*/
-#define SLIP_ESC_ESC    0xDD  /*Change ESC char in the stream to: ESC, ESC_ESC*/
-#endif  /*USE_SLIP*/
-
-/*===================
  *   File system
  *==================*/
 
@@ -129,7 +114,6 @@
 #define LINUXFS_DIR    "./" /*See this directory as root folder*/
 #endif  /*USE_LINUXFS*/
 
-
 /*===================
  *     Others
  *==================*/
@@ -141,6 +125,25 @@
 #if USE_COLOR != 0
 #define COLOR_DEPTH     16
 #endif
+
+/*------------
+ *    Slip
+ *-----------*/
+#define USE_SLIP        0
+#if USE_SLIP != 0
+#define SLIP_ESC        0x0C
+#define SLIP_END        0xDB
+#define SLIP_ESC_END    0xDC  /*Change END char in the stream to: ESC, ESC_END*/
+#define SLIP_ESC_ESC    0xDD  /*Change ESC char in the stream to: ESC, ESC_ESC*/
+#endif  /*USE_SLIP*/
+
+/*----------------
+ * String command
+ *--------------*/
+#define USE_STRCMD     0
+#if USE_STRCMD != 0
+/*No settings*/
+#endif /*USE_STRCMD*/
 
 #endif /* MISC_CONF_H */
 

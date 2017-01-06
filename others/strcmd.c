@@ -1,6 +1,7 @@
 /**
  * @file strcmd.c
- * String Command parser. Waits for "\r\n" terminated commands. 
+ * String Command parser. Waits for "\r\n" terminated commands.
+ * E.g.: "operation=measure\r\n"
  */
 
 /*********************
@@ -38,7 +39,12 @@ static int16_t strcmd_test(sc_t * sc_p) ;
  **********************/
 
 /**
- * 
+ * Initialize a string command variable
+ * @param sc_p pointer to a sc_t variable to initalize
+ * @param cmds the possible commands as an array of character strings.
+ *             The last command has to be "".
+ * @param buf a buffer to store commands during the process (size > longest command + parameter + 8)
+ * @param buf_len length of 'buf' in bytes.
  */
 void strcmd_init(sc_t * sc_p, const char ** cmds, char *buf, uint16_t buf_len)
 {
@@ -52,12 +58,10 @@ void strcmd_init(sc_t * sc_p, const char ** cmds, char *buf, uint16_t buf_len)
 }
 
 /**
- * 
- * @param buf
- * @param buf_len
- * @param cmds
- * @param c
- * @return 
+ * Add a character to process.
+ * @param sc_p pointer to an initialized sc_t variable
+ * @param c a character to add
+ * @return >= 0: id of the received command, < 0 not ready or error, see strcmd.h for return codes
  */
 int16_t strcmd_add(sc_t * sc_p, char c)
 {   
@@ -144,10 +148,9 @@ const char * strcmd_get_par(sc_t * sc_p)
  **********************/
 
 /**
- * 
- * @param buf
- * @param cmds
- * @return 
+ * Test the current string if it is a valid command or not
+ * @param sc_p pointer to a 'sc_t' variable
+ * @return >= 0: id of a command, STRCMD_UNKNOWN: no matching command found
  */
 static int16_t strcmd_test(sc_t * sc_p) 
 {

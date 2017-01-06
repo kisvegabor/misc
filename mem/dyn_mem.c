@@ -125,7 +125,8 @@ void dm_free(const void * data)
     
     e->header.used = 0;
 
-    /*Defrag*/
+    /* Make a simple defrag.
+     * Join the following free entries after this*/
     dm_ent_t * e_next;
     e_next = ent_get_next(e);
     while(e_next != NULL) {
@@ -165,7 +166,7 @@ void * dm_realloc(void * data_p, uint32_t new_size)
 }
 
 /**
- * Join the adjacent free memory blocks TODO
+ * Join the adjacent free memory blocks
  */
 void dm_defrag(void)
 {
@@ -211,7 +212,7 @@ void dm_defrag(void)
  */
 void dm_monitor(dm_mon_t * mon_p)
 {
-    //Init the data
+    /*Init the data*/
     memset(mon_p, 0, sizeof(dm_mon_t));
     
     dm_ent_t * e;

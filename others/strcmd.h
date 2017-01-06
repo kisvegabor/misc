@@ -17,20 +17,23 @@
 /*********************
  *      DEFINES
  *********************/
+/*Return codes*/
 #define STRCMD_NOT_READY    (-1)
-#define STRCMD_UNKNOWN  (-2)
-#define STRCMD_FORMAT_ERR  (-3)
-#define STRCMD_OVERFLOW  (-4)
+#define STRCMD_UNKNOWN      (-2)
+#define STRCMD_FORMAT_ERR   (-3)
+#define STRCMD_OVERFLOW     (-4)
 
 /**********************
  *      TYPEDEFS
  **********************/
+
+/*Internal states of command processing*/
 typedef enum
 {
     SC_WAIT,        /*Wait for the first data*/
     SC_CMD_REC,     /*Receiving command*/
     SC_PAR_REC,     /*Receiving paramter*/
-    SC_N_REC,       /*Wait for \n*/ 
+    SC_N_REC,       /*Wait for \n*/
 }sc_state_t;
 
 typedef struct
