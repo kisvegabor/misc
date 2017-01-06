@@ -244,7 +244,7 @@ fs_res_t linuxfs_readdir_init(void * rddir_p, const char * path)
 {
     errno = 0;
     char path_buf[512];
-    sprintf(path_buf,"%s%s" , LINUXFS_DIR, path);
+    sprintf(path_buf,"%s%s" , LINUXFS_ROOT_DIR, path);
 
     DIR ** rd = rddir_p;
     *rd = opendir(path_buf);

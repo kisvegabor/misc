@@ -24,7 +24,7 @@
 #define DM_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
 #define DM_AUTO_ZERO   1             /*Automatically fill-zero the allocated memory*/
 #define DM_MEM_ATTR                  /*Complier prefix for big array declaration*/
-#else /*Add wrappers to normal malloc/free/malloc */
+#else /*Add wrappers to normal malloc/free/realloc */
 #define dm_alloc   malloc
 #define dm_free    free
 #define dm_realloc realloc
@@ -32,6 +32,7 @@
 
  /*--------------------------------------
   * Dynamic memory with advanced defrag
+  * Not compatible with malloc
   *------------------------------------*/
  #define USE_DYN_MEM_DEFR     0
  #if USE_DYN_MEM_DEFR != 0
@@ -111,7 +112,7 @@
 #define USE_LINUXFS   0
 #if USE_LINUXFS != 0
 #define LINUXFS_LETTER 'L'
-#define LINUXFS_DIR    "./" /*See this directory as root folder*/
+#define LINUXFS_ROOT_DIR    "./" /*See this directory as root folder*/
 #endif  /*USE_LINUXFS*/
 
 /*===================
