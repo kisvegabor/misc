@@ -1,33 +1,30 @@
 /**
  * @file dyn_mem.c
- * Implementation of special memory allocation.
- * 
+ * Implementation of special memory allocation which
+ * always provides 0 % fragmentation.
+ * It is NOT COMAPTIBLE with normal malloc/free.
+ */
+
+/*
  * !!!IMPORTANT!!!!
+ * It is NOT COMAPTIBLE with normal malloc/free.
  * The dmd_alloc function can allocate a new memory and give pointer to it
- * with DM_POL_DEFRAG this pointer is special:
- * - to store this special pointer use the dp tag
- * e.g. int dp * x = dmd_alloc(sizeof(int)) (and not simply int * x)
- * - to convert this pointer to normal pointer use the da() tag
+ * but this pointer is special:
+ * - to store this special pointer use the dp tag (means Dynamic Pointer)
+ *   e.g. int dp * x = dmd_alloc(sizeof(int)) (and not simply int * x)
+ * - to convert this pointer to normal pointer use the da() tag (means Dynamic Access)
  *   e.g. *da(x) = 5;
  * - never store the pointer converted by da(), only use it locally
- * - DM__POL_NO_FREE and DM_POL_FREE use normal pointers like malloc() but 
- * because of compatibility reasons it is recommanded to use dp, da() tag with 
- * this policies too.
  * 
  * How dose it works?
- * Initially there is 1 big free memory and an entry (descriptor) for this, 
- * called master_e.maaster_e always store only the 1 big free data. 
- * The entries are located at end of the work memory. If a new allocation 
- * occurred the big free master_e is devided to two parts: the desired memory 
- * (smaller address) and the remaing free data. To describe the new allocated 
- * data a new entry is created at the end of the memory.
- * On the next allocation the free data (in master_e) will be truncated again 
- * and new entry will be also created.
- * When a dmd_free occurred all the memories after the freed data ara copied to fill
- * the gap in the memory. When memory is copied its entry at end of the work memory
- * is refreshed to store the new address of its memory. So when a free occurred 
- * the memories fort the data ara moving but the recent address is dotred in the entries  
- *   
+ * This type of allocation separates the memory entry descriptors
+ * from the allocated memory chunks. The descriptors are located
+ * at the end of memory and contains a pointer to their memory chunk.
+ * dmd_alloc gives a pointer to a descriptor which stores the pointer
+ * of the memory chunk. So it is a void ** and NOT void *.
+ * That is why it is not compatible with malloc.
+ * Because the memory chunk addressed are not stored by the user
+ * they can be moved to achieve 0 fragmentation.
  */
 
 /*********************
@@ -86,7 +83,6 @@ void dmd_init(void)
  
     master_e = e;
     last_e = e;
-
 }
 
 /**

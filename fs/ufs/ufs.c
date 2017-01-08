@@ -308,7 +308,7 @@ fs_res_t ufs_seek (void * file_p, uint32_t pos)
     if(pos < ent->size) {
         fp->rwp = pos;
     } else { /*Expand the file size*/
-        if(fp->aw == 0) return FS_RES_DENIED;       /*Not opend for write*/
+        if(fp->aw == 0) return FS_RES_DENIED;       /*Not opened for write*/
         
         uint8_t* new_data = dm_realloc(ent->data_d, pos);
         if(new_data == NULL) return FS_RES_FULL; /*Out of memory*/

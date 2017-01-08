@@ -5,10 +5,6 @@
 
 #if 0 /*Remove this to enable the content*/
 
-/**
- * @file misc_conf.h
- *
- */
 #ifndef MISC_CONF_H
 #define MISC_CONF_H
 
@@ -19,21 +15,24 @@
 /*----------------
  * Dynamic memory
  *----------------*/
-#define USE_DYN_MEM     0
+#define USE_DYN_MEM     1
 #if USE_DYN_MEM != 0
-#define DM_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
-#define DM_AUTO_ZERO   1             /*Automatically fill-zero the allocated memory*/
-#define DM_MEM_ATTR                  /*Complier prefix for big array declaration*/
-#else /*Add wrappers to normal malloc/free/realloc */
-#define dm_alloc   malloc
-#define dm_free    free
-#define dm_realloc realloc
+#define DM_AUTO_ZERO   0     /*Automatically fill-zero the allocated memory*/
+#define DM_CUSTOM      1     /*1: use custom malloc/free, 0: use malloc/free provided by dyn_mem*/
+#if DM_CUSTOM == 0
+  #define DM_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
+  #define DM_MEM_ATTR                  /*Complier prefix for big array declaration*/
+#else /*DM_CUSTOM != 0: Provide custom malloc/free functions*/
+  #define DM_CUST_INCLUDE      <stdlib.h>   /*Header for the dynamic memory function*/
+  #define DM_CUST_ALLOC   malloc       /*Wrapper to malloc*/
+  #define DM_CUST_FREE    free         /*Wrapper to free*/
+#endif  /*DM_CUSTOM*/
 #endif  /*USE_DYN_MEM*/
 
- /*--------------------------------------
-  * Dynamic memory with advanced defrag
-  * Not compatible with malloc
-  *------------------------------------*/
+ /*-----------------------------------------------
+  * Dynamic memory with always 0 % fragmentation
+  * Not compatible with normal malloc/free
+  *-----------------------------------------------*/
  #define USE_DYN_MEM_DEFR     0
  #if USE_DYN_MEM_DEFR != 0
  #define DMD_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/

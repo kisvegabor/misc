@@ -14,6 +14,10 @@
 #include "../math/math_base.h"
 #include <string.h>
 
+#if DM_CUSTOM != 0
+#include DM_CUST_INCLUDE
+#endif
+
 /*********************
  *      DEFINES
  *********************/
@@ -42,15 +46,19 @@ typedef struct
 /**********************
  *  STATIC PROTOTYPES
  **********************/
-
+#if DM_CUSTOM == 0
 static dm_ent_t  * ent_get_next(dm_ent_t * act_e);
 static void * ent_alloc(dm_ent_t * e, uint32_t size);
 static dm_ent_t * ent_trunc(dm_ent_t * e, uint32_t size);
+#endif
 
 /**********************
  *  STATIC VARIABLES
  **********************/
+#if DM_CUSTOM == 0
 static DM_MEM_ATTR uint8_t work_mem[DM_MEM_SIZE] ;    //Work memory for allocation
+#endif
+
 static uint32_t zero_mem;       /*Give the address of this variable if 0 byte should be allocated*/ 
 
 /**********************
@@ -66,10 +74,12 @@ static uint32_t zero_mem;       /*Give the address of this variable if 0 byte sh
  */
 void dm_init(void)
 {
+#if DM_CUSTOM == 0
     dm_ent_t * full = (dm_ent_t *)&work_mem;
     full->header.used = 0;
     /*The total mem size id reduced by the first header and the close patterns */
     full->header.d_size = DM_MEM_SIZE - sizeof(dm_header_t);
+#endif
 }
 
 /**
@@ -90,6 +100,8 @@ void * dm_alloc(uint32_t size)
     }    
     
     void * alloc = NULL;
+
+#if DM_CUSTOM == 0 /*Use the allocation from dyn_mem*/
     dm_ent_t * e = NULL;
     
     //Search for a appropriate entry
@@ -103,6 +115,15 @@ void * dm_alloc(uint32_t size)
         }
     //End if there is not next entry OR the alloc. is successful
     }while(e != NULL && alloc == NULL); 
+#else  /*Use custom, user defined malloc function*/
+    /*Allocate a header too to store the size*/
+    alloc = DM_CUST_ALLOC(size + sizeof(dm_header_t));
+    if(alloc != NULL) {
+        ((dm_ent_t*) alloc)->header.d_size = size;
+        ((dm_ent_t*) alloc)->header.used = 1;
+        alloc = &((dm_ent_t*) alloc)->first_data;
+    }
+#endif
 
 #if DM_AUTO_ZERO != 0
     if(alloc != NULL) memset(alloc, 0, size);
@@ -119,12 +140,12 @@ void dm_free(const void * data)
 {    
     if(data == &zero_mem) return;
     if(data == NULL) return;
-    
+
     /*e points to the header*/
     dm_ent_t * e = (dm_ent_t *)((uint8_t *) data - sizeof(dm_header_t));
-    
     e->header.used = 0;
 
+#if DM_CUSTOM == 0 /*Use the free from dyn_mem*/
     /* Make a simple defrag.
      * Join the following free entries after this*/
     dm_ent_t * e_next;
@@ -135,9 +156,11 @@ void dm_free(const void * data)
         } else {
             break;
         }
-
         e_next = ent_get_next(e_next);
     }
+#else /*Use custom, user defined free function*/
+    DM_CUST_FREE(e);
+#endif
 }
 
 /**
@@ -170,6 +193,7 @@ void * dm_realloc(void * data_p, uint32_t new_size)
  */
 void dm_defrag(void)
 {
+#if DM_CUSTOM == 0
     dm_ent_t * e_free;
     dm_ent_t * e_next;
     e_free = ent_get_next(NULL);
@@ -203,6 +227,7 @@ void dm_defrag(void)
         /*Continue from the lastly checked entry*/
         e_free = e_next;
     }
+#endif
 }
 
 /**
@@ -214,7 +239,7 @@ void dm_monitor(dm_mon_t * mon_p)
 {
     /*Init the data*/
     memset(mon_p, 0, sizeof(dm_mon_t));
-    
+#if DM_CUSTOM == 0
     dm_ent_t * e;
     e = NULL;
     
@@ -233,9 +258,11 @@ void dm_monitor(dm_mon_t * mon_p)
         
         e = ent_get_next(e);
     }
-    
+    mon_p->size_total = DM_MEM_SIZE;
+    mon_p->pct_used = 100 - (100U * mon_p->size_free) / mon_p->size_total;
     mon_p->pct_frag = (uint32_t)mon_p->size_free_big * 100U / mon_p->size_free;
     mon_p->pct_frag = 100 - mon_p->pct_frag;
+#endif
 }
 
 /**
@@ -254,6 +281,7 @@ uint32_t dm_get_size(void * data)
  *   STATIC FUNCTIONS
  **********************/
 
+#if DM_CUSTOM == 0
 /**
  * Give the next entry after 'act_e'
  * @param act_e pointer to an entry
@@ -331,5 +359,7 @@ static dm_ent_t * ent_trunc(dm_ent_t * e, uint32_t size)
     
     return new_e;
 }
+
+#endif /*DM_CUSTOM == 0*/
 
 #endif

@@ -29,8 +29,10 @@ typedef struct
     uint32_t cnt_free;
     uint32_t cnt_used;
     uint32_t size_free;
+    uint32_t size_total;
     uint32_t size_free_big;
-    uint32_t pct_frag;
+    uint8_t pct_frag;
+    uint8_t pct_used;
 }dm_mon_t;
 
 
@@ -50,11 +52,6 @@ void dm_monitor(dm_mon_t * mon_p);
  **********************/
 
 #define dm_assert(p) {if(p == NULL) {while(1);}}
-
-#else /*USE_DYN_MEM == 0*/
-#include <stdlib.h> /*To use normal malloc/free instead*/
-#define dm_assert(p) {if(p == NULL) {while(1);}}
-
 #endif /*USE_DYN_MEM*/
 
 #endif /*DYN_MEM_H*/
