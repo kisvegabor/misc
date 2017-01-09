@@ -172,13 +172,14 @@ void dm_free(const void * data)
  */
 void * dm_realloc(void * data_p, uint32_t new_size)
 {
-    uint8_t* new_p;
-    
+    uint32_t old_size = dm_get_size(data_p);
+    if(old_size == new_size) return data_p;
+
+    void * new_p;
     new_p = dm_alloc(new_size);
     
     if(new_p != NULL && data_p != NULL) {
         /*Copy the old data to the new. Use the smaller size*/
-        uint32_t old_size = dm_get_size(data_p);
         if(old_size != 0) {
             memcpy(new_p, data_p, min(new_size, old_size));
             dm_free(data_p);
