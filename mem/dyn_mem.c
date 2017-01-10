@@ -172,6 +172,7 @@ void dm_free(const void * data)
  */
 void * dm_realloc(void * data_p, uint32_t new_size)
 {
+
     uint32_t old_size = dm_get_size(data_p);
     if(old_size == new_size) return data_p;
 
@@ -181,7 +182,7 @@ void * dm_realloc(void * data_p, uint32_t new_size)
     if(new_p != NULL && data_p != NULL) {
         /*Copy the old data to the new. Use the smaller size*/
         if(old_size != 0) {
-            memcpy(new_p, data_p, min(new_size, old_size));
+            memcpy(new_p, data_p, MATH_MIN(new_size, old_size));
             dm_free(data_p);
         }
     }
@@ -273,6 +274,7 @@ void dm_monitor(dm_mon_t * mon_p)
  */
 uint32_t dm_get_size(void * data)
 {
+    if(data == NULL) return 0;
     if(data == &zero_mem) return 0;
     
     dm_ent_t * e = (dm_ent_t *)((uint8_t *) data - sizeof(dm_header_t));
