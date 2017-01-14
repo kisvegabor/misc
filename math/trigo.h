@@ -26,7 +26,13 @@
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
-int16_t trigo_sin(int16_t angle); 
+
+/**
+ * Return with sinus of an angle
+ * @param angle
+ * @return sinus of 'angle'. sin(-90) = -32767, sin(90) = 32767
+ */
+int16_t trigo_sin(int16_t angle);
 
 /**********************
  *      MACROS

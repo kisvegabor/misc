@@ -56,13 +56,39 @@ typedef struct
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
+
+/**
+ * Initiaize the dyn_mem module (work memory and other variables)
+ */
 void dmd_init(void);
+
+/**
+ * Allocate a memory dynamically
+ * @param size size of the memory to allocate in bytes
+ * @return pointer to the allocated memory
+ * !!!IMPORTANT!!! it is special pointer,  see the file header for more information
+ */
 void * dmd_alloc(uint32_t size);
-void dmd_free(void  * data);
-void * dmd_realloc(void * data_p, uint32_t new_size);
-void dmd_defrag(void);
-uint32_t dmd_get_size(void * p);
+
+/**
+ * Free an allocated data
+ * @param data pointer to an allocated memory
+ * (without da() tag, see file header for more information)
+ */
+void dmd_free(void * data);
+
+/**
+ * Give information about the work memory of dynamic allocation
+ * @param mon_p pointer to a mon_p variable, the result of the analysis will be stored here
+ */
 void dmd_monitor(dmd_mon_t * mon_p);
+
+/**
+ * Give the size a allocated memory
+ * @param data pointer to an allocated memory (without da() tag see file header for more information )
+ * @return the size of data memory in bytes
+ */
+uint32_t dmd_get_size(void * data);
 
 /**********************
  *      MACROS

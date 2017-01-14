@@ -50,8 +50,30 @@ typedef struct
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
+
+/**
+ * Initialize a string command variable
+ * @param sc_p pointer to a sc_t variable to initalize
+ * @param cmds the possible commands as an array of character strings.
+ *             The last command has to be "".
+ * @param buf a buffer to store commands during the process (size > longest command + parameter + 8)
+ * @param buf_len length of 'buf' in bytes.
+ */
 void strcmd_init(sc_t * sc_p, const char ** cmds, char *buf, uint16_t buf_len);
+
+/**
+ * Add a character to process.
+ * @param sc_p pointer to an initialized sc_t variable
+ * @param c a character to add
+ * @return >= 0: id of the received command, < 0 not ready or error, see strcmd.h for return codes
+ */
 int16_t strcmd_add(sc_t * sc_p, char c);
+
+/**
+ * Return with parameter of the last command.
+ * @param sc_p pointer to an 'sc_t' variable.
+ * @return the parameter as string or "" if no parameter
+ */
 const char * strcmd_get_par(sc_t * sc_p);
 
 /**********************

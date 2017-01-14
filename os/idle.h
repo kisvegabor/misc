@@ -28,8 +28,21 @@
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
+
+/**
+ * Init the idle module. It will make a reference measurement.
+ */
 void idle_init(void);
+
+/**
+ * Return with the measured CPU load
+ * @return The CPU idle in percentage
+ */
 uint8_t idle_get(void);
+
+/**
+ * Use it instead of an empty while(1) loop to measure the idle time
+ */
 void idle_loop(void);
 
 /**********************

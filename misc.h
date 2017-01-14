@@ -24,6 +24,10 @@
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
+
+/**
+ * Initialize the enabled misc modules
+ */
 void misc_init(void);
 
 /**********************

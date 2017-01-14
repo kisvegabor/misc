@@ -38,20 +38,79 @@ typedef struct
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
-void ll_init(ll_dsc_t * ll_dsc, uint32_t n_size);
-void * ll_ins_head(ll_dsc_t * ll);
-void * ll_ins_tail(ll_dsc_t * ll);
-void * ll_ins_after(ll_dsc_t * ll, void * n_act);
-void * ll_ins_before(ll_dsc_t * ll, void * n_act);
-void ll_rem(ll_dsc_t * ll, void * n_act);
-void ll_clear(ll_dsc_t * ll_p);
-void ll_chg_list(ll_dsc_t * ll_ori_p, ll_dsc_t * ll_new_p, void * node);
-void * ll_get_head(ll_dsc_t * ll);
-void * ll_get_tail(ll_dsc_t * ll);
-void * ll_get_next(ll_dsc_t * ll, void * n_act);
-void * ll_get_prev(ll_dsc_t * ll, void * n_act);
-void ll_swap(ll_dsc_t * ll_p, void * n1_p, void * n2_p);
 
+/**
+ * Initialize linked list
+ * @param ll_dsc pointer to ll_dsc variable
+ * @param n_size the size of 1 node in bytes
+ */
+void ll_init(ll_dsc_t * ll_p, uint32_t n_size);
+
+/**
+ * Add a new head to a linked list
+ * @param ll_p pointer to linked list
+ * @return pointer to the new head
+ */
+void * ll_ins_head(ll_dsc_t * ll_p);
+
+/**
+ * Add a new tail to a linked list
+ * @param ll_p pointer to linked list
+ * @return pointer to the new tail
+ */
+void * ll_ins_tail(ll_dsc_t * ll_p);
+
+/**
+ * Remove the node 'node_p' from 'll_p' linked list.
+ * It Dose not free the the memory of node.
+ * @param ll_p pointer to the linked list of 'node_p'
+ * @param node_p pointer to node in 'll_p' linked list
+ */
+void ll_rem(ll_dsc_t  * ll_p, void * node_p);
+
+/**
+ * Remove and free all elements from a linked list.
+ * @param ll_p pointer to linked list
+ */
+void ll_clear(ll_dsc_t * ll_p);
+
+/**
+ * Move a node to a new linked list
+ * @param ll_ori_p pointer to the original (old) linked list
+ * @param ll_new_p pointer to the new linked list
+ * @param node pointer to a node
+ */
+void ll_chg_list(ll_dsc_t * ll_ori_p, ll_dsc_t * ll_new_p, void * node);
+
+/**
+ * Return with head node of the linked list
+ * @param ll_p pointer to linked list
+ * @return pointer to the head of 'll_p'
+ */
+void * ll_get_head(ll_dsc_t * ll_p);
+
+/**
+ * Return with tail node of the linked list
+ * @param ll_p pointer to linked list
+ * @return pointer to the head of 'll_p'
+ */
+void * ll_get_tail(ll_dsc_t * ll_p);
+
+/**
+ * Return with the pointer of the next node after 'n_act'
+ * @param ll_p pointer to linked list
+ * @param n_act pointer a node
+ * @return pointer to the next node
+ */
+void * ll_get_next(ll_dsc_t * ll_p, void * n_act);
+
+/**
+ * Return with the pointer of the previous node after 'n_act'
+ * @param ll_p pointer to linked list
+ * @param n_act pointer a node
+ * @return pointer to the previous node
+ */
+void * ll_get_prev(ll_dsc_t * ll_p, void * n_act);
 
 /**********************
  *      MACROS
