@@ -58,6 +58,8 @@ int16_t trigo_sin(int16_t angle)
     int16_t ret = 0;
     angle = angle % 360;
     
+    if(angle < 0) angle = 360 + angle;
+
     if(angle < 90){
         ret = sin0_90_table[angle];
     } else if(angle >= 90 && angle < 180)
