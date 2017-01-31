@@ -58,18 +58,34 @@ void fat32_init(void)
     
     fat_drv.open = fat32_open;
     fat_drv.close = fat32_close;
+#if _FS_MINIMIZE < 1
     fat_drv.remove = fat32_remove;
+#else
+    fat_drv.remove = NULL;
+#endif
     fat_drv.read = fat32_read;
+#if _FS_READONLY == 0
     fat_drv.write = fat32_write;
+#else
+    fat_drv.write = NULL;
+#endif
+#if _FS_MINIMIZE < 3
     fat_drv.seek = fat32_seek;
+#else
+    fat_drv.seek = NULL;
+#endif
     fat_drv.tell = fat32_tell;
     fat_drv.size = fat32_size;
     fat_drv.trunc = fat32_trunc;
-    
+#if _FS_MINIMIZE < 2
     fat_drv.rddir_init = fat32_readdir_init;
     fat_drv.rddir = fat32_readdir;
     fat_drv.rddir_close = fat32_readdir_close;
-    
+#else
+    fat_drv.rddir_init = NULL;
+    fat_drv.rddir = NULL;
+    fat_drv.rddir_close = NULL;
+#endif
     fs_add_drv(&fat_drv);
 }
 
@@ -93,11 +109,18 @@ fs_res_t fat32_open (void * file_p, const char * path, fs_mode_t mode)
 {
     uint8_t fat32_mode = 0;
     if(mode & FS_MODE_RD) fat32_mode |= FA_READ;
+#if _FS_READONLY == 0
     if(mode & FS_MODE_WR) fat32_mode |= FA_WRITE | FA_OPEN_ALWAYS;
+#endif
+    
+    /*In ready only mode the write is not implemented*/
+    if(mode == 0) return FS_RES_NOT_IMP;
+    
     
     FRESULT fat32_res;
     fat32_res = f_open(file_p, path, fat32_mode);
     return fat32_res_trans(fat32_res);    
+
 }
 
 /**
@@ -119,9 +142,13 @@ fs_res_t fat32_close (void * file_p)
  */
 fs_res_t fat32_remove(const char * path)
 {
+#if _FS_MINIMIZE < 1
     FRESULT fat32_res;
     fat32_res = f_unlink(path);
-    return fat32_res_trans(fat32_res);   
+    return fat32_res_trans(fat32_res);       
+#else
+    return FS_RES_NOT_IMP;
+#endif
 }
    
 /**
@@ -148,10 +175,14 @@ fs_res_t fat32_read (void * file_p, void * buf, uint32_t btr, uint32_t * br)
  * @return FS_RES_OK or any error from 'fs_res_t'
  */
 fs_res_t fat32_write (void * file_p, const void * buf, uint32_t btw, uint32_t * bw)
-{
+{   
+#if _FS_READONLY == 0
     FRESULT fat32_res;
     fat32_res = f_write(file_p, buf, btw, (UINT *)bw);
-    return fat32_res_trans(fat32_res);   
+    return fat32_res_trans(fat32_res);     
+#else
+    return FS_RES_NOT_IMP;
+#endif
 }
 
 /**
@@ -162,9 +193,13 @@ fs_res_t fat32_write (void * file_p, const void * buf, uint32_t btw, uint32_t * 
  */
 fs_res_t fat32_seek (void * file_p, uint32_t pos)
 {
+#if _FS_MINIMIZE < 3
     FRESULT fat32_res;
     fat32_res = f_lseek(file_p, pos);
-    return fat32_res_trans(fat32_res);   
+    return fat32_res_trans(fat32_res);  
+#else
+    return FS_RES_NOT_IMP;
+#endif 
 }
 
 /**
@@ -187,9 +222,13 @@ fs_res_t fat32_tell (void * file_p, uint32_t * pos_p)
  */
 fs_res_t fat32_trunc (void * file_p)
 {
+#if _FS_MINIMIZE < 1
     FRESULT fat32_res;
     fat32_res = f_truncate(file_p);
-    return fat32_res_trans(fat32_res);   
+    return fat32_res_trans(fat32_res);  
+#else
+    return FS_RES_NOT_IMP;
+#endif  
 }
 
 /**
@@ -212,10 +251,14 @@ fs_res_t fat32_size (void * file_p, uint32_t * size_p)
  * @return FS_RES_OK or any error from fs_res_t enum
  */
 fs_res_t fat32_readdir_init(void * rddir_p, const char * path)
-{
+{   
+#if _FS_MINIMIZE < 2
     FRESULT res = f_opendir(rddir_p, path);
     
     return fat32_res_trans(res);
+#else
+    return FS_RES_NOT_IMP;
+#endif
 }
 
 /**
@@ -227,6 +270,8 @@ fs_res_t fat32_readdir_init(void * rddir_p, const char * path)
  */
 fs_res_t fat32_readdir(void * rddir_p, char * fn)
 {
+    
+#if _FS_MINIMIZE < 2
     FRESULT res;
     FILINFO fno;
     char lfn_buf[FSINT_MAX_FN_LENGTH];
@@ -252,6 +297,9 @@ fs_res_t fat32_readdir(void * rddir_p, char * fn)
     }
     
     return fat32_res_trans(res);
+#else
+    return FS_RES_NOT_IMP;
+#endif
 }
 
 /**
@@ -261,8 +309,12 @@ fs_res_t fat32_readdir(void * rddir_p, char * fn)
  */
 fs_res_t fat32_readdir_close(void * rddir_p)
 {
+#if _FS_MINIMIZE < 2
     f_closedir(rddir_p);
     return FS_RES_OK;
+#else
+    return FS_RES_NOT_IMP;
+#endif
 }
 
 /**********************
