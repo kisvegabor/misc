@@ -156,6 +156,7 @@
 #define SLIP_END        0xDB
 #define SLIP_ESC_END    0xDC  /*Change END char in the stream to: ESC, ESC_END*/
 #define SLIP_ESC_ESC    0xDD  /*Change ESC char in the stream to: ESC, ESC_ESC*/
+#define SLIP_END_FIRST  0     /*Send the END character as the first byte*/  
 #endif  /*USE_SLIP*/
 
 /*----------------
