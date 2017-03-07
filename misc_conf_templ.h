@@ -102,7 +102,7 @@
  *-----------------------*/
 #define USE_FAT32   0
 #if USE_FAT32 != 0
-#define FAT32_LETTER 'S'/
+#define FAT32_LETTER 'S'
 #endif  /*USE_FAT32*/
 
 /*---------------------
