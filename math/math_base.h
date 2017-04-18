@@ -20,15 +20,6 @@
 #define MATH_MAX(a,b) (a>b?a:b)
 #define MATH_ABS(x) ((x)>0?(x):(-(x)))
 
-/*min and max will be removed. Use MATH_MIN and MATH_MAX instead*/
-#ifndef min
-#define min(a,b) (a<b?a:b)
-#endif
-
-#ifndef max
-#define max(a,b) (a>b?a:b)
-#endif
-
 /**********************
  *      TYPEDEFS
  **********************/
