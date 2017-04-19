@@ -6,7 +6,13 @@
 #include "lv_conf.h"
 #if  USE_FONT_SYMBOL_30 != 0 || USE_FONT_SYMBOL_60 != 0
 
-
+#define SYMBOL_PLAY     "Z"
+#define SYMBOL_STOP     "["
+#define SYMBOL_PAUSE    "\"
+#define SYMBOL_PREV     "]"
+#define SYMBOL_NEXT     "^"
+#define SYMBOL_SPMUTE   "_"
+#define SYMBOL_SPUNMUTE "`"
 #define SYMBOL_DRIVE	"a"
 #define SYMBOL_FILE	    "b"
 #define SYMBOL_FOLDER	"c"
