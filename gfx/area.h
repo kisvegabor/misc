@@ -19,8 +19,8 @@
 /*********************
  *      DEFINES
  *********************/
-#define CORD_MAX     (32000)
-#define CORD_MIN     (-32000)
+#define CORD_MAX     (16383)    /*To avoid overflow don't let the max [-32,32k] range */
+#define CORD_MIN     (-16384)
 
 /**********************
  *      TYPEDEFS

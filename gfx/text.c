@@ -209,8 +209,9 @@ cord_t txt_get_width(const char * txt, uint16_t char_num,
 }
 
 /**
- * Check next character in a string and decide if te character is part of the command or not
+ * Check next character in a string and decide if the character is part of the command or not
  * @param state pointer to a txt_cmd_state_t variable which stores the current state of command processing
+ *             (Initied. to TXT_CMD_STATE_WAIT )
  * @param c the current character
  * @return true: the character is part of a command and should not be written,
  *         false: the character should be written
