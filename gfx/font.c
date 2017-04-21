@@ -29,6 +29,9 @@
 /**********************
  *      TYPEDEFS
  **********************/
+typedef struct
+{
+}font_map_t;
 
 /**********************
  *  STATIC PROTOTYPES
@@ -37,6 +40,8 @@
 /**********************
  *  STATIC VARIABLES
  **********************/
+const font_t * (*font_map[FONT_NAME_NUM])(void);
+
 
 /**********************
  * GLOBAL PROTOTYPES
@@ -51,76 +56,78 @@
  **********************/
 
 /**
- * Get the font from its id 
- * @param font_id: the id of a font (an element of font_types_t enum)
- * @return pointer to a font descriptor
+ * Initialize the built-in fonts
  */
-const font_t * font_get(font_types_t font_id)
+void font_init(void)
 {
-    const font_t * font_p = NULL;
-    
-    switch(font_id)
-    {
 #if USE_FONT_DEJAVU_8 != 0
-        case FONT_DEJAVU_8:
-            font_p = dejavu_8_get_dsc();
-            break;
+    font_add(FONT_DEJAVU_8, dejavu_8_get_dsc);
 #endif
+
 #if USE_FONT_DEJAVU_10 != 0
-        case FONT_DEJAVU_10:
-            font_p = dejavu_10_get_dsc();
-            break;
+    font_add(FONT_DEJAVU_10, dejavu_10_get_dsc);
 #endif
+
 #if USE_FONT_DEJAVU_14 != 0
-        case FONT_DEJAVU_14:
-            font_p = dejavu_14_get_dsc();
-            break;
+    font_add(FONT_DEJAVU_14, dejavu_14_get_dsc);
 #endif
+
 #if USE_FONT_DEJAVU_20 != 0
-        case FONT_DEJAVU_20:
-            font_p = dejavu_20_get_dsc();
-            break;
+    font_add(FONT_DEJAVU_20, dejavu_20_get_dsc);
 #endif
 
 #if USE_FONT_DEJAVU_30 != 0
-        case FONT_DEJAVU_30:
-            font_p = dejavu_30_get_dsc();
-            break;
+    font_add(FONT_DEJAVU_30, dejavu_30_get_dsc);
 #endif
 
 #if USE_FONT_DEJAVU_40 != 0
-        case FONT_DEJAVU_40:
-            font_p = dejavu_40_get_dsc();
-            break;
+    font_add(FONT_DEJAVU_40, dejavu_40_get_dsc);
 #endif
 
 #if USE_FONT_DEJAVU_60 != 0
-        case FONT_DEJAVU_60:
-            font_p = dejavu_60_get_dsc();
-            break;
+    font_add(FONT_DEJAVU_60, dejavu_60_get_dsc);
 #endif
 
 #if USE_FONT_DEJAVU_80 != 0
-        case FONT_DEJAVU_80:
-            font_p = dejavu_80_get_dsc();
-            break;
+    font_add(FONT_DEJAVU_80, dejavu_80_get_dsc);
 #endif
 
 #if USE_FONT_SYMBOL_30 != 0
-        case FONT_SYMBOL_30:
-            font_p = symbol_30_get_dsc();
-            break;
+    font_add(FONT_SYMBOL_30, symbol_30_get_dsc);
 #endif
 
 #if USE_FONT_SYMBOL_60 != 0
-        case FONT_SYMBOL_60:
-            font_p = symbol_60_get_dsc();
-            break;
+    font_add(FONT_SYMBOL_60, symbol_60_get_dsc);
 #endif
-        default:
-            font_p = NULL;
-    }
-    
+}
+
+/**
+ * Create a pair from font name and font dsc. get function. After it 'font_get' can be used for this font
+ * @param name name of the font
+ * @param dsc_get_fp the font descriptor get function
+ */
+void font_add(font_name_t name, const font_t * (*dsc_get_fp)(void))
+{
+    if(name >= FONT_NAME_NUM) return;
+
+    font_map[name] = dsc_get_fp;
+}
+
+
+/**
+ * Get the font from its id 
+ * @param name: name of a font (form 'font_name_t' enum)
+ * @return pointer to a font descriptor
+ */
+const font_t * font_get(font_name_t name)
+{
+
+    if(name >= FONT_NAME_NUM) return font_map[FONT_DEFAULT]();
+
+    const font_t * font_p = font_map[name]();
+
+    if(font_p == NULL) font_p = font_map[FONT_DEFAULT]();
+
     return font_p;
 }
 

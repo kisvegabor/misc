@@ -55,8 +55,11 @@ typedef enum
 #if USE_FONT_SYMBOL_60 != 0
     FONT_SYMBOL_60,
 #endif
-    FONT_TYPE_NUM,
-}font_types_t;
+    /*Insert the user defined font names*/
+    FONT_NEW_NAMES
+
+    FONT_NAME_NUM,
+}font_name_t;
 
 typedef struct
 {
@@ -74,11 +77,23 @@ typedef struct
  **********************/
 
 /**
+ * Initialize the built-in fonts
+ */
+void font_init(void);
+
+/**
+ * Create a pair from font name and font dsc. get function. After it 'font_get' can be used for this font
+ * @param name name of the font
+ * @param dsc_get_fp the font descriptor get function
+ */
+void font_add(font_name_t name, const font_t * (*dsc_get_fp)(void));
+
+/**
  * Get the font from its id
  * @param font_id: the id of a font (an element of font_types_t enum)
  * @return pointer to a font descriptor
  */
-const font_t * font_get(font_types_t font_id);
+const font_t * font_get(font_name_t font_id);
 
 
 /**
