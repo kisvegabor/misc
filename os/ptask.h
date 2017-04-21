@@ -114,6 +114,7 @@ void ptask_reset(ptask_t* ptask_p);
  */
 void ptask_en(bool en);
 
+uint8_t ptask_get_idle(void);
 /**********************
  *      MACROS
  **********************/

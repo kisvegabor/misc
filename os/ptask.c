@@ -32,6 +32,7 @@ static bool ptask_exec(ptask_t* ptask_p, ptask_prio_t prio_act);
  **********************/
 static ll_dsc_t ptask_ll;  /*Linked list to store the ptasks*/
 static bool ptask_run = false;
+static uint8_t idle_last = 0;
 
 /**********************
  *      MACROS
@@ -58,6 +59,12 @@ void ptask_init(void)
 void ptask_handler(void)
 {
 	if(ptask_run == false) return;
+
+	static uint32_t idle_tick = 0;
+    static uint32_t used_tick = 0;
+    uint32_t start_tick = systick_get();
+
+	if(idle_tick == 0) idle_tick = systick_get();
 
     ptask_t* ptask_prio_a[PTASK_PRIO_NUM]; /*Lists for all prio.*/
     ptask_prio_t prio_act;
@@ -101,6 +108,14 @@ void ptask_handler(void)
                 ptask_prio_a[prio_act] = ll_get_head(&ptask_ll);
             }
         }
+    }
+
+    used_tick += systick_elaps(start_tick);
+    if(systick_elaps(idle_tick) > PTASK_IDLE_PERIOD) {
+        idle_last = (uint16_t)((uint16_t) used_tick * 100) / systick_elaps(idle_tick);
+        printf("idle %d\n", idle_last);
+        idle_tick = 0;
+        used_tick = 0;
     }
 }
 
@@ -184,6 +199,15 @@ void ptask_reset(ptask_t* ptask_p)
 void ptask_en(bool en)
 {
 	ptask_run = en;
+}
+
+/**
+ * Get idle percentage
+ * @return the ptask idle in percentage
+ */
+uint8_t ptask_get_idle(void)
+{
+    return idle_last;
 }
 
 
