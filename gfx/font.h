@@ -55,8 +55,11 @@ typedef enum
 #if USE_FONT_SYMBOL_60 != 0
     FONT_SYMBOL_60,
 #endif
+
     /*Insert the user defined font names*/
+#ifdef FONT_NEW_NAMES
     FONT_NEW_NAMES
+#endif
 
     FONT_NAME_NUM,
 }font_name_t;
