@@ -8,7 +8,7 @@
 
 #define SYMBOL_PLAY     "Z"
 #define SYMBOL_STOP     "["
-#define SYMBOL_PAUSE    "\"
+#define SYMBOL_PAUSE    "|"
 #define SYMBOL_PREV     "]"
 #define SYMBOL_NEXT     "^"
 #define SYMBOL_SPMUTE   "_"
