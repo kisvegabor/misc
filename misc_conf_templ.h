@@ -18,21 +18,21 @@
 #define USE_DYN_MEM     1
 #if USE_DYN_MEM != 0
 #define DM_AUTO_ZERO   0     /*Automatically fill-zero the allocated memory*/
-#define DM_CUSTOM      1     /*1: use custom malloc/free, 0: use malloc/free provided by dyn_mem*/
+#define DM_CUSTOM      0     /*1: use custom malloc/free, 0: use malloc/free provided by dyn_mem*/
 #if DM_CUSTOM == 0
   #define DM_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
   #define DM_MEM_ATTR                  /*Complier prefix for big array declaration*/
 #else /*DM_CUSTOM != 0: Provide custom malloc/free functions*/
-  #define DM_CUST_INCLUDE      <stdlib.h>   /*Header for the dynamic memory function*/
+  #define DM_CUST_INCLUDE <stdlib.h>   /*Header for the dynamic memory function*/
   #define DM_CUST_ALLOC   malloc       /*Wrapper to malloc*/
   #define DM_CUST_FREE    free         /*Wrapper to free*/
 #endif  /*DM_CUSTOM*/
 #endif  /*USE_DYN_MEM*/
 
- /*-----------------------------------------------
+ /*--------------------------------------
   * Dynamic memory with always 0 % fragmentation
   * Not compatible with normal malloc/free
-  *-----------------------------------------------*/
+  *------------------------------------*/
  #define USE_DYN_MEM_DEFR     0
  #if USE_DYN_MEM_DEFR != 0
  #define DMD_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
@@ -43,7 +43,7 @@
 /*------------
  *   FIFO
  *-----------*/
-#define USE_FIFO        0
+#define USE_FIFO        1
 #if USE_FIFO != 0
 /* No settings*/
 #endif /*USE_FIFO*/
@@ -51,7 +51,7 @@
 /*----------------
  *   Linked list
  *----------------*/
-#define USE_LINKED_LIST 0
+#define USE_LINKED_LIST     1
 #if USE_LINKED_LIST != 0
 /* No settings*/
 #endif /*USE_LINKED_LIST*/
@@ -63,9 +63,9 @@
 /*----------------
  * Periodic task
  *----------------*/
-#define USE_PTASK       0
+#define USE_PTASK       1
 #if USE_PTASK != 0
-/*No settings*/
+#define PTASK_IDLE_PERIOD  500  /*500*/
 #endif /*USE_PTASK*/
 
 /*-----------------------
@@ -83,7 +83,7 @@
 /*----------------
  *  FS interface
  *----------------*/
-#define USE_FSINT   0
+#define USE_FSINT   1
 #if USE_FSINT != 0
 /*No settings*/
 #endif  /*USE_FSINT*/
@@ -91,7 +91,7 @@
 /*----------------
  *     uFS
  *----------------*/
-#define USE_UFS   0
+#define USE_UFS   1
 #if USE_UFS != 0
 #define UFS_LETTER 'U'
 #endif  /*USE_UFS*/
@@ -102,7 +102,7 @@
  *-----------------------*/
 #define USE_FAT32   0
 #if USE_FAT32 != 0
-#define FAT32_LETTER 'S'
+#define FAT32_LETTER 'S'/
 #endif  /*USE_FAT32*/
 
 /*---------------------
@@ -114,7 +114,6 @@
 #define LINUXFS_ROOT_DIR    "./" /*See this directory as root folder*/
 #endif  /*USE_LINUXFS*/
 
-
 /*================
  *     Math
  *================*/
@@ -122,7 +121,7 @@
 /*-----------------
  *  Trigonometry
  *----------------*/
-#define USE_TRIGO   1
+#define USE_TRIGO   0
 #if USE_TRIGO != 0
 /*No settings*/
 #endif
@@ -135,8 +134,9 @@
 /*No settings*/
 #endif
 
+
 /*===================
- *     Others
+ *  GRAPHICS (GFX)
  *==================*/
 
 /*----------------
@@ -144,8 +144,70 @@
  *----------------*/
 #define  USE_COLOR      0
 #if USE_COLOR != 0
-#define COLOR_DEPTH     16
+#define COLOR_DEPTH     24
 #endif
+
+/*----------------
+ *     Area
+ *----------------*/
+#define USE_AREA    0
+#if USE_AREA != 0
+/*No settings*/
+#endif
+
+/*----------------
+ *     Circle
+ *----------------*/
+#define USE_CIRC    0
+#if USE_CIRC != 0
+/*No settings*/
+#endif
+
+/*----------------
+ *     Font
+ *----------------*/
+#define USE_FONT    0
+#if USE_FONT != 0
+#define FONT_ANTIALIAS       0
+/*Built-in font usage*/
+#define USE_FONT_DEJAVU_8    1
+#define USE_FONT_DEJAVU_10   1
+#define USE_FONT_DEJAVU_14   1
+#define USE_FONT_DEJAVU_20   1
+#define USE_FONT_DEJAVU_30   1
+#define USE_FONT_DEJAVU_40   1
+#define USE_FONT_DEJAVU_60   1
+#define USE_FONT_DEJAVU_80   1
+#define USE_FONT_SYMBOL_30   1
+#define USE_FONT_SYMBOL_60   1
+
+/*Always set a default font from the built-in fonts*/
+#define FONT_DEFAULT      FONT_DEJAVU_40
+
+/*Enumerate the name of the external fonts. E.g: MY_FONT_1, MY_FONT_2, (comma at the end!)*/
+#define FONT_NEW_NAMES
+
+#endif /*USE_FONT*/
+
+/*----------------
+ *     Text
+ *----------------*/
+#define USE_TEXT    0
+#if USE_TEXT != 0
+#define TXT_BREAK_CHARS  " ,.;-" /*Can break texts on these chars*/
+#endif /*USE_TEXT*/
+
+/*----------------
+ *     Animation
+ *----------------*/
+#define USE_ANIM    0
+#if USE_ANIM != 0
+#define ANIM_REFR_PERIOD 10 /*ms*/
+#endif
+
+/*===================
+ *     Others
+ *==================*/
 
 /*------------
  *    Slip
@@ -156,7 +218,6 @@
 #define SLIP_END        0xDB
 #define SLIP_ESC_END    0xDC  /*Change END char in the stream to: ESC, ESC_END*/
 #define SLIP_ESC_ESC    0xDD  /*Change ESC char in the stream to: ESC, ESC_ESC*/
-#define SLIP_END_FIRST  0     /*Send the END character as the first byte*/  
 #endif  /*USE_SLIP*/
 
 /*----------------
