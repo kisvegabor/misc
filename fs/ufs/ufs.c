@@ -202,7 +202,11 @@ fs_res_t ufs_remove(const char * fn)
     
     ll_rem(&file_ll, ent);
     dm_free(ent->fn_d);
-    if(ent->const_data == 0) dm_free(ent->data_d);
+    ent->fn_d = NULL;
+    if(ent->const_data == 0){
+        dm_free(ent->data_d);
+        ent->data_d = NULL;
+    }
     
     dm_free(ent);
     

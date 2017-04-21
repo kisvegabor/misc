@@ -34,7 +34,7 @@
 #define COLOR_PURPLE  COLOR_MAKE(0x80,0x00,0x80)
 #define COLOR_TEAL    COLOR_MAKE(0x00,0x80,0x80)
 #define COLOR_NAVY    COLOR_MAKE(0x00,0x00,0x80)
-
+#define COLOR_ORANGE  COLOR_MAKE(0xFF,0xA5,0x00)
 
 #define OPA_TRANSP    0
 #define OPA_0         0

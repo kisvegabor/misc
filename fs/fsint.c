@@ -117,6 +117,7 @@ fs_res_t fs_close (fs_file_t * file_p)
     fs_res_t res = file_p->drv->close(file_p->file_d);
     
     dm_free(file_p->file_d);   /*Clean up*/
+    file_p->file_d = NULL;
     file_p->drv = NULL;
     file_p->file_d = NULL;
     
@@ -340,6 +341,7 @@ fs_res_t fs_readdir_close (fs_readdir_t * rddir_p)
     }
     
     dm_free(rddir_p->rddir_d);   /*Clean up*/
+    rddir_p->rddir_d = NULL;
     rddir_p->drv = NULL;
     rddir_p->rddir_d = NULL;
     
