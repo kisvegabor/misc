@@ -71,7 +71,7 @@ void idle_init(void)
 }
 
 /**
- * Return with the measured CPU load
+ * Return with the measured CPU idle percentage
  * @return The CPU idle in percentage 
  */
 uint8_t idle_get(void)
