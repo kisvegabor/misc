@@ -7,13 +7,15 @@
  *      INCLUDES
  *********************/
 #include "misc_conf.h"
-#if USE_ANIM != 0
 
-#include <string.h>
 #include "anim.h"
+
 #include "misc/math/math_base.h"
 #include "misc/os/ptask.h"
 #include "hal/systick/systick.h"
+#include <string.h>
+
+#if USE_ANIM != 0
 
 
 /*********************
@@ -77,6 +79,9 @@ void anim_init(void)
  */
 void anim_create(anim_t * anim_p)
 {
+    /* Do not let two animations for the  same 'var' with the same 'fp'*/
+    if(anim_p->fp != NULL) anim_del(anim_p->var, anim_p->fp);       /*fp == NULL would delete all animations of var*/
+
 	/*Add the new animation to the animation linked list*/
 	anim_t * new_anim = ll_ins_head(&anim_ll);
 	dm_assert(new_anim);
@@ -93,7 +98,7 @@ void anim_create(anim_t * anim_p)
  * Delete an animation for a variable with a given animatior function
  * @param var pointer to variable
  * @param fp a function pointer which is animating 'var',
- *           or NULL to ignore it and delete all animation with 'var
+ *           or NULL to delete all animations of 'var'
  * @return true: at least 1 animation is deleted, false: no animation is deleted
  */
 bool anim_del(void * var, anim_fp_t fp)
@@ -259,6 +264,81 @@ static bool anim_ready_handler(anim_t * a)
 	}
 
 	return invalid;
+}
+
+/*For compatibility add dummy functions*/
+#else
+
+static void anim_dummy_handler(void * anim_dm);
+
+/**
+ * Create an animation. Immediately set to end value
+ * @param anim_p an initialized 'anim_t' variable. Not required after call.
+ */
+void anim_create(anim_t * anim_p)
+{
+
+    /*If no delay simply set the end value end call the callback */
+    if(anim_p->act_time == 0) {
+        if(anim_p->fp != NULL) anim_p->fp(anim_p->var, anim_p->end);
+        if(anim_p->end_cb != NULL) anim_p->end_cb(anim_p->var);
+    }
+    /*With delay set the start value and set a one shot ptask to set end value and call the callback*/
+    else {
+        if(anim_p->fp != NULL) anim_p->fp(anim_p->var, anim_p->start);
+        void * anim_dm = dm_alloc(sizeof(anim_t));
+        memcpy(anim_dm, anim_p, sizeof(anim_t));
+        ptask_t * ptask = ptask_create(anim_dummy_handler, -anim_p->act_time, PTASK_PRIO_LOW, anim_dm);
+        ptask_once(ptask);
+    }
+}
+
+/**
+ * Delete an animation for a variable with a given animatior function (Now do nothing)
+ * @param var pointer to variable
+ * @param fp a function pointer which is animating 'var',
+ *           or NULL to ignore it and delete all animation with 'var
+ * @return true: at least 1 animation is deleted, false: no animation is deleted
+ */
+bool anim_del(void * var, anim_fp_t fp)
+{
+    return false;
+}
+
+/**
+ * Calculate the time of an animation with a given speed and the start and end values (Give dummy value)
+ * @param speed speed of animation in unit/sec
+ * @param start start value of the animation
+ * @param end end value of the animation
+ * @return the required time [ms] for the animation with the given parameters
+ */
+uint16_t anim_speed_to_time(uint16_t speed, int32_t start, int32_t end)
+{
+    return 1;
+}
+
+/**
+ * Get a predefine animation path (Give NULL)
+ * @param name name of the path from 'anim_path_name_t'
+ * @return pointer to the path array
+ */
+anim_path_t * anim_get_path(anim_path_name_t name)
+{
+    return NULL;
+}
+
+/**
+ * A One Shot ptask to handle end callbacks with delay
+ * @param anim_dm pointer to temporal dynamically allocated animation
+ */
+static void anim_dummy_handler(void * anim_dm)
+{
+    anim_t * anim = anim_dm;
+
+    if(anim->fp != NULL) anim->fp(anim->var, anim->end);
+    if(anim->end_cb != NULL) anim->end_cb(anim->var);
+
+    dm_free(anim_dm);
 }
 
 #endif /*USE_ANIM*/

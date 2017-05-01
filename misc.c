@@ -16,6 +16,7 @@
 #include "fs/fat32/fat32.h"
 #include "fs/linuxfs/linuxfs.h"
 #include "gfx/font.h"
+#include "gfx/anim.h"
 
 /*********************
  *      DEFINES
@@ -75,9 +76,12 @@ void misc_init(void)
     linuxfs_init();
 #endif
     
-
 #if USE_FONT != 0
     font_init();
+#endif
+
+#if USE_ANIM != 0
+    anim_init();
 #endif
 
 

@@ -10,7 +10,7 @@
  *      INCLUDES
  *********************/
 #include "misc_conf.h"
-#if USE_ANIM != 0
+/*For compatibility always include this header*/
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -110,7 +110,5 @@ anim_path_t * anim_get_path(anim_path_name_t name);
 /**********************
  *      MACROS
  **********************/
-
-#endif /*USE_ANIM*/
 
 #endif
