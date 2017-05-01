@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "../font.h"
 
-static const uint8_t  dejavu_80_bitmaps[143360] = 
+static const uint8_t  dejavu_80_bitmaps[] =
 {
     // ASCII: 32, char width: 20
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // --------------------............................................
@@ -7796,6 +7796,7 @@ static const uint8_t  dejavu_80_bitmaps[143360] =
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // ----------------------------------------------------............
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // ----------------------------------------------------............
 
+#if FONT_BUILTIN_LATIN_EXT != 0
     // No glyph for ASCII: 127, using substitute:
     // ASCII: 32, char width: 20
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // --------------------............................................
@@ -18406,6 +18407,7 @@ static const uint8_t  dejavu_80_bitmaps[143360] =
     0x07, 0xfc, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // -----OOOOOOOOO-----------------------...........................
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // -------------------------------------...........................
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // -------------------------------------...........................
+#endif
 };
 
 static const uint8_t  dejavu_80_widths[224] = 
@@ -18422,6 +18424,8 @@ static const uint8_t  dejavu_80_widths[224] =
     39, 17, 17, 36, 17, 60, 39, 38, 
     39, 39, 26, 32, 24, 39, 37, 51, 
     37, 37, 33, 39, 21, 39, 52, 20, 
+
+#if FONT_BUILTIN_LATIN_EXT != 0
     20, 20, 20, 20, 20, 20, 20, 20, 
     20, 20, 20, 20, 20, 20, 20, 20, 
     20, 20, 20, 20, 20, 20, 20, 20, 
@@ -18438,11 +18442,16 @@ static const uint8_t  dejavu_80_widths[224] =
     38, 38, 38, 38, 17, 17, 17, 17, 
     38, 39, 38, 38, 38, 38, 38, 52, 
     38, 39, 39, 39, 39, 37, 39, 37, 
+#endif
 };
 
 static const font_t dejavu_80_dsc = 
 {
+#if FONT_BUILTIN_LATIN_EXT != 0
     224, // Letter count
+#else
+    96, // Letter count
+#endif
     32, // First ascii code
     8, // Letters width (bytes)
     80, // Letters height (row)

@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "../font.h"
 
-static const uint8_t  dejavu_10_bitmaps[2240] = 
+static const uint8_t  dejavu_10_bitmaps[] =
 {
     // ASCII: 32, char width: 3
     0x00,  // ---.....
@@ -1146,6 +1146,7 @@ static const uint8_t  dejavu_10_bitmaps[2240] =
     0x00,  // -------.
     0x00,  // -------.
 
+#if FONT_BUILTIN_LATIN_EXT != 0
     // No glyph for ASCII: 127, using substitute:
     // ASCII: 32, char width: 3
     0x00,  // ---.....
@@ -2726,9 +2727,10 @@ static const uint8_t  dejavu_10_bitmaps[2240] =
     0x20,  // --O--...
     0x20,  // --O--...
     0x40,  // -O---...
+#endif
 };
 
-static const uint8_t  dejavu_10_widths[224] = 
+static const uint8_t  dejavu_10_widths[] =
 {
      3,  3,  4,  7,  5,  8,  6,  2, 
      3,  3,  4,  7,  3,  3,  3,  3, 
@@ -2742,6 +2744,7 @@ static const uint8_t  dejavu_10_widths[224] =
      5,  2,  2,  5,  2,  8,  5,  5, 
      5,  5,  3,  4,  3,  5,  5,  7, 
      5,  5,  4,  5,  3,  5,  7,  3, 
+#if FONT_BUILTIN_LATIN_EXT != 0
      3,  3,  3,  3,  3,  3,  3,  3, 
      3,  3,  3,  3,  3,  3,  3,  3, 
      3,  3,  3,  3,  3,  3,  3,  3, 
@@ -2758,11 +2761,16 @@ static const uint8_t  dejavu_10_widths[224] =
      5,  5,  5,  5,  2,  2,  2,  2, 
      5,  5,  5,  5,  5,  5,  5,  7, 
      5,  5,  5,  5,  5,  5,  5,  5, 
+#endif
 };
 
 static const font_t dejavu_10_dsc = 
 {
+#if FONT_BUILTIN_LATIN_EXT != 0
     224, // Letter count
+#else
+    96, // Letter count
+#endif
     32, // First ascii code
     1, // Letters width (bytes)
     10, // Letters height (row)

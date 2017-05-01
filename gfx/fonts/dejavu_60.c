@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "../font.h"
 
-static const uint8_t  dejavu_60_bitmaps[80640] = 
+static const uint8_t  dejavu_60_bitmaps[] =
 {
     // ASCII: 32, char width: 15
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // ---------------.................................
@@ -5896,6 +5896,7 @@ static const uint8_t  dejavu_60_bitmaps[80640] =
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // ---------------------------------------.........
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // ---------------------------------------.........
 
+#if FONT_BUILTIN_LATIN_EXT != 0
     // No glyph for ASCII: 127, using substitute:
     // ASCII: 32, char width: 15
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // ---------------.................................
@@ -13926,9 +13927,10 @@ static const uint8_t  dejavu_60_bitmaps[80640] =
     0x0f, 0xe0, 0x00, 0x00, 0x00, 0x00,  // ----OOOOOOO-----------------....................
     0x0f, 0x80, 0x00, 0x00, 0x00, 0x00,  // ----OOOOO-------------------....................
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // ----------------------------....................
+#endif
 };
 
-static const uint8_t  dejavu_60_widths[224] = 
+static const uint8_t  dejavu_60_widths[] =
 {
     15, 19, 22, 39, 30, 44, 36, 13, 
     18, 18, 23, 39, 15, 17, 15, 16, 
@@ -13942,6 +13944,8 @@ static const uint8_t  dejavu_60_widths[224] =
     30, 13, 13, 27, 13, 46, 30, 29, 
     30, 30, 19, 24, 18, 30, 28, 38, 
     28, 28, 25, 30, 16, 30, 39, 15, 
+
+#if FONT_BUILTIN_LATIN_EXT != 0
     15, 15, 15, 15, 15, 15, 15, 15, 
     15, 15, 15, 15, 15, 15, 15, 15, 
     15, 15, 15, 15, 15, 15, 15, 15, 
@@ -13958,11 +13962,16 @@ static const uint8_t  dejavu_60_widths[224] =
     29, 29, 29, 29, 13, 13, 13, 13, 
     29, 30, 29, 29, 29, 29, 29, 39, 
     29, 30, 30, 30, 30, 28, 30, 28, 
+#endif
 };
 
 static const font_t dejavu_60_dsc = 
 {
+#if FONT_BUILTIN_LATIN_EXT != 0
     224, // Letter count
+#else
+    96, // Letter count
+#endif
     32, // First ascii code
     6, // Letters width (bytes)
     60, // Letters height (row)

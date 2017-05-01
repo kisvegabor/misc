@@ -168,7 +168,8 @@
  *----------------*/
 #define USE_FONT    0
 #if USE_FONT != 0
-#define FONT_ANTIALIAS       0
+#define FONT_ANTIALIAS       0      /*Enable font antialaissing (you have to use double sized fonts)*/
+#define FONT_BUILTIN_LATIN_EXT   0  /*1: Use ISO8859-1 (Latin-1) character set instead of normal ASCII*/
 /*Built-in font usage*/
 #define USE_FONT_DEJAVU_8    1
 #define USE_FONT_DEJAVU_10   1
