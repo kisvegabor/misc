@@ -22,7 +22,7 @@
  *      DEFINES
  *********************/
 #ifndef PTASK_IDLE_PERIOD
-#define PTASK_IDLE_PERIOD 2000
+#define PTASK_IDLE_PERIOD 500
 #endif
 
 
@@ -51,8 +51,9 @@ typedef struct
     uint32_t period;
     uint32_t last_run;
     void (*task) (void*);
-    ptask_prio_t prio;
     void * param;
+    uint8_t prio:3;
+    uint8_t once:1;
 }ptask_t;
 
 /**********************
@@ -104,6 +105,13 @@ void ptask_set_period(ptask_t* ptask_p, ptask_prio_t period);
  * @param ptask_p pointer to a ptask.
  */
 void ptask_ready(ptask_t* ptask_p);
+
+
+/**
+ * Delete the ptask after one call
+ * @param ptask_p pointer to a ptask.
+ */
+void ptask_once(ptask_t * ptask_p);
 
 /**
  * Reset a ptask.
