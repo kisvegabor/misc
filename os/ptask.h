@@ -21,6 +21,10 @@
 /*********************
  *      DEFINES
  *********************/
+#ifndef PTASK_IDLE_PERIOD
+#define PTASK_IDLE_PERIOD 2000
+#endif
+
 
 /**********************
  *      TYPEDEFS
