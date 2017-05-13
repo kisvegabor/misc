@@ -179,6 +179,7 @@
 #define USE_FONT_DEJAVU_40   1
 #define USE_FONT_DEJAVU_60   1
 #define USE_FONT_DEJAVU_80   1
+#define USE_FONT_DEJAVU_120  1
 #define USE_FONT_SYMBOL_30   1
 #define USE_FONT_SYMBOL_60   1
 
