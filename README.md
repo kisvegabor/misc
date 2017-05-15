@@ -11,12 +11,12 @@ This library is written especially for the Littlev Graphics Library however its 
 * etc
 
 ## Usage
-1. Clone the repository intp the root folder of your project: `https://github.com/littlevgl/misc.git`
+1. Clone the repository into the root folder of your project: `https://github.com/littlevgl/misc.git`
 2. In your IDE add the project **root folder as include path**
 3. Copy *misc/misc_conf_templ.h* as **misc_conf.h** to the project root folder
 4. Delete the first `#if 0` and the last `#endif` to enable the file
 5. Enable/disable or configure the components
-7. To initialize the library `#include misc/misc.h` and call `misc_init()`
+6. To initialize the library `#include misc/misc.h` and call `misc_init()`
 
 ## Documentation
  * You will find **well commented** source and header files.
