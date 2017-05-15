@@ -43,7 +43,7 @@
 /*------------
  *   FIFO
  *-----------*/
-#define USE_FIFO        1
+#define USE_FIFO        0
 #if USE_FIFO != 0
 /* No settings*/
 #endif /*USE_FIFO*/
@@ -51,7 +51,7 @@
 /*----------------
  *   Linked list
  *----------------*/
-#define USE_LINKED_LIST     1
+#define USE_LINKED_LIST     0
 #if USE_LINKED_LIST != 0
 /* No settings*/
 #endif /*USE_LINKED_LIST*/
@@ -71,6 +71,7 @@
 /*-----------------------
  * CPU Idle measurement
  *-----------------------*/
+/*In hal/systick.c: systick_add_cb() and systick_rem_cb() is required)*/
 #define USE_IDLE        0
 #if USE_IDLE != 0
 #define IDLE_REFR_RATE  500 /*ms*/
@@ -129,7 +130,7 @@
 /*-----------------
  *  Math basic
  *----------------*/
-#define USE_MATH_BASE   1
+#define USE_MATH_BASE   0
 #if USE_MATH_BASE != 0
 /*No settings*/
 #endif
@@ -168,23 +169,22 @@
  *----------------*/
 #define USE_FONT    0
 #if USE_FONT != 0
-#define FONT_ANTIALIAS       0      /*Enable font antialaissing (you have to use double sized fonts)*/
-#define FONT_BUILTIN_LATIN_EXT   0  /*1: Use ISO8859-1 (Latin-1) character set instead of normal ASCII*/
+#define FONT_ANTIALIAS       0
 /*Built-in font usage*/
-#define USE_FONT_DEJAVU_8    1
-#define USE_FONT_DEJAVU_10   1
-#define USE_FONT_DEJAVU_14   1
-#define USE_FONT_DEJAVU_20   1
+#define USE_FONT_DEJAVU_8    0
+#define USE_FONT_DEJAVU_10   0
+#define USE_FONT_DEJAVU_14   0
+#define USE_FONT_DEJAVU_20   0
 #define USE_FONT_DEJAVU_30   1
-#define USE_FONT_DEJAVU_40   1
-#define USE_FONT_DEJAVU_60   1
-#define USE_FONT_DEJAVU_80   1
-#define USE_FONT_DEJAVU_120  1
+#define USE_FONT_DEJAVU_40   0
+#define USE_FONT_DEJAVU_60   0
+#define USE_FONT_DEJAVU_80   0
+#define USE_FONT_DEJAVU_120  0
 #define USE_FONT_SYMBOL_30   1
-#define USE_FONT_SYMBOL_60   1
+#define USE_FONT_SYMBOL_60   0
 
 /*Always set a default font from the built-in fonts*/
-#define FONT_DEFAULT      FONT_DEJAVU_40
+#define FONT_DEFAULT      FONT_DEJAVU_30
 
 /*Enumerate the name of the external fonts. E.g: MY_FONT_1, MY_FONT_2, (comma at the end!)*/
 #define FONT_NEW_NAMES
@@ -196,8 +196,9 @@
  *----------------*/
 #define USE_TEXT    0
 #if USE_TEXT != 0
-#define TXT_BREAK_CHARS  " ,.;-" /*Can break texts on these chars*/
+#define TXT_BREAK_CHARS  " ,.;-_" /*Can break texts on these chars*/
 #endif /*USE_TEXT*/
+
 
 /*----------------
  *     Animation
