@@ -51,7 +51,7 @@
 /*----------------
  *   Linked list
  *----------------*/
-#define USE_LINKED_LIST     0
+#define USE_LINKED_LIST     1
 #if USE_LINKED_LIST != 0
 /* No settings*/
 #endif /*USE_LINKED_LIST*/
@@ -122,7 +122,7 @@
 /*-----------------
  *  Trigonometry
  *----------------*/
-#define USE_TRIGO   0
+#define USE_TRIGO   1
 #if USE_TRIGO != 0
 /*No settings*/
 #endif
@@ -130,7 +130,7 @@
 /*-----------------
  *  Math basic
  *----------------*/
-#define USE_MATH_BASE   0
+#define USE_MATH_BASE   1
 #if USE_MATH_BASE != 0
 /*No settings*/
 #endif
@@ -143,15 +143,15 @@
 /*----------------
  *     Color
  *----------------*/
-#define  USE_COLOR      0
+#define  USE_COLOR      1
 #if USE_COLOR != 0
-#define COLOR_DEPTH     24
+#define COLOR_DEPTH     16
 #endif
 
 /*----------------
  *     Area
  *----------------*/
-#define USE_AREA    0
+#define USE_AREA    1
 #if USE_AREA != 0
 /*No settings*/
 #endif
@@ -159,7 +159,7 @@
 /*----------------
  *     Circle
  *----------------*/
-#define USE_CIRC    0
+#define USE_CIRC    1
 #if USE_CIRC != 0
 /*No settings*/
 #endif
@@ -167,7 +167,7 @@
 /*----------------
  *     Font
  *----------------*/
-#define USE_FONT    0
+#define USE_FONT    1
 #if USE_FONT != 0
 #define FONT_ANTIALIAS       0
 /*Built-in font usage*/
@@ -194,7 +194,7 @@
 /*----------------
  *     Text
  *----------------*/
-#define USE_TEXT    0
+#define USE_TEXT    1
 #if USE_TEXT != 0
 #define TXT_BREAK_CHARS  " ,.;-_" /*Can break texts on these chars*/
 #endif /*USE_TEXT*/
@@ -203,7 +203,7 @@
 /*----------------
  *     Animation
  *----------------*/
-#define USE_ANIM    0
+#define USE_ANIM    1
 #if USE_ANIM != 0
 #define ANIM_REFR_PERIOD 10 /*ms*/
 #endif
