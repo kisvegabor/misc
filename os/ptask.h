@@ -98,7 +98,7 @@ void ptask_set_prio(ptask_t* ptask_p, ptask_prio_t prio);
  * @param ptask_p pointer to a ptask
  * @param period the new period
  */
-void ptask_set_period(ptask_t* ptask_p, ptask_prio_t period);
+void ptask_set_period(ptask_t* ptask_p, uint32_t period);
 
 /**
  * Make a ptask ready. It will not wait its period.
