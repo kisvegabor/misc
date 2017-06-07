@@ -17,6 +17,7 @@
 #include "fs/linuxfs/linuxfs.h"
 #include "gfx/font.h"
 #include "gfx/anim.h"
+#include "comm/wifimng.h"
 
 /*********************
  *      DEFINES
@@ -84,6 +85,9 @@ void misc_init(void)
     anim_init();
 #endif
 
+
+    
+    wifimng_init();
 
 }
 
