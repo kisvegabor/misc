@@ -6,14 +6,18 @@
 #ifndef TEXT_H
 #define TEXT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_FONT != 0
 
-#include <misc/gfx/area.h>
 #include <stdbool.h>
+#include "area.h"
 #include "font.h"
 #include "area.h"
 
@@ -93,5 +97,10 @@ bool txt_is_cmd(txt_cmd_state_t * state, char c);
  **********************/
 
 #endif /*USE_TEXT*/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif

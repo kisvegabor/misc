@@ -6,7 +6,7 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_FONT != 0
 
 #include <stddef.h>

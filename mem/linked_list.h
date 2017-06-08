@@ -6,10 +6,15 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 
 #if USE_LINKED_LIST != 0
 #include "dyn_mem.h"
@@ -120,6 +125,10 @@ void * ll_get_prev(ll_dsc_t * ll_p, void * n_act);
 
 #define LL_READ_BACK(list, i) for(i = ll_get_tail(&list); i != NULL; i = ll_get_prev(&list, i))
 
-#endif /*USE_LINKED_LIST != 0*/
+#endif /*USE_LINKED_LIST*/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif

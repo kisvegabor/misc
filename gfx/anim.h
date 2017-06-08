@@ -6,10 +6,15 @@
 #ifndef ANIM_H
 #define ANIM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 /*For compatibility always include this header*/
 
 #include <stdint.h>
@@ -110,5 +115,9 @@ anim_path_t * anim_get_path(anim_path_name_t name);
 /**********************
  *      MACROS
  **********************/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif

@@ -6,6 +6,10 @@
 #ifndef MISC_H
 #define MISC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*********************
  *      INCLUDES
  *********************/
@@ -34,4 +38,9 @@ void misc_init(void);
  *      MACROS
  **********************/
 
+#ifdef __cplusplus
+} /* extern "C" */
 #endif
+
+#endif
+

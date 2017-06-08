@@ -6,7 +6,7 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../misc_conf.h"
 
 #include "os/idle.h"
 #include "mem/dyn_mem.h"
@@ -85,9 +85,9 @@ void misc_init(void)
     anim_init();
 #endif
 
-
-    
+#if USE_WIFIMNG != 0
     wifimng_init();
+#endif
 
 }
 

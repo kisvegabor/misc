@@ -6,10 +6,15 @@
 #ifndef MATH_BASE_H
 #define MATH_BASE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_MATH_BASE != 0
 
 /*********************
@@ -33,5 +38,9 @@
  **********************/
 
 #endif /*USE_MATH_BASE*/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif

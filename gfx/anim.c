@@ -6,16 +6,20 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
+#include "../os/ptask.h"
 #include "anim.h"
 #include <stddef.h>
+#include <string.h>
 
 #if USE_ANIM != 0
+#include "../math/math_base.h"
 
-#include "misc/math/math_base.h"
-#include "misc/os/ptask.h"
-#include "hal/systick/systick.h"
-#include <string.h>
+#define HAL_PATH(x) ../x/systick/systick.h
+#define STR(x) _STR(x)
+#define _STR(x)   #x
+
+#include  STR(HAL_PATH(MISC_HAL_INCLUDE))
 
 /*********************
  *      DEFINES

@@ -7,12 +7,18 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_PTASK != 0
 
+
 #include "ptask.h"
-#include "hal/systick/systick.h"
 #include <stddef.h>
+
+#define HAL_PATH(x) ../x/systick/systick.h
+#define STR(x) _STR(x)
+#define _STR(x)   #x
+
+#include  STR(HAL_PATH(MISC_HAL_INCLUDE))
 
 /*********************
  *      DEFINES

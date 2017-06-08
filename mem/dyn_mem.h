@@ -6,10 +6,15 @@
 #ifndef DYN_MEM_H
 #define DYN_MEM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_DYN_MEM != 0
 
 #include <stdint.h>
@@ -92,7 +97,12 @@ uint32_t dm_get_size(void * data);
  **********************/
 
 #define dm_assert(p) {if(p == NULL) {while(1);}}
+
 #endif /*USE_DYN_MEM*/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif /*DYN_MEM_H*/
 

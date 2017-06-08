@@ -8,6 +8,8 @@
 #ifndef MISC_CONF_H
 #define MISC_CONF_H
 
+#define MISC_HAL_INCLUDE    ../hal  /*hal folder include path from misc. root*/
+
 /*====================
  * Memory management
  *===================*/
@@ -209,6 +211,19 @@
 #endif
 
 /*===================
+ *  Communication
+ *==================*/
+
+/*------------------
+ *    WiFi Manager
+ *-----------------*/
+#define USE_WIFIMNG        0
+#if USE_WIFIMNG != 0
+#define WIFIMNG_TCP_CON_DELAY      5000     /*Delay after network connection and before connecting to TCP [ms]*/
+#define WIFIMNG_RETRY_WAIT         10000    /*Wait before two reconnect attempts [ms] */
+#endif
+
+/*===================
  *     Others
  *==================*/
 
@@ -230,6 +245,7 @@
 #if USE_STRCMD != 0
 /*No settings*/
 #endif /*USE_STRCMD*/
+
 
 #endif /* MISC_CONF_H */
 

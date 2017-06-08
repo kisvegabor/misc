@@ -6,10 +6,15 @@
 #ifndef SLIP_H
 #define SLIP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_SLIP != 0
 
 #include <stdint.h>
@@ -81,6 +86,11 @@ uint32_t slip_proc_get_msg_length(const slip_proc_t * slip_p);
  *      MACROS
  **********************/
 
+#endif
+
+
+#ifdef __cplusplus
+} /* extern "C" */
 #endif
 
 #endif

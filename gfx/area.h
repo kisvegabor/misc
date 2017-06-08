@@ -6,10 +6,15 @@
 #ifndef AREA_H
 #define AREA_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_AREA != 0
 
 #include <string.h>
@@ -160,5 +165,10 @@ bool area_is_in(const area_t * ain_p, const area_t * aholder_p);
  **********************/
 
 #endif /*USE_AREA*/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif

@@ -6,10 +6,15 @@
 #ifndef CIRC_H
 #define CIRC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_CIRC != 0
 
 #include <misc/gfx/area.h>
@@ -70,5 +75,10 @@ void circ_next(point_t * c, cord_t * tmp);
  **********************/
 
 #endif /*USE_CIRC*/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif

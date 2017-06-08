@@ -6,11 +6,11 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_AREA != 0
 
-#include "misc/gfx/area.h"
-#include "misc/math/math_base.h"
+#include "area.h"
+#include "../math/math_base.h"
 
 /*********************
  *      DEFINES

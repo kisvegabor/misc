@@ -7,16 +7,20 @@
 #ifndef PTASK_H
 #define PTASK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 
 #if USE_PTASK != 0
 #include <stdint.h>
 #include <stdbool.h>
-#include "misc/mem/dyn_mem.h"
-#include "misc/mem/linked_list.h"
+#include "../mem/dyn_mem.h"
+#include "../mem/linked_list.h"
 
 /*********************
  *      DEFINES
@@ -127,10 +131,16 @@ void ptask_reset(ptask_t* ptask_p);
 void ptask_en(bool en);
 
 uint8_t ptask_get_idle(void);
+
 /**********************
  *      MACROS
  **********************/
 
 #endif
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif 

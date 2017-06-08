@@ -6,10 +6,15 @@
 #ifndef FIFO_H
 #define FIFO_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 
 #if USE_FIFO != 0
 #include <stdint.h>
@@ -103,6 +108,10 @@ uint32_t fifo_get_free(fifo_t * fifo_p);
  *      MACROS
  **********************/
 
-#endif 
+#endif  /*USE_FIFO*/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif

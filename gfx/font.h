@@ -6,10 +6,15 @@
 #ifndef FONT_H
 #define FONT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_FONT != 0
 
 #include <stdint.h>
@@ -135,5 +140,10 @@ uint8_t font_get_width(const font_t * font_p, uint8_t letter);
  **********************/
 
 #endif /*USE_FONT*/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif

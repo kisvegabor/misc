@@ -6,9 +6,16 @@
 #ifndef WIFIMNG_H
 #define WIFIMNG_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
+#include "../../misc_conf.h"
+#if USE_WIFIMNG != 0
 
 /*********************
  *      DEFINES
@@ -50,5 +57,12 @@ wifimng_state_t wifimng_get_state(void);
 /**********************
  *      MACROS
  **********************/
+
+#endif
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif

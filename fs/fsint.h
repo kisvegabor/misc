@@ -6,10 +6,15 @@
 #ifndef FSINT_H
 #define FSINT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_FSINT != 0
 
 #include <stdint.h>
@@ -224,5 +229,10 @@ const char * fs_get_last(const char * path);
  **********************/
 
 #endif
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif
