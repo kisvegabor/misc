@@ -145,6 +145,7 @@ ptask_t* ptask_create(void (*task) (void *), uint32_t period, ptask_prio_t prio,
     new_ptask->prio = prio;
     new_ptask->param = param;
     new_ptask->once = 0;
+    new_ptask->last_run = systick_get();
 
     return new_ptask;
 }

@@ -19,7 +19,7 @@ extern "C" {
  *********************/
 #define MISC_VERSION_MAJOR  4
 #define MISC_VERSION_MINOR  0
-#define MISC_VERSION_PATCH  2
+#define MISC_VERSION_PATCH  1
 
 /**********************
  *      TYPEDEFS
