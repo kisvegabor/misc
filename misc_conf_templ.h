@@ -169,7 +169,8 @@
  *----------------*/
 #define USE_FONT    1
 #if USE_FONT != 0
-#define FONT_ANTIALIAS       0
+#define FONT_BUILTIN_LATIN_EXT  0
+#define FONT_ANTIALIAS          0
 /*Built-in font usage*/
 #define USE_FONT_DEJAVU_8    0
 #define USE_FONT_DEJAVU_10   0
