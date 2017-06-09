@@ -164,7 +164,6 @@ anim_path_t * anim_get_path(anim_path_name_t name)
  *   STATIC FUNCTIONS
  **********************/
 
-#include "stm32f429i_discovery.h"
 /**
  * Periodically handle the animations.
  * @param param unused
