@@ -1,9 +1,12 @@
 #ifndef SYMBOL_DEF_H
 #define SYMBOL_DEF_H
 
-/*Use ISO8859-1 encoding in the IDE*/
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#include "lv_conf.h"
+
+/*Use ISO8859-1 encoding in the IDE*/
 #if  USE_FONT_SYMBOL_30 != 0 || USE_FONT_SYMBOL_60 != 0
 
 #define SYMBOL_PLAY     "Z"
@@ -41,5 +44,10 @@
 #define SYMBOL_WIFI	    "z"
 
 #endif
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif /*SYMBOL_DEF_H*/

@@ -6,10 +6,15 @@
 #ifndef FONT_H
 #define FONT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_FONT != 0
 
 #include <stdint.h>
@@ -48,6 +53,9 @@ typedef enum
 #endif
 #if USE_FONT_DEJAVU_80 != 0
     FONT_DEJAVU_80,
+#endif
+#if USE_FONT_DEJAVU_120 != 0
+    FONT_DEJAVU_120,
 #endif
 #if USE_FONT_SYMBOL_30 != 0
     FONT_SYMBOL_30,
@@ -132,5 +140,10 @@ uint8_t font_get_width(const font_t * font_p, uint8_t letter);
  **********************/
 
 #endif /*USE_FONT*/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif

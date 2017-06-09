@@ -6,11 +6,11 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_TEXT != 0
 
 #include "text.h"
-#include "misc/math/math_base.h"
+#include "../math/math_base.h"
 
 /*********************
  *      DEFINES

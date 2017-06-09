@@ -8,14 +8,14 @@
  *      INCLUDES
  *********************/
 
-#include "misc_conf.h"
+#include "../../../misc_conf.h"
 #if USE_UFS != 0
 
 #include <string.h>
 #include <stdio.h>
-#include "misc/mem/linked_list.h"
-#include "ufs.h"
 #include <errno.h>
+#include "ufs.h"
+#include "../../mem/linked_list.h"
 
 /*********************
  *      DEFINES

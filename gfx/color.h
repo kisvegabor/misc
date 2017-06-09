@@ -6,10 +6,14 @@
 #ifndef COLOR_H
 #define COLOR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_COLOR != 0
 
 #include <stdint.h>
@@ -265,6 +269,10 @@ static inline uint8_t color_brightness(color_t color)
  *      MACROS
  **********************/
 
-#endif /*USE_COLOR != 0*/
+#endif /*USE_COLOR*/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif

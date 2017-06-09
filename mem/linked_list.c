@@ -7,8 +7,9 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_LINKED_LIST != 0
+
 #include <stdint.h>
 #include <string.h>
 

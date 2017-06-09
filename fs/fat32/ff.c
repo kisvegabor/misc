@@ -15,7 +15,7 @@
 / by use of this software.
 /----------------------------------------------------------------------------*/
 
-#include "misc_conf.h"
+#include "../../../misc_conf.h"
 #if USE_FAT32 != 0
 
 #include "ff.h"                                 /* Declarations of FatFs API */

@@ -1,4 +1,4 @@
-#include "misc_conf.h"
+#include "../../../misc_conf.h"
 #if USE_FONT_DEJAVU_14 != 0
 
 #include <stdint.h>

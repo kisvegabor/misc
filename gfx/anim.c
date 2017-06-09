@@ -6,17 +6,20 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
-
+#include "../../misc_conf.h"
+#include "../os/ptask.h"
 #include "anim.h"
-
-#include "misc/math/math_base.h"
-#include "misc/os/ptask.h"
-#include "hal/systick/systick.h"
+#include <stddef.h>
 #include <string.h>
 
 #if USE_ANIM != 0
+#include "../math/math_base.h"
 
+#define HAL_PATH(x) ../x/systick/systick.h
+#define STR(x) _STR(x)
+#define _STR(x)   #x
+
+#include  STR(HAL_PATH(MISC_HAL_INCLUDE))
 
 /*********************
  *      DEFINES
@@ -271,7 +274,9 @@ static bool anim_ready_handler(anim_t * a)
 /*For compatibility add dummy functions*/
 #else
 
+#if USE_PTASK != 0
 static void anim_dummy_handler(void * anim_dm);
+#endif
 
 /**
  * Create an animation. Immediately set to end value
@@ -287,11 +292,16 @@ void anim_create(anim_t * anim_p)
     }
     /*With delay set the start value and set a one shot ptask to set end value and call the callback*/
     else {
+#if USE_DYN_MEM != 0 && USE_PTASK != 0
         if(anim_p->fp != NULL) anim_p->fp(anim_p->var, anim_p->start);
         void * anim_dm = dm_alloc(sizeof(anim_t));
         memcpy(anim_dm, anim_p, sizeof(anim_t));
         ptask_t * ptask = ptask_create(anim_dummy_handler, -anim_p->act_time, PTASK_PRIO_LOW, anim_dm);
         ptask_once(ptask);
+#else
+        if(anim_p->fp != NULL) anim_p->fp(anim_p->var, anim_p->end);
+        if(anim_p->end_cb != NULL) anim_p->end_cb(anim_p->var);
+#endif
     }
 }
 
@@ -329,6 +339,8 @@ anim_path_t * anim_get_path(anim_path_name_t name)
     return NULL;
 }
 
+#if USE_PTASK != 0
+
 /**
  * A One Shot ptask to handle end callbacks with delay
  * @param anim_dm pointer to temporal dynamically allocated animation
@@ -342,6 +354,7 @@ static void anim_dummy_handler(void * anim_dm)
 
     dm_free(anim_dm);
 }
+#endif
 
 #endif /*USE_ANIM*/
 

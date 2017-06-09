@@ -7,12 +7,18 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_PTASK != 0
 
+
 #include "ptask.h"
-#include "hal/systick/systick.h"
 #include <stddef.h>
+
+#define HAL_PATH(x) ../x/systick/systick.h
+#define STR(x) _STR(x)
+#define _STR(x)   #x
+
+#include  STR(HAL_PATH(MISC_HAL_INCLUDE))
 
 /*********************
  *      DEFINES
@@ -169,7 +175,7 @@ void ptask_set_prio(ptask_t* ptask_p, ptask_prio_t prio)
  * @param ptask_p pointer to a ptask
  * @param period the new period
  */
-void ptask_set_period(ptask_t* ptask_p, ptask_prio_t period)
+void ptask_set_period(ptask_t* ptask_p, uint32_t period)
 {
     ptask_p->period = period;
 }

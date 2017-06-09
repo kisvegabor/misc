@@ -5,6 +5,11 @@
 #ifndef _FF_INTEGER
 #define _FF_INTEGER
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #ifdef _WIN32	/* Development platform */
 
 #include <windows.h>
@@ -28,6 +33,10 @@ typedef unsigned int	UINT;
 typedef long			LONG;
 typedef unsigned long	DWORD;
 
+#endif
+
+#ifdef __cplusplus
+} /* extern "C" */
 #endif
 
 #endif

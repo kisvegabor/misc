@@ -6,7 +6,7 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_FONT != 0
 
 #include <stddef.h>
@@ -19,6 +19,7 @@
 #include "fonts/dejavu_40.h"
 #include "fonts/dejavu_60.h"
 #include "fonts/dejavu_80.h"
+#include "fonts/dejavu_120.h"
 #include "fonts/symbol_30.h"
 #include "fonts/symbol_60.h"
 
@@ -90,6 +91,10 @@ void font_init(void)
 
 #if USE_FONT_DEJAVU_80 != 0
     font_add(FONT_DEJAVU_80, dejavu_80_get_dsc);
+#endif
+
+#if USE_FONT_DEJAVU_120 != 0
+    font_add(FONT_DEJAVU_120, dejavu_120_get_dsc);
 #endif
 
 #if USE_FONT_SYMBOL_30 != 0
