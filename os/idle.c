@@ -12,11 +12,7 @@
 #include "../../misc_conf.h"
 #if USE_IDLE != 0
 
-#define HAL_PATH(x) ../x/systick/systick.h
-#define STR(x) _STR(x)
-#define _STR(x)   #x
-
-#include  STR(HAL_PATH(MISC_HAL_INCLUDE))
+#include "hal/systick/systick.h"
 
 /*********************
  *      DEFINES

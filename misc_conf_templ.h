@@ -8,8 +8,6 @@
 #ifndef MISC_CONF_H
 #define MISC_CONF_H
 
-#define MISC_HAL_INCLUDE    ../hal  /*hal folder include path from misc. root*/
-
 /*====================
  * Memory management
  *===================*/
