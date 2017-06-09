@@ -166,14 +166,16 @@ anim_path_t * anim_get_path(anim_path_name_t name)
  *   STATIC FUNCTIONS
  **********************/
 
+#include "stm32f429i_discovery.h"
 /**
  * Periodically handle the animations.
  * @param param unused
  */
 static void anim_task (void * param)
 {
-	uint32_t elaps;
+	volatile uint32_t elaps;
 	elaps = systick_elaps(last_task_run);
+
 
 	anim_t * a;
 	anim_t * a_next;

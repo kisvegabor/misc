@@ -144,7 +144,7 @@
  *----------------*/
 #define  USE_COLOR      0
 #if USE_COLOR != 0
-#define COLOR_DEPTH     24
+#define COLOR_DEPTH     16
 #endif
 
 /*----------------
