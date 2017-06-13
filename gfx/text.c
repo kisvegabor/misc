@@ -128,8 +128,9 @@ uint16_t txt_get_next_line(const char * txt, const font_t * font,
             return i+1;    /*Return with the first letter of the next line*/
 
         } else { /*Check the actual length*/
-            act_l += font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
-            
+            if((flag & TXT_FLAG_PWD) == 0 || txt[i + 1] == '\0') act_l += font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
+            else act_l += font_get_width(font, '*') >> FONT_ANTIALIAS;
+
             /*If the txt is too long then finish, this is the line end*/
             if(act_l > max_l) {
                 /*If already a break character is found, then break there*/
@@ -186,14 +187,16 @@ cord_t txt_get_width(const char * txt, uint16_t char_num,
                     continue;
                 }
             }
-            len += font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
+            if((flag & TXT_FLAG_PWD) == 0 || txt[i + 1] == '\0') len += font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
+            else len += font_get_width(font, '*') >> FONT_ANTIALIAS;
             len += letter_space;
         }
         
         /*Trim closing spaces */
         for(i = char_num - 1; i > 0; i--) {
             if(txt[i] == ' ') {
-                len -= font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
+                if((flag & TXT_FLAG_PWD) == 0 || txt[i + 1] == '\0') len -= font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
+                else len -= font_get_width(font, '*') >> FONT_ANTIALIAS;
                 len -= letter_space;
             } else {
                 break;
@@ -201,7 +204,7 @@ cord_t txt_get_width(const char * txt, uint16_t char_num,
         }
         
         /*Correct the last letter space, 
-         * because thee is no letter space after the last char*/
+         * because there is no letter space after the last char*/
         len -= letter_space;
     }
     

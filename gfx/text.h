@@ -31,8 +31,9 @@ extern "C" {
  **********************/
 typedef enum
 {
-    TXT_FLAG_NONE = 0x00,
-    TXT_FLAG_RECOLOR = 0x01,
+    TXT_FLAG_NONE =     0x00,
+    TXT_FLAG_RECOLOR =  0x01,
+    TXT_FLAG_PWD =      0x02,
 }txt_flag_t;
 
 typedef enum
