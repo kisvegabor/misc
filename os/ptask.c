@@ -63,9 +63,9 @@ void ptask_handler(void)
 
 	static uint32_t idle_tick = 0;
     static uint32_t used_tick = 0;
-    uint32_t start_tick = systick_get();
+    uint32_t start_tick = hal_tick_get();
 
-	if(idle_tick == 0) idle_tick = systick_get();
+	if(idle_tick == 0) idle_tick = hal_tick_get();
 
     ptask_t* ptask_prio_a[PTASK_PRIO_NUM]; /*Lists for all prio.*/
     ptask_prio_t prio_act;
@@ -111,9 +111,9 @@ void ptask_handler(void)
         }
     }
 
-    used_tick += systick_elaps(start_tick);
-    if(systick_elaps(idle_tick) > PTASK_IDLE_PERIOD) {
-        idle_last = (uint16_t)((uint16_t) used_tick * 100) / systick_elaps(idle_tick);  /*Calculate the busy time*/
+    used_tick += hal_tick_elaps(start_tick);
+    if(hal_tick_elaps(idle_tick) > PTASK_IDLE_PERIOD) {
+        idle_last = (uint16_t)((uint16_t) used_tick * 100) / hal_tick_elaps(idle_tick);  /*Calculate the busy time*/
         idle_last = idle_last > 100 ? 0 : 100 - idle_last;  /*Convert he busy time to idle time*/
         idle_tick = 0;
         used_tick = 0;
@@ -240,7 +240,7 @@ static bool ptask_exec (ptask_t* ptask_p, ptask_prio_t prio_act)
     /*Execute ptask if its prio is 'prio_act'*/
     if(ptask_p->prio == prio_act) {
         /*Execute if at least 'period' time elapsed*/
-        uint32_t elp = systick_elaps(ptask_p->last_run);
+        uint32_t elp = hal_tick_elaps(ptask_p->last_run);
         if(elp >= ptask_p->period) {
             ptask_p->last_run = systick_get();
             ptask_p->task(ptask_p->param);
