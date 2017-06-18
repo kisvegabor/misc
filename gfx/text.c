@@ -46,7 +46,7 @@ static bool txt_is_break_char(char letter);
  * @param letter_space letter space of the text
  * @param line_space line space of the text
  * @param flags settings for the text from 'txt_flag_t' enum
- * @param max_width max with of the text (break the lines to fit this size) Set LV_CORD_MAX to avoid line breaks
+ * @param max_width max with of the text (break the lines to fit this size) Set CORD_MAX to avoid line breaks
  */
 void txt_get_size(point_t * size_res, const char * text, const font_t * font,
 		          uint16_t letter_space, uint16_t line_space, cord_t max_width, txt_flag_t flag)
@@ -56,6 +56,8 @@ void txt_get_size(point_t * size_res, const char * text, const font_t * font,
 
     if(text == NULL) return;
     if(font == NULL) return;
+
+    if(flag & TXT_FLAG_EXPAND) max_width = CORD_MAX;
 
     uint32_t line_start = 0;
     uint32_t new_line_start = 0;
@@ -92,15 +94,17 @@ void txt_get_size(point_t * size_res, const char * text, const font_t * font,
  * @param txt a '\0' terminated string
  * @param font pointer to a font
  * @param letter_space letter space
- * @param max_l max line length
+ * @param max_width max with of the text (break the lines to fit this size) Set CORD_MAX to avoid line breaks
  * @param flags settings for the text from 'txt_flag_type' enum
  * @return the index of the first char of the new line
  */
 uint16_t txt_get_next_line(const char * txt, const font_t * font,
-                           uint16_t letter_space, cord_t max_l, txt_flag_t flag)
+                           uint16_t letter_space, cord_t max_width, txt_flag_t flag)
 {
     if(txt == NULL) return 0;
     if(font == NULL) return 0;
+
+    if(flag & TXT_FLAG_EXPAND) max_width = CORD_MAX;
 
     uint32_t i = 0;
     cord_t act_l = 0;
@@ -132,7 +136,7 @@ uint16_t txt_get_next_line(const char * txt, const font_t * font,
             else act_l += font_get_width(font, '*') >> FONT_ANTIALIAS;
 
             /*If the txt is too long then finish, this is the line end*/
-            if(act_l > max_l) {
+            if(act_l > max_width) {
                 /*If already a break character is found, then break there*/
                 if(last_break != TXT_NO_BREAK_FOUND && txt_is_break_char(txt[i]) == false) {
                     i = last_break;

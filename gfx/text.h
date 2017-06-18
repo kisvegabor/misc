@@ -32,8 +32,9 @@ extern "C" {
 typedef enum
 {
     TXT_FLAG_NONE =     0x00,
-    TXT_FLAG_RECOLOR =  0x01,
-    TXT_FLAG_PWD =      0x02,
+    TXT_FLAG_RECOLOR =  0x01,   /*Enable parsing of recolor command*/
+    TXT_FLAG_PWD =      0x02,   /*Display letters as '*' */
+    TXT_FLAG_EXPAND =   0x04,   /*Force expanding size when solving line length (Used by the library)*/
 }txt_flag_t;
 
 typedef enum
@@ -55,7 +56,7 @@ typedef enum
  * @param letter_space letter space of the text
  * @param line_space line space of the text
  * @param flags settings for the text from 'txt_flag_t' enum
- * @param max_width max with of the text (break the lines to fit this size) Set LV_CORD_MAX to avoid line breaks
+ * @param max_width max with of the text (break the lines to fit this size) Set CORD_MAX to avoid line breaks
  */
 void txt_get_size(point_t * size_res, const char * text, const font_t * font,
                     uint16_t letter_space, uint16_t line_space, cord_t max_width, txt_flag_t flag);
@@ -65,7 +66,7 @@ void txt_get_size(point_t * size_res, const char * text, const font_t * font,
  * @param txt a '\0' terminated string
  * @param font_p pointer to a font
  * @param letter_space letter space
- * @param max_l max line length
+ * @param max_width max with of the text (break the lines to fit this size) Set CORD_MAX to avoid line breaks
  * @param flags settings for the text from 'txt_flag_t' enum
  * @return the index of the first char of the new line
  */
