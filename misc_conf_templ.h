@@ -8,6 +8,17 @@
 #ifndef MISC_CONF_H
 #define MISC_CONF_H
 
+/*=========================================
+ *  Logging (add external log functions)
+ *=========================================*/
+#define USE_MISC_LOG    1
+#if USE_MISC_LOG  !=  0
+#define MISC_LOG_INCLUDE    "hw/dev/ui/log.h"   /*Include of log headers*/
+#define MISC_LOG_MSG        SMSG                /*Log simple messages. (printf-like variable paremter list)*/
+#define MISC_LOG_WARN       SWARN               /*Log warning messages. (printf-like variable paremter list)*/
+#define MISC_LOG_ERR        SERR                /*Log error messages. (printf-like variable paremter list)*/
+#endif
+
 /*====================
  * Memory management
  *===================*/
@@ -220,6 +231,15 @@
 #if USE_WIFIMNG != 0
 #define WIFIMNG_TCP_CON_DELAY      5000     /*Delay after network connection and before connecting to TCP [ms]*/
 #define WIFIMNG_RETRY_WAIT         10000    /*Wait before two reconnect attempts [ms] */
+#endif
+
+/*------------------
+ *    GSM Manager
+ *-----------------*/
+#define USE_GSMMNG        0
+#if USE_GSMMNG != 0
+#define GSMMNG_TCP_CON_DELAY      5000     /*Delay after network connection and before connecting to TCP [ms]*/
+#define GSMMNG_RETRY_WAIT         10000    /*Wait before two reconnect attempts [ms] */
 #endif
 
 /*===================
