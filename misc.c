@@ -18,6 +18,7 @@
 #include "gfx/font.h"
 #include "gfx/anim.h"
 #include "comm/wifimng.h"
+#include "comm/gsmmng.h"
 
 /*********************
  *      DEFINES
@@ -89,6 +90,10 @@ void misc_init(void)
     wifimng_init();
 #endif
 
+
+#if USE_GSMMNG != 0
+    gsmmng_init();
+#endif
 }
 
 /**********************

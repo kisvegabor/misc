@@ -3,14 +3,13 @@
  * 
  */
 
-#include "../../misc_conf.h"
-#if USE_WIFIMNG != 0
 #include "wifimng.h"
+#if USE_WIFIMNG != 0
 
 #include <string.h>
-#include "../../hal/wifi/wifi.h"
-#include "../../hal/systick/systick.h"
-#include "..//os/ptask.h"
+#include "hal/wifi/wifi.h"
+#include "hal/systick/systick.h"
+#include "../os/ptask.h"
 
 /*********************
  *      INCLUDES
@@ -160,7 +159,7 @@ static void wifimng_task(void * param)
 
 static void wifimng_netw_ssid_cb(wifi_state_t state, const char * txt)
 {
-    if(state == WIFI_STATE_READY) {
+    if(state == WIFI_STATE_OK) {
         if(txt[0] == '\0') {
             wifimng_state = WIFIMNG_STATE_NETW_CON;
         } else {
@@ -173,7 +172,7 @@ static void wifimng_netw_ssid_cb(wifi_state_t state, const char * txt)
 
 static void wifimng_netw_con_cb(wifi_state_t state, const char * txt)
 {
-    if(state == WIFI_STATE_READY) {
+    if(state == WIFI_STATE_OK) {
         wifimng_timestamp = systick_get();
         wifimng_state = WIFIMNG_STATE_TCP_CON_DELAY;
     } else {
@@ -190,7 +189,7 @@ static void wifimng_tcp_leave_cb(wifi_state_t state, const char * txt)
 
 static void wifimng_tcp_con_cb(wifi_state_t state, const char * txt)
 {
-    if(state == WIFI_STATE_READY) {
+    if(state == WIFI_STATE_OK) {
         wifimng_state = WIFIMNG_STATE_READY;
     } else {
         wifimng_timestamp = systick_get();
