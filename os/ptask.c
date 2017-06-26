@@ -113,7 +113,7 @@ void ptask_handler(void)
 
     used_tick += systick_elaps(start_tick);
     if(systick_elaps(idle_tick) > PTASK_IDLE_PERIOD) {
-        idle_last = (uint16_t)((uint16_t) used_tick * 100) / systick_elaps(idle_tick);  /*Calculate the busy time*/
+        idle_last = (uint32_t)((uint32_t) used_tick * 100) / systick_elaps(idle_tick);  /*Calculate the busy time*/
         idle_last = idle_last > 100 ? 0 : 100 - idle_last;  /*Convert he busy time to idle time*/
         idle_tick = 0;
         used_tick = 0;
