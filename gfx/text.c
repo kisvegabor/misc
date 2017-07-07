@@ -132,8 +132,7 @@ uint16_t txt_get_next_line(const char * txt, const font_t * font,
             return i+1;    /*Return with the first letter of the next line*/
 
         } else { /*Check the actual length*/
-            if((flag & TXT_FLAG_PWD) == 0 || txt[i + 1] == '\0') act_l += font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
-            else act_l += font_get_width(font, '*') >> FONT_ANTIALIAS;
+            act_l += font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
 
             /*If the txt is too long then finish, this is the line end*/
             if(act_l > max_width) {
@@ -191,16 +190,14 @@ cord_t txt_get_width(const char * txt, uint16_t char_num,
                     continue;
                 }
             }
-            if((flag & TXT_FLAG_PWD) == 0 || txt[i + 1] == '\0') len += font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
-            else len += font_get_width(font, '*') >> FONT_ANTIALIAS;
+            len += font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
             len += letter_space;
         }
         
         /*Trim closing spaces */
         for(i = char_num - 1; i > 0; i--) {
             if(txt[i] == ' ') {
-                if((flag & TXT_FLAG_PWD) == 0 || txt[i + 1] == '\0') len -= font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
-                else len -= font_get_width(font, '*') >> FONT_ANTIALIAS;
+                len -= font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
                 len -= letter_space;
             } else {
                 break;

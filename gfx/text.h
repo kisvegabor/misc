@@ -33,8 +33,7 @@ typedef enum
 {
     TXT_FLAG_NONE =     0x00,
     TXT_FLAG_RECOLOR =  0x01,   /*Enable parsing of recolor command*/
-    TXT_FLAG_PWD =      0x02,   /*Display letters as '*' */
-    TXT_FLAG_EXPAND =   0x04,   /*Force expanding size when solving line length (Used by the library)*/
+    TXT_FLAG_EXPAND =   0x02,   /*Force expanding size when solving line length (Used by the library)*/
 }txt_flag_t;
 
 typedef enum
