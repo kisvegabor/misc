@@ -44,9 +44,9 @@ typedef struct {
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
-void fsm_handler(const fsm_t * fsm);
+void fsm_handler(fsm_t * fsm);
 void fsm_set_state(fsm_t * fsm, fsm_state_t state);
-fsm_state_t fsm_get_state(fsm_t * fsm);
+fsm_state_t fsm_get_state(const fsm_t * fsm);
 
 
 /**********************

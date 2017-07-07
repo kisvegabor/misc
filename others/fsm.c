@@ -32,7 +32,7 @@
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
-void fsm_handler(const fsm_t * fsm)
+void fsm_handler(fsm_t * fsm)
 {
     if(fsm->funcs[fsm->state_act] != NULL) {
         fsm->funcs[fsm->state_act](FSM_SUBSTATE_RUN, &fsm->param);
@@ -53,7 +53,7 @@ void fsm_set_state(fsm_t * fsm, fsm_state_t state)
     }
 }
 
-fsm_state_t fsm_get_state(fsm_t * fsm)
+fsm_state_t fsm_get_state(const fsm_t * fsm)
 {
     return fsm->state_act;
 }
