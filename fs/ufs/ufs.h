@@ -7,15 +7,20 @@
 #ifndef UFS_H
 #define UFS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../../misc_conf.h"
 #if USE_UFS != 0
 
-#include "../fsint.h"
-#include "misc/mem/dyn_mem.h"
 #include <stdbool.h>
+#include "../fsint.h"
+#include "../../mem/dyn_mem.h"
 
 /*********************
  *      DEFINES
@@ -187,5 +192,10 @@ fs_res_t ufs_readdir_close(void * rddir_p);
  **********************/
 
 #endif
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif

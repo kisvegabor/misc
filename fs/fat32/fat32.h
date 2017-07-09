@@ -7,10 +7,15 @@
 #ifndef FAT32_H
 #define FAT32_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../../misc_conf.h"
 #if USE_FAT32 != 0
 
 #include "../fsint.h"
@@ -141,5 +146,10 @@ fs_res_t fat32_readdir_close(void * rddir_p);
  **********************/
 
 #endif
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif

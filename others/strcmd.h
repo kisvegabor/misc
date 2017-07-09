@@ -6,10 +6,15 @@
 #ifndef STRCMD_H
 #define STRCMD_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_STRCMD != 0
 
 #include <stdint.h>
@@ -80,6 +85,10 @@ const char * strcmd_get_par(sc_t * sc_p);
  *      MACROS
  **********************/
 
-#endif  /*USE_STRCMD != 0*/
+#endif  /*USE_STRCMD*/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif

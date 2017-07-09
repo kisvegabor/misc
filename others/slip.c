@@ -6,7 +6,7 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_SLIP != 0
 
 #include "slip.h"
@@ -47,6 +47,11 @@ uint32_t slip_encode(void * dest_p, void * src_p, uint32_t src_len)
     uint32_t i;
     uint8_t * src8_p =  src_p;      /*Use byte arrays when process the data*/
     uint8_t * dest8_p =  dest_p;
+#if SLIP_END_FIRST != 0
+    /*Add a starting END character*/
+    dest8_p[dest_pct] = SLIP_END;
+    dest_pct ++;
+#endif
     
     /*Convert all bytes*/
     for(i = 0; i < src_len; i++) {
@@ -71,11 +76,13 @@ uint32_t slip_encode(void * dest_p, void * src_p, uint32_t src_len)
                 dest_pct ++;
         }
     }
-        
+    
+#if SLIP_END_FIRST == 0
     /*Add a closing END character*/
     dest8_p[dest_pct] = SLIP_END;
     dest_pct ++;
-    
+#endif
+        
     return dest_pct;
 }
 

@@ -8,14 +8,14 @@
  *      INCLUDES
  *********************/
 
-#include "misc_conf.h"
+#include "../../../misc_conf.h"
 #if USE_UFS != 0
 
 #include <string.h>
 #include <stdio.h>
-#include "misc/mem/linked_list.h"
-#include "ufs.h"
 #include <errno.h>
+#include "ufs.h"
+#include "../../mem/linked_list.h"
 
 /*********************
  *      DEFINES
@@ -202,7 +202,11 @@ fs_res_t ufs_remove(const char * fn)
     
     ll_rem(&file_ll, ent);
     dm_free(ent->fn_d);
-    if(ent->const_data == 0) dm_free(ent->data_d);
+    ent->fn_d = NULL;
+    if(ent->const_data == 0){
+        dm_free(ent->data_d);
+        ent->data_d = NULL;
+    }
     
     dm_free(ent);
     

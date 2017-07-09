@@ -6,6 +6,10 @@
 #ifndef MISC_H
 #define MISC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*********************
  *      INCLUDES
  *********************/
@@ -13,9 +17,9 @@
 /*********************
  *      DEFINES
  *********************/
-#define MISC_VERSION_MAJOR  3
-#define MISC_VERSION_MINOR  0
-#define MISC_VERSION_PATCH  0
+#define MISC_VERSION_MAJOR  4
+#define MISC_VERSION_MINOR  1
+#define MISC_VERSION_PATCH  1
 
 /**********************
  *      TYPEDEFS
@@ -34,4 +38,9 @@ void misc_init(void);
  *      MACROS
  **********************/
 
+#ifdef __cplusplus
+} /* extern "C" */
 #endif
+
+#endif
+

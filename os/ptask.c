@@ -7,12 +7,13 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_PTASK != 0
 
+
 #include "ptask.h"
-#include "hal/systick/systick.h"
 #include <stddef.h>
+#include "hal/systick/systick.h"
 
 /*********************
  *      DEFINES
@@ -32,6 +33,7 @@ static bool ptask_exec(ptask_t* ptask_p, ptask_prio_t prio_act);
  **********************/
 static ll_dsc_t ptask_ll;  /*Linked list to store the ptasks*/
 static bool ptask_run = false;
+static uint8_t idle_last = 0;
 
 /**********************
  *      MACROS
@@ -58,6 +60,12 @@ void ptask_init(void)
 void ptask_handler(void)
 {
 	if(ptask_run == false) return;
+
+	static uint32_t idle_tick = 0;
+    static uint32_t used_tick = 0;
+    uint32_t start_tick = systick_get();
+
+	if(idle_tick == 0) idle_tick = systick_get();
 
     ptask_t* ptask_prio_a[PTASK_PRIO_NUM]; /*Lists for all prio.*/
     ptask_prio_t prio_act;
@@ -102,6 +110,14 @@ void ptask_handler(void)
             }
         }
     }
+
+    used_tick += systick_elaps(start_tick);
+    if(systick_elaps(idle_tick) > PTASK_IDLE_PERIOD) {
+        idle_last = (uint32_t)((uint32_t) used_tick * 100) / systick_elaps(idle_tick);  /*Calculate the busy time*/
+        idle_last = idle_last > 100 ? 0 : 100 - idle_last;  /*Convert he busy time to idle time*/
+        idle_tick = 0;
+        used_tick = 0;
+    }
 }
 
 /**
@@ -123,6 +139,8 @@ ptask_t* ptask_create(void (*task) (void *), uint32_t period, ptask_prio_t prio,
     new_ptask->task = task;
     new_ptask->prio = prio;
     new_ptask->param = param;
+    new_ptask->once = 0;
+    new_ptask->last_run = systick_get();
 
     return new_ptask;
 }
@@ -153,7 +171,7 @@ void ptask_set_prio(ptask_t* ptask_p, ptask_prio_t prio)
  * @param ptask_p pointer to a ptask
  * @param period the new period
  */
-void ptask_set_period(ptask_t* ptask_p, ptask_prio_t period)
+void ptask_set_period(ptask_t* ptask_p, uint32_t period)
 {
     ptask_p->period = period;
 }
@@ -165,6 +183,15 @@ void ptask_set_period(ptask_t* ptask_p, ptask_prio_t period)
 void ptask_ready(ptask_t* ptask_p)
 {
     ptask_p->last_run = systick_get() - ptask_p->period - 1;
+}
+
+/**
+ * Delete the ptask after one call
+ * @param ptask_p pointer to a ptask.
+ */
+void ptask_once(ptask_t * ptask_p)
+{
+    ptask_p->once = 1;
 }
 
 /**
@@ -184,6 +211,15 @@ void ptask_reset(ptask_t* ptask_p)
 void ptask_en(bool en)
 {
 	ptask_run = en;
+}
+
+/**
+ * Get idle percentage
+ * @return the ptask idle in percentage
+ */
+uint8_t ptask_get_idle(void)
+{
+    return idle_last;
 }
 
 
@@ -208,6 +244,9 @@ static bool ptask_exec (ptask_t* ptask_p, ptask_prio_t prio_act)
         if(elp >= ptask_p->period) {
             ptask_p->last_run = systick_get();
             ptask_p->task(ptask_p->param);
+
+            /*Delete if it was a one shot ptask*/
+            if(ptask_p->once != 0) ptask_del(ptask_p);
 
             exec = true;
         }

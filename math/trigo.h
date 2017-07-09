@@ -6,10 +6,15 @@
 #ifndef TRIGO_H
 #define TRIGO_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_TRIGO != 0
 
 #include <stdint.h>
@@ -38,6 +43,10 @@ int16_t trigo_sin(int16_t angle);
  *      MACROS
  **********************/
 
+#endif /*USE_TRIGO*/
+
+#ifdef __cplusplus
+} /* extern "C" */
 #endif
 
 #endif

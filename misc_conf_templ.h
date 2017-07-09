@@ -8,6 +8,17 @@
 #ifndef MISC_CONF_H
 #define MISC_CONF_H
 
+/*=========================================
+ *  Logging (add external log functions)
+ *=========================================*/
+#define USE_MISC_LOG    1
+#if USE_MISC_LOG  !=  0
+#define MISC_LOG_INCLUDE    "hw/dev/ui/log.h"   /*Include of log headers*/
+#define MISC_LOG_MSG        SMSG                /*Log simple messages. (printf-like variable paremter list)*/
+#define MISC_LOG_WARN       SWARN               /*Log warning messages. (printf-like variable paremter list)*/
+#define MISC_LOG_ERR        SERR                /*Log error messages. (printf-like variable paremter list)*/
+#endif
+
 /*====================
  * Memory management
  *===================*/
@@ -18,21 +29,21 @@
 #define USE_DYN_MEM     1
 #if USE_DYN_MEM != 0
 #define DM_AUTO_ZERO   0     /*Automatically fill-zero the allocated memory*/
-#define DM_CUSTOM      1     /*1: use custom malloc/free, 0: use malloc/free provided by dyn_mem*/
+#define DM_CUSTOM      0     /*1: use custom malloc/free, 0: use malloc/free provided by dyn_mem*/
 #if DM_CUSTOM == 0
   #define DM_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
   #define DM_MEM_ATTR                  /*Complier prefix for big array declaration*/
 #else /*DM_CUSTOM != 0: Provide custom malloc/free functions*/
-  #define DM_CUST_INCLUDE      <stdlib.h>   /*Header for the dynamic memory function*/
+  #define DM_CUST_INCLUDE <stdlib.h>   /*Header for the dynamic memory function*/
   #define DM_CUST_ALLOC   malloc       /*Wrapper to malloc*/
   #define DM_CUST_FREE    free         /*Wrapper to free*/
 #endif  /*DM_CUSTOM*/
 #endif  /*USE_DYN_MEM*/
 
- /*-----------------------------------------------
+ /*--------------------------------------
   * Dynamic memory with always 0 % fragmentation
   * Not compatible with normal malloc/free
-  *-----------------------------------------------*/
+  *------------------------------------*/
  #define USE_DYN_MEM_DEFR     0
  #if USE_DYN_MEM_DEFR != 0
  #define DMD_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
@@ -51,7 +62,7 @@
 /*----------------
  *   Linked list
  *----------------*/
-#define USE_LINKED_LIST 0
+#define USE_LINKED_LIST     1
 #if USE_LINKED_LIST != 0
 /* No settings*/
 #endif /*USE_LINKED_LIST*/
@@ -63,14 +74,15 @@
 /*----------------
  * Periodic task
  *----------------*/
-#define USE_PTASK       0
+#define USE_PTASK       1
 #if USE_PTASK != 0
-/*No settings*/
+#define PTASK_IDLE_PERIOD  500  /*500*/
 #endif /*USE_PTASK*/
 
 /*-----------------------
  * CPU Idle measurement
  *-----------------------*/
+/*In hal/systick.c: systick_add_cb() and systick_rem_cb() is required)*/
 #define USE_IDLE        0
 #if USE_IDLE != 0
 #define IDLE_REFR_RATE  500 /*ms*/
@@ -83,7 +95,7 @@
 /*----------------
  *  FS interface
  *----------------*/
-#define USE_FSINT   0
+#define USE_FSINT   1
 #if USE_FSINT != 0
 /*No settings*/
 #endif  /*USE_FSINT*/
@@ -91,7 +103,7 @@
 /*----------------
  *     uFS
  *----------------*/
-#define USE_UFS   0
+#define USE_UFS   1
 #if USE_UFS != 0
 #define UFS_LETTER 'U'
 #endif  /*USE_UFS*/
@@ -114,7 +126,6 @@
 #define LINUXFS_ROOT_DIR    "./" /*See this directory as root folder*/
 #endif  /*USE_LINUXFS*/
 
-
 /*================
  *     Math
  *================*/
@@ -135,17 +146,105 @@
 /*No settings*/
 #endif
 
+
 /*===================
- *     Others
+ *  GRAPHICS (GFX)
  *==================*/
 
 /*----------------
  *     Color
  *----------------*/
-#define  USE_COLOR      0
+#define  USE_COLOR      1
 #if USE_COLOR != 0
 #define COLOR_DEPTH     16
 #endif
+
+/*----------------
+ *     Area
+ *----------------*/
+#define USE_AREA    1
+#if USE_AREA != 0
+/*No settings*/
+#endif
+
+/*----------------
+ *     Circle
+ *----------------*/
+#define USE_CIRC    1
+#if USE_CIRC != 0
+/*No settings*/
+#endif
+
+/*----------------
+ *     Font
+ *----------------*/
+#define USE_FONT    1
+#if USE_FONT != 0
+#define FONT_BUILTIN_LATIN_EXT  0
+#define FONT_ANTIALIAS          0
+/*Built-in font usage*/
+#define USE_FONT_DEJAVU_8    0
+#define USE_FONT_DEJAVU_10   0
+#define USE_FONT_DEJAVU_14   0
+#define USE_FONT_DEJAVU_20   0
+#define USE_FONT_DEJAVU_30   1
+#define USE_FONT_DEJAVU_40   0
+#define USE_FONT_DEJAVU_60   0
+#define USE_FONT_DEJAVU_80   0
+#define USE_FONT_DEJAVU_120  0
+#define USE_FONT_SYMBOL_30   1
+#define USE_FONT_SYMBOL_60   0
+
+/*Always set a default font from the built-in fonts*/
+#define FONT_DEFAULT      FONT_DEJAVU_30
+
+/*Enumerate the name of the external fonts. E.g: MY_FONT_1, MY_FONT_2, (comma at the end!)*/
+#define FONT_NEW_NAMES
+
+#endif /*USE_FONT*/
+
+/*----------------
+ *     Text
+ *----------------*/
+#define USE_TEXT    1
+#if USE_TEXT != 0
+#define TXT_BREAK_CHARS  " ,.;-_" /*Can break texts on these chars*/
+#endif /*USE_TEXT*/
+
+
+/*----------------
+ *     Animation
+ *----------------*/
+#define USE_ANIM    1
+#if USE_ANIM != 0
+#define ANIM_REFR_PERIOD 10 /*ms*/
+#endif
+
+/*===================
+ *  Communication
+ *==================*/
+
+/*------------------
+ *    WiFi Manager
+ *-----------------*/
+#define USE_WIFIMNG        0
+#if USE_WIFIMNG != 0
+#define WIFIMNG_TCP_CON_DELAY      5000     /*Delay after network connection and before connecting to TCP [ms]*/
+#define WIFIMNG_RETRY_WAIT         10000    /*Wait before two reconnect attempts [ms] */
+#endif
+
+/*------------------
+ *    GSM Manager
+ *-----------------*/
+#define USE_GSMMNG        0
+#if USE_GSMMNG != 0
+#define GSMMNG_TCP_CON_DELAY      5000     /*Delay after network connection and before connecting to TCP [ms]*/
+#define GSMMNG_RETRY_WAIT         10000    /*Wait before two reconnect attempts [ms] */
+#endif
+
+/*===================
+ *     Others
+ *==================*/
 
 /*------------
  *    Slip
@@ -165,6 +264,7 @@
 #if USE_STRCMD != 0
 /*No settings*/
 #endif /*USE_STRCMD*/
+
 
 #endif /* MISC_CONF_H */
 

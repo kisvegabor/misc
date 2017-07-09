@@ -9,10 +9,14 @@
 #ifndef IDLE_H
 #define IDLE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_IDLE != 0
 
 #include <stdint.h>
@@ -35,7 +39,7 @@
 void idle_init(void);
 
 /**
- * Return with the measured CPU load
+ * Return with the measured CPU idle in percentage
  * @return The CPU idle in percentage
  */
 uint8_t idle_get(void);
@@ -50,5 +54,10 @@ void idle_loop(void);
  **********************/
 
 #endif
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif

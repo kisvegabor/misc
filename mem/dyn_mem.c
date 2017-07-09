@@ -7,7 +7,7 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_DYN_MEM != 0
 
 #include "dyn_mem.h"
@@ -172,6 +172,11 @@ void dm_free(const void * data)
  */
 void * dm_realloc(void * data_p, uint32_t new_size)
 {
+    /*data_p could be previously freed pointer (in this case it is invalid)*/
+    if(data_p != NULL) {
+        dm_ent_t * e = (dm_ent_t *)((uint8_t *) data_p - sizeof(dm_header_t));
+        if(e->header.used == 0) data_p = NULL;
+    }
 
     uint32_t old_size = dm_get_size(data_p);
     if(old_size == new_size) return data_p;
@@ -278,6 +283,7 @@ uint32_t dm_get_size(void * data)
     if(data == &zero_mem) return 0;
     
     dm_ent_t * e = (dm_ent_t *)((uint8_t *) data - sizeof(dm_header_t));
+
     return e->header.d_size;
 }
 /**********************

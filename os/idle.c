@@ -9,11 +9,10 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 #if USE_IDLE != 0
 
-#include "idle.h"
-#include "hw/per/tick.h"
+#include "hal/systick/systick.h"
 
 /*********************
  *      DEFINES
@@ -54,7 +53,7 @@ void idle_init(void)
     /*Set the reference measurement time*/
     idle_meas_interval = IDLE_REF_MEAS_TIME;
     
-    tick_add_cb(idle_meas_cb);
+    systick_add_cb(idle_meas_cb);
     
     while(idle_cnt_last == 0) {
         idle_meas();
@@ -71,7 +70,7 @@ void idle_init(void)
 }
 
 /**
- * Return with the measured CPU load
+ * Return with the measured CPU idle percentage
  * @return The CPU idle in percentage 
  */
 uint8_t idle_get(void)

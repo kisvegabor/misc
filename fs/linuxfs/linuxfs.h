@@ -8,10 +8,15 @@
 #ifndef LINUXFS_H
 #define LINUXFS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../../misc_conf.h"
 #if USE_LINUXFS != 0
 
 #include "../fsint.h"
@@ -135,5 +140,10 @@ fs_res_t linuxfs_readdir_close(void * rddir_p);
  **********************/
 
 #endif
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
+
 
 #endif

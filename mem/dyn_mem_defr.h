@@ -6,10 +6,15 @@
 #ifndef DYN_MEM_H
 #define DYN_MEM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /*********************
  *      INCLUDES
  *********************/
-#include "misc_conf.h"
+#include "../../misc_conf.h"
 
 #if USE_DYN_MEM_DEFR != 0
 
@@ -99,6 +104,10 @@ uint32_t dmd_get_size(void * data);
 
 
 #endif /*USE_DYN_MEM*/
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif
 

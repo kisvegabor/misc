@@ -6,6 +6,10 @@
 #ifndef TEMPL_H
 #define TEMPL_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*********************
  *      INCLUDES
  *********************/
@@ -25,5 +29,10 @@
 /**********************
  *      MACROS
  **********************/
+
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif
