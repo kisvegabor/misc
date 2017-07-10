@@ -53,7 +53,7 @@ static void wifimng_tcp_con_cb(wifi_state_t state, const char * txt);
  **********************/
 void wifimng_init(void)
 {
-    wifimng_state = WIFIMNG_STATE_NETW_TEST;
+    wifimng_state = WIFIMNG_STATE_IDLE;
     ptask_create(wifimng_task, 1000, PTASK_PRIO_LOW, NULL);
 }
 
@@ -62,12 +62,14 @@ void wifimng_set_last_netw(const char * ssid, const char * pwd)
 {
     strcpy(last_ssid, ssid);
     strcpy(last_pwd, pwd);
+    wifimng_state = WIFIMNG_STATE_NETW_TEST;
 }
 
 void wifimng_set_last_tcp(const char * ip, const char * port)
 {
     strcpy(last_ip, ip);
     strcpy(last_port, port);
+    wifimng_state = WIFIMNG_STATE_NETW_TEST;
 }
 
 wifimng_state_t wifimng_get_state(void)
@@ -152,6 +154,8 @@ static void wifimng_task(void * param)
             }
         break;
         case WIFIMNG_STATE_READY:
+            break;
+        case WIFIMNG_STATE_IDLE:
             break;
     }
     

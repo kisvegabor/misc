@@ -35,4 +35,4 @@ extern "C" {
 } /* extern "C" */
 #endif
 
-#endif
+#endif /*TEMPL_H*/

@@ -26,6 +26,7 @@ extern "C" {
  **********************/
 typedef enum
 {
+    GSMMNG_STATE_IDLE,
     GSMMNG_STATE_NETW_LEAVE,
     GSMMNG_STATE_NETW_CON,
     GSMMNG_STATE_TCP_CON_DELAY,

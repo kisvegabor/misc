@@ -54,7 +54,7 @@ LOG_FN("gsmmng");
  **********************/
 void gsmmng_init(void)
 {
-    gsmmng_state = GSMMNG_STATE_NETW_LEAVE;
+    gsmmng_state = GSMMNG_STATE_IDLE;
     ptask_create(gsmmng_task, 1000, PTASK_PRIO_LOW, NULL);
 }
 
@@ -62,12 +62,14 @@ void gsmmng_init(void)
 void gsmmng_set_last_apn(const char * apn)
 {
     strcpy(last_apn, apn);
+    gsmmng_state = GSMMNG_STATE_NETW_CON;
 }
 
 void gsmmng_set_last_tcp(const char * ip, const char * port)
 {
     strcpy(last_ip, ip);
     strcpy(last_port, port);
+    gsmmng_state = GSMMNG_STATE_NETW_CON;
 }
 
 gsmmng_state_t gsmmng_get_state(void)
@@ -151,8 +153,11 @@ static void gsmmng_task(void * param)
                 gsmmng_state = GSMMNG_STATE_NETW_CON;
             }
         break;
+        
+        case GSMMNG_STATE_IDLE:
+            break;
+            
         case GSMMNG_STATE_READY:
-            SMSG("ready");
             break;
     }
     

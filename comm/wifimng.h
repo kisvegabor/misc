@@ -26,6 +26,7 @@ extern "C" {
  **********************/
 typedef enum
 {
+    WIFIMNG_STATE_IDLE,
     WIFIMNG_STATE_NETW_TEST,
     WIFIMNG_STATE_NETW_CON,
     WIFIMNG_STATE_TCP_CON_DELAY,
