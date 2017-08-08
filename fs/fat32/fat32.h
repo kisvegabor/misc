@@ -141,6 +141,15 @@ fs_res_t fat32_readdir(void * rddir_p, char * fn);
  */
 fs_res_t fat32_readdir_close(void * rddir_p);
 
+/**
+ * Give the size of a drive
+ * @param rddir_p pointer to a drive letter
+ * @param total_p pointer to store the total
+ * @param free_p pointer to store the free
+ * @return FS_RES_OK or any error from 'fs_res_t'
+ */
+fs_res_t fat32_free (void * rddir_p,uint32_t * total_p, uint32_t * free_p);
+
 /**********************
  *      MACROS
  **********************/

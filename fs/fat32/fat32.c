@@ -317,6 +317,34 @@ fs_res_t fat32_readdir_close(void * rddir_p)
 #endif
 }
 
+/**
+ * Give the size of a drive
+ * @param rddir_p pointer to a drive letter
+ * @param total_p pointer to store the total
+ * @param free_p pointer to store the free
+ * @return FS_RES_OK or any error from 'fs_res_t'
+ */
+fs_res_t fat32_free (void * rddir_p,uint32_t * total_p, uint32_t * free_p)
+{
+#if _FS_READONLY != 1
+	FATFS *fs;
+    FRESULT fat32_res;
+	uint32_t fre_clust=0, fre_sect=0, tot_sect=0;
+	fat32_res = f_getfree(rddir_p, (unsigned long*)&fre_clust, &fs);										   
+	tot_sect=(fs->n_fatent-2)*fs->csize;
+	fre_sect=fre_clust*fs->csize;
+#if _MAX_SS!=512
+	tot_sect*=fs1->ssize/512;
+	fre_sect*=fs1->ssize/512;
+#endif	  
+	*total_p=tot_sect>>1;
+	*free_p=fre_sect>>1;
+    return fat32_res_trans(fat32_res); 
+#else
+    return FS_RES_NOT_IMP;
+#endif
+}
+
 /**********************
  *   STATIC FUNCTIONS
  **********************/
