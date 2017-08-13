@@ -83,6 +83,7 @@ typedef struct __fs_drv_struct
     fs_res_t (*tell) (void * file_p, uint32_t * pos_p);
     fs_res_t (*trunc) (void * file_p);
     fs_res_t (*size) (void * file_p, uint32_t * size_p);
+    fs_res_t (*free) (uint32_t * total_p, uint32_t * free_p);
     
     fs_res_t (*rddir_init) (void * rddir_p, const char * path);
     fs_res_t (*rddir) (void * rddir_p, char * fn);
@@ -97,6 +98,13 @@ typedef struct __fs_drv_struct
  * Initialize the File system interface
  */
 void fs_init(void);
+
+/**
+ * Add a new drive
+ * @param drv_p pointer to an fs_drv_t structure which is inited with the
+ * corresponding function pointer
+ */
+void fs_add_drv(fs_drv_t * drv_p);
 
 /**
  * Open a file
@@ -190,11 +198,13 @@ fs_res_t fs_readdir (fs_readdir_t * rddir_p, char * fn);
 fs_res_t fs_readdir_close (fs_readdir_t * rddir_p);
 
 /**
- * Add a new drive
- * @param drv_p pointer to an fs_drv_t structure which is inited with the
- * corresponding function pointer
+ * Get the free and total size of a driver in kB
+ * @param letter the driver letter
+ * @param total_p pointer to store the total size [kB]
+ * @param free_p pointer to store the free size [kB]
+ * @return FS_RES_OK or any error from fs_res_t enum
  */
-void fs_add_drv(fs_drv_t * drv_p);
+fs_res_t fs_free (char letter, uint32_t * total_p, uint32_t * free_p);
 
 /**
  * Fill a buffer with the letters of existing drivers

@@ -34,7 +34,6 @@ static ufs_ent_t* ufs_ent_new(const char * fn);
 /**********************
  *  STATIC VARIABLES
  **********************/
-static fs_drv_t ufs_drv;
 static ll_dsc_t file_ll;
 static bool inited = false;
       
@@ -52,6 +51,9 @@ static bool inited = false;
 void ufs_init(void)
 {
     ll_init(&file_ll, sizeof(ufs_ent_t));
+
+    fs_drv_t ufs_drv;
+    memset(&ufs_drv, 0, sizeof(fs_drv_t));    /*Initialization*/
     
     ufs_drv.file_size = sizeof(ufs_file_t);
     ufs_drv.rddir_size = sizeof(ufs_read_dir_t);
@@ -67,6 +69,7 @@ void ufs_init(void)
     ufs_drv.tell = ufs_tell;
     ufs_drv.size = ufs_size;
     ufs_drv.trunc = ufs_trunc;
+    ufs_drv.free = ufs_free;
     
     ufs_drv.rddir_init = ufs_readdir_init;
     ufs_drv.rddir = ufs_readdir;
@@ -428,6 +431,23 @@ fs_res_t ufs_readdir(void * rddir_p, char * fn)
  */
 fs_res_t ufs_readdir_close(void * rddir_p)
 {
+    return FS_RES_OK;
+}
+
+/**
+ * Give the size of a drive
+ * @param total_p pointer to store the total size [kB]
+ * @param free_p pointer to store the free site [kB]
+ * @return FS_RES_OK or any error from 'fs_res_t'
+ */
+fs_res_t ufs_free (uint32_t * total_p, uint32_t * free_p)
+{
+    dm_mon_t mon;
+
+    dm_monitor(&mon);
+    *total_p = DM_MEM_SIZE >> 10;    /*Convert bytes to kB*/
+    *free_p = mon.size_free >> 10;
+
     return FS_RES_OK;
 }
 
