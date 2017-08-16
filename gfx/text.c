@@ -65,8 +65,7 @@ void txt_get_size(point_t * size_res, const char * text, const font_t * font,
     uint8_t letter_height = font_get_height(font) >> FONT_ANTIALIAS;
 
     /*Calc. the height and longest line*/
-    while (text[line_start] != '\0')
-    {
+    while (text[line_start] != '\0') {
         new_line_start += txt_get_next_line(&text[line_start], font, letter_space, max_width, flag);
         size_res->y += letter_height ;
         size_res->y += line_space;
@@ -120,9 +119,8 @@ uint16_t txt_get_next_line(const char * txt, const font_t * font,
                 continue;
             }
         }
-
         /*Check for new line chars*/
-        if(txt[i] == '\n' || txt[i] == '\r') {
+        if((flag & TXT_FLAG_NO_BREAK) == 0 && (txt[i] == '\n' || txt[i] == '\r')) {
             /*Handle \n\r and \r\n as well*/
             if(txt[i] == '\n' && txt[i + 1] == '\r') {
                 i++;
@@ -203,10 +201,6 @@ cord_t txt_get_width(const char * txt, uint16_t char_num,
                 break;
             }
         }
-        
-        /*Correct the last letter space, 
-         * because there is no letter space after the last char*/
-        len -= letter_space;
     }
     
     return len;
