@@ -49,7 +49,7 @@ static bool txt_is_break_char(char letter);
  * @param max_width max with of the text (break the lines to fit this size) Set CORD_MAX to avoid line breaks
  */
 void txt_get_size(point_t * size_res, const char * text, const font_t * font,
-		          uint16_t letter_space, uint16_t line_space, cord_t max_width, txt_flag_t flag)
+                  uint16_t letter_space, uint16_t line_space, cord_t max_width, txt_flag_t flag)
 {
     size_res->x = 0;
     size_res->y = 0;
@@ -65,22 +65,21 @@ void txt_get_size(point_t * size_res, const char * text, const font_t * font,
     uint8_t letter_height = font_get_height(font) >> FONT_ANTIALIAS;
 
     /*Calc. the height and longest line*/
-    while (text[line_start] != '\0')
-    {
+    while (text[line_start] != '\0') {
         new_line_start += txt_get_next_line(&text[line_start], font, letter_space, max_width, flag);
         size_res->y += letter_height ;
         size_res->y += line_space;
 
-		/*Calculate the the longest line*/
-		act_line_length = txt_get_width(&text[line_start], new_line_start - line_start,
-									   font, letter_space, flag);
+        /*Calculate the the longest line*/
+        act_line_length = txt_get_width(&text[line_start], new_line_start - line_start,
+                                       font, letter_space, flag);
 
-		size_res->x = MATH_MAX(act_line_length, size_res->x);
-		line_start = new_line_start;
+        size_res->x = MATH_MAX(act_line_length, size_res->x);
+        line_start = new_line_start;
     }
 
     if(line_start != 0 && (text[line_start - 1] == '\n' || text[line_start - 1] == '\r')) {
-    	size_res->y += letter_height + line_space;
+        size_res->y += letter_height + line_space;
     }
 
     /*Correction with the last line space or set the height manually if the text is empty*/
@@ -120,9 +119,8 @@ uint16_t txt_get_next_line(const char * txt, const font_t * font,
                 continue;
             }
         }
-
         /*Check for new line chars*/
-        if(txt[i] == '\n' || txt[i] == '\r') {
+        if((flag & TXT_FLAG_NO_BREAK) == 0 && (txt[i] == '\n' || txt[i] == '\r')) {
             /*Handle \n\r and \r\n as well*/
             if(txt[i] == '\n' && txt[i + 1] == '\r') {
                 i++;
@@ -203,10 +201,6 @@ cord_t txt_get_width(const char * txt, uint16_t char_num,
                 break;
             }
         }
-        
-        /*Correct the last letter space, 
-         * because there is no letter space after the last char*/
-        len -= letter_space;
     }
     
     return len;
