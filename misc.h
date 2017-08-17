@@ -18,7 +18,7 @@ extern "C" {
  *      DEFINES
  *********************/
 #define MISC_VERSION_MAJOR  4
-#define MISC_VERSION_MINOR  1
+#define MISC_VERSION_MINOR  2
 #define MISC_VERSION_PATCH  0
 
 /**********************
