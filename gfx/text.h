@@ -59,7 +59,7 @@ typedef enum
  * @param max_width max with of the text (break the lines to fit this size) Set CORD_MAX to avoid line breaks
  */
 void txt_get_size(point_t * size_res, const char * text, const font_t * font,
-                    uint16_t letter_space, uint16_t line_space, cord_t max_width, txt_flag_t flag);
+                    cord_t letter_space, cord_t line_space, cord_t max_width, txt_flag_t flag);
 
 /**
  * Get the next line of text. Check line length and break chars too.
@@ -71,7 +71,7 @@ void txt_get_size(point_t * size_res, const char * text, const font_t * font,
  * @return the index of the first char of the new line
  */
 uint16_t txt_get_next_line(const char * txt, const font_t * font_p,
-                            uint16_t letter_space, cord_t max_l, txt_flag_t flag);
+                            cord_t letter_space, cord_t max_l, txt_flag_t flag);
 
 /**
  * Give the length of a text with a given font
@@ -83,7 +83,7 @@ uint16_t txt_get_next_line(const char * txt, const font_t * font_p,
  * @return length of a char_num long text
  */
 cord_t txt_get_width(const char * txt, uint16_t char_num,
-                    const font_t * font_p, uint16_t letter_space, txt_flag_t flag);
+                    const font_t * font_p, cord_t letter_space, txt_flag_t flag);
 
 /**
  * Check next character in a string and decide if te character is part of the command or not

@@ -349,9 +349,40 @@ fs_res_t fs_readdir_close (fs_readdir_t * rddir_p)
 }
 
 /**
+ * Get the free and total size of a driver in kB
+ * @param letter the driver letter
+ * @param total_p pointer to store the total size [kB]
+ * @param free_p pointer to store the free size [kB]
+ * @return FS_RES_OK or any error from fs_res_t enum
+ */
+fs_res_t fs_free (char letter, uint32_t * total_p, uint32_t * free_p)
+{
+    fs_drv_t * drv = fs_get_drv(letter);
+
+    if(drv == NULL) {
+        return FS_RES_INV_PARAM;
+    }
+
+    fs_res_t res;
+
+    if(drv->free == NULL) {
+        res =  FS_RES_NOT_IMP;
+    } else {
+        uint32_t total_tmp = 0;
+        uint32_t free_tmp = 0;
+        res = drv->free(&total_tmp, &free_tmp);
+
+        if(total_p != NULL) *total_p = total_tmp;
+        if(free_p != NULL) *free_p = free_tmp;
+    }
+
+    return res;
+}
+
+/**
  * Add a new drive
  * @param drv_p pointer to an fs_drv_t structure which is inited with the 
- * corresponding function pointer
+ * corresponding function pointer. The data will be copied so the variable can be local.
  */
 void fs_add_drv(fs_drv_t * drv_p)
 {
@@ -434,7 +465,7 @@ char * fs_up(char * path)
 
 /**
  * Get the last element of a path (e.g. U:/folder/file -> file)
- * @param buf buffer to store the letters ('\0' added after the last letter)
+ * @param path a character sting with the path to search in
  * @return pointer to the beginning of the last element in the path
  */
 const char * fs_get_last(const char * path)

@@ -47,30 +47,31 @@ static fs_res_t linuxfs_res_trans(int linuxfs_res);
  */
 void linuxfs_init(void)
 {
-
     /*Create the driver*/
-    fs_drv_t fat_drv;
+    fs_drv_t linux_drv;
+    memset(&linux_drv, 0, sizeof(fs_drv_t));    /*Initialization*/
 
-    fat_drv.file_size = sizeof(FILE *);
-    fat_drv.rddir_size = sizeof(DIR *);
-    fat_drv.letter = LINUXFS_LETTER;
-    fat_drv.ready = linuxfs_ready;
+    linux_drv.file_size = sizeof(FILE *);
+    linux_drv.rddir_size = sizeof(DIR *);
+    linux_drv.letter = LINUXFS_LETTER;
+    linux_drv.ready = linuxfs_ready;
 
-    fat_drv.open = linuxfs_open;
-    fat_drv.close = linuxfs_close;
-    fat_drv.remove = linuxfs_remove;
-    fat_drv.read = linuxfs_read;
-    fat_drv.write = linuxfs_write;
-    fat_drv.seek = linuxfs_seek;
-    fat_drv.tell = linuxfs_tell;
-    fat_drv.size = linuxfs_size;
-    fat_drv.trunc = NULL;
+    linux_drv.open = linuxfs_open;
+    linux_drv.close = linuxfs_close;
+    linux_drv.remove = linuxfs_remove;
+    linux_drv.read = linuxfs_read;
+    linux_drv.write = linuxfs_write;
+    linux_drv.seek = linuxfs_seek;
+    linux_drv.tell = linuxfs_tell;
+    linux_drv.size = linuxfs_size;
+    linux_drv.trunc = NULL;
 
-    fat_drv.rddir_init = linuxfs_readdir_init;
-    fat_drv.rddir = linuxfs_readdir;
-    fat_drv.rddir_close = linuxfs_readdir_close;
+    linux_drv.rddir_init = linuxfs_readdir_init;
+    linux_drv.rddir = linuxfs_readdir;
+    linux_drv.rddir_close = linuxfs_readdir_close;
 
-    fs_add_drv(&fat_drv);
+    linux_drv.free = NULL;
+    fs_add_drv(&linux_drv);
 }
 
 /**

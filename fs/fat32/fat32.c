@@ -50,6 +50,7 @@ void fat32_init(void)
 {
     /*Create the driver*/
     fs_drv_t fat_drv;
+    memset(&fat_drv, 0, sizeof(fs_drv_t));    /*Initialization*/
         
     fat_drv.file_size = sizeof(FIL);
     fat_drv.rddir_size = sizeof(DIR);
@@ -85,6 +86,12 @@ void fat32_init(void)
     fat_drv.rddir_init = NULL;
     fat_drv.rddir = NULL;
     fat_drv.rddir_close = NULL;
+#endif
+
+#if _FS_MINIMIZE == 0
+    fat_drv.free = fat32_free;
+#else
+    fat_drv.free = NULL;
 #endif
     fs_add_drv(&fat_drv);
 }
@@ -312,6 +319,36 @@ fs_res_t fat32_readdir_close(void * rddir_p)
 #if _FS_MINIMIZE < 2
     f_closedir(rddir_p);
     return FS_RES_OK;
+#else
+    return FS_RES_NOT_IMP;
+#endif
+}
+
+/**
+ * Give the size of a drive
+ * @param total_p pointer to store the total size [kB]
+ * @param free_p pointer to store the free size [kB]
+ * @return FS_RES_OK or any error from 'fs_res_t'
+ */
+fs_res_t fat32_free (uint32_t * total_p, uint32_t * free_p)
+{
+#if _FS_READONLY == 0 && _FS_MINIMIZE == 0
+	FATFS *fs;
+    FRESULT fat32_res;
+	uint32_t fre_clust = 0;
+	uint32_t fre_sect=0;
+	uint32_t tot_sect=0;
+
+	fat32_res = f_getfree("", (unsigned long*)&fre_clust, &fs);
+	tot_sect=(fs->n_fatent - 2) * fs->csize;
+	fre_sect=fre_clust*fs->csize;
+#if _MAX_SS!=512
+	tot_sect*=fs1->ssize / 512;
+	fre_sect*=fs1->ssize / 512;
+#endif	  
+	*total_p=tot_sect >> 1;
+	*free_p=fre_sect >> 1;
+    return fat32_res_trans(fat32_res); 
 #else
     return FS_RES_NOT_IMP;
 #endif
