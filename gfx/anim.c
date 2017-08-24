@@ -6,7 +6,7 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "../../misc_conf.h"
+#include "misc_conf.h"
 #include "../os/ptask.h"
 #include "anim.h"
 #include <stddef.h>
@@ -14,7 +14,7 @@
 
 #if USE_ANIM != 0
 #include "../math/math_base.h"
-#include "hal/systick/systick.h"
+#include "../../hal/systick/systick.h"
 
 /*********************
  *      DEFINES

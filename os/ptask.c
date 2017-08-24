@@ -7,13 +7,13 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "../../misc_conf.h"
+#include "misc_conf.h"
 #if USE_PTASK != 0
 
 
 #include "ptask.h"
 #include <stddef.h>
-#include "hal/systick/systick.h"
+#include "../../hal/systick/systick.h"
 
 /*********************
  *      DEFINES

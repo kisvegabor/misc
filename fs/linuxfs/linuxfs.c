@@ -7,7 +7,7 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "../../../misc_conf.h"
+#include "misc_conf.h"
 #if USE_LINUXFS != 0
 
 #include <string.h>

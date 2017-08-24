@@ -8,7 +8,7 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "../../misc_conf.h"
+#include "misc_conf.h"
 #if USE_CIRC != 0
 
 #include "area.h"
