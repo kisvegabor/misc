@@ -6,7 +6,7 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "../misc_conf.h"
+#include "misc_conf.h"
 
 #include "os/idle.h"
 #include "mem/dyn_mem.h"

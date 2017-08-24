@@ -30,7 +30,7 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "../../misc_conf.h"
+#include "misc_conf.h"
 #if USE_DYN_MEM_DEFR != 0
 
 #include "dyn_mem_defr.h"

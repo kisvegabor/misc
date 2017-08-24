@@ -16,7 +16,7 @@ extern "C" {
 /*********************
  *      INCLUDES
  *********************/
-#include "../../../misc_conf.h"
+#include "misc_conf.h"
 #if USE_LINUXFS != 0
 
 #include "../fsint.h"

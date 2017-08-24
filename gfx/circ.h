@@ -14,10 +14,10 @@ extern "C" {
 /*********************
  *      INCLUDES
  *********************/
-#include "../../misc_conf.h"
+#include "misc_conf.h"
 #if USE_CIRC != 0
 
-#include <misc/gfx/area.h>
+#include "area.h"
 #include <stddef.h>
 
 /*********************
