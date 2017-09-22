@@ -92,8 +92,42 @@ cord_t txt_get_width(const char * txt, uint16_t char_num,
  * @return true: the character is part of a command and should not be written,
  *         false: the character should be written
  */
-bool txt_is_cmd(txt_cmd_state_t * state, char c);
+bool txt_is_cmd(txt_cmd_state_t * state, uint32_t c);
 
+/**
+ * Decode an UTF-8 character from text.
+ * @param txt pointer to '\0' terminated string
+ * @param i start index in 'txt'. After the call it will point to the net byte in 'txt'
+ * @return the decoded Unicode character or 0 on invalid UTF-8 code
+ */
+uint32_t txt_unicode_next(const char * txt, uint32_t * i);
+
+/**
+ * Decode an UTF-8 character from text.
+ * @param txt pointer to '\0' terminated string
+ * @param i start index in 'txt'. After the call it will point to the net byte in 'txt'
+ * @return the decoded Unicode character or 0 on invalid UTF-8 code
+ */
+uint32_t txt_utf8_next(const char * txt, uint32_t * i);
+
+
+uint32_t txt_utf8_prev(const char * txt, uint32_t * i);
+
+uint8_t txt_utf8_size(uint8_t c);
+
+uint32_t txt_utf8_get_id(const char * txt, uint32_t utf8_id);
+
+/**
+ * Get the number of characters (and NOT bytes) in a string. Decode it with UTF-8 if enabled
+ * E.g.: ÁBC is 3 character (but 4 bytes)
+ * @param txt a '\0' terminated char string
+ * @return number of characters
+ */
+uint32_t txt_len(const char * txt);
+
+
+void txt_ins(char * txt_buf, uint32_t pos, const char * ins_txt);
+void txt_cut(char * txt, uint32_t pos, uint32_t len);
 /**********************
  *      MACROS
  **********************/

@@ -16,7 +16,7 @@ extern "C" {
 #include "../font.h"
 
 
-const font_t * dejavu_30_get_dsc(void);
+font_t * dejavu_30_get_dsc(void);
 
 #endif
 

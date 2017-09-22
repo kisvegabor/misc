@@ -1072,7 +1072,7 @@ static const uint8_t  symbol_30_widths[33] =
     29, 
 };
 
-static const font_t symbol_30_dsc = 
+static font_t symbol_30_dsc =
 {
     33, // Letter count
     90, // First ascii code
@@ -1083,7 +1083,7 @@ static const font_t symbol_30_dsc =
     symbol_30_bitmaps
 };
 
-const font_t * symbol_30_get_dsc(void)
+font_t * symbol_30_get_dsc(void)
 {
     return &symbol_30_dsc;
 }

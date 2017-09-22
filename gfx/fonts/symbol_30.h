@@ -13,7 +13,7 @@ extern "C" {
 #include <stdint.h>
 #include "../font.h"
 
-const font_t * symbol_30_get_dsc(void);
+font_t * symbol_30_get_dsc(void);
 
 #endif
 

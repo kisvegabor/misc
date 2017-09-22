@@ -13965,7 +13965,7 @@ static const uint8_t  dejavu_60_widths[] =
 #endif
 };
 
-static const font_t dejavu_60_dsc = 
+static font_t dejavu_60_dsc =
 {
 #if FONT_BUILTIN_LATIN_EXT != 0
     224, // Letter count
@@ -13980,7 +13980,7 @@ static const font_t dejavu_60_dsc =
     dejavu_60_bitmaps
 };
 
-const font_t * dejavu_60_get_dsc(void)
+font_t * dejavu_60_get_dsc(void)
 {
     return &dejavu_60_dsc;
 }

@@ -7244,7 +7244,7 @@ static const uint8_t  dejavu_30_widths[] =
 #endif
 };
 
-static const font_t dejavu_30_dsc = 
+static font_t dejavu_30_dsc =
 {
 
 #if FONT_BUILTIN_LATIN_EXT != 0
@@ -7260,7 +7260,7 @@ static const font_t dejavu_30_dsc =
     dejavu_30_bitmaps
 };
 
-const font_t * dejavu_30_get_dsc(void)
+font_t * dejavu_30_get_dsc(void)
 {
     return &dejavu_30_dsc;
 }

@@ -16,6 +16,8 @@
 #include "fonts/dejavu_14.h"
 #include "fonts/dejavu_20.h"
 #include "fonts/dejavu_30.h"
+#include "fonts/dejavu_30_latin_ext_a.h"
+#include "fonts/dejavu_30_latin_ext_b.h"
 #include "fonts/dejavu_40.h"
 #include "fonts/dejavu_60.h"
 #include "fonts/dejavu_80.h"
@@ -30,9 +32,6 @@
 /**********************
  *      TYPEDEFS
  **********************/
-typedef struct
-{
-}font_map_t;
 
 /**********************
  *  STATIC PROTOTYPES
@@ -41,7 +40,7 @@ typedef struct
 /**********************
  *  STATIC VARIABLES
  **********************/
-const font_t * (*font_map[FONT_NAME_NUM])(void);
+font_t * (*font_map[FONT_NAME_NUM])(void);
 
 
 /**********************
@@ -62,47 +61,55 @@ const font_t * (*font_map[FONT_NAME_NUM])(void);
 void font_init(void)
 {
 #if USE_FONT_DEJAVU_8 != 0
-    font_add(FONT_DEJAVU_8, dejavu_8_get_dsc);
+    font_add(FONT_DEJAVU_8, dejavu_8_get_dsc, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_10 != 0
-    font_add(FONT_DEJAVU_10, dejavu_10_get_dsc);
+    font_add(FONT_DEJAVU_10, dejavu_10_get_dsc, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_14 != 0
-    font_add(FONT_DEJAVU_14, dejavu_14_get_dsc);
+    font_add(FONT_DEJAVU_14, dejavu_14_get_dsc, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_20 != 0
-    font_add(FONT_DEJAVU_20, dejavu_20_get_dsc);
+    font_add(FONT_DEJAVU_20, dejavu_20_get_dsc, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_30 != 0
-    font_add(FONT_DEJAVU_30, dejavu_30_get_dsc);
+    font_add(FONT_DEJAVU_30, dejavu_30_get_dsc, NULL);
+#endif
+
+#if USE_FONT_DEJAVU_30_LATIN_EXT_A != 0
+    font_add(FONT_DEJAVU_30_LATIN_EXT_A, dejavu_30_latin_ext_a_get_dsc, dejavu_30_get_dsc());
+#endif
+
+#if USE_FONT_DEJAVU_30_LATIN_EXT_B != 0
+    font_add(FONT_DEJAVU_30_LATIN_EXT_B, dejavu_30_latin_ext_b_get_dsc, dejavu_30_get_dsc());
 #endif
 
 #if USE_FONT_DEJAVU_40 != 0
-    font_add(FONT_DEJAVU_40, dejavu_40_get_dsc);
+    font_add(FONT_DEJAVU_40, dejavu_40_get_dsc, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_60 != 0
-    font_add(FONT_DEJAVU_60, dejavu_60_get_dsc);
+    font_add(FONT_DEJAVU_60, dejavu_60_get_dsc, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_80 != 0
-    font_add(FONT_DEJAVU_80, dejavu_80_get_dsc);
+    font_add(FONT_DEJAVU_80, dejavu_80_get_dsc, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_120 != 0
-    font_add(FONT_DEJAVU_120, dejavu_120_get_dsc);
+    font_add(FONT_DEJAVU_120, dejavu_120_get_dsc), NULL;
 #endif
 
 #if USE_FONT_SYMBOL_30 != 0
-    font_add(FONT_SYMBOL_30, symbol_30_get_dsc);
+    font_add(FONT_SYMBOL_30, symbol_30_get_dsc, NULL);
 #endif
 
 #if USE_FONT_SYMBOL_60 != 0
-    font_add(FONT_SYMBOL_60, symbol_60_get_dsc);
+    font_add(FONT_SYMBOL_60, symbol_60_get_dsc, NULL);
 #endif
 }
 
@@ -110,12 +117,23 @@ void font_init(void)
  * Create a pair from font name and font dsc. get function. After it 'font_get' can be used for this font
  * @param name name of the font
  * @param dsc_get_fp the font descriptor get function
+ * @param parent add this font as charter set extension of 'parent'
  */
-void font_add(font_name_t name, const font_t * (*dsc_get_fp)(void))
+void font_add(font_name_t name, font_t * (*dsc_get_fp)(void), font_t * parent)
 {
     if(name >= FONT_NAME_NUM) return;
+    if(dsc_get_fp == NULL) return;
 
     font_map[name] = dsc_get_fp;
+
+    font_t * font = dsc_get_fp();
+    font->next_page = NULL;
+
+    if(parent) {
+        while(parent->next_page != NULL) parent = parent->next_page; /*Got to the last page and as the new one there*/
+
+        parent->next_page = dsc_get_fp();
+    }
 }
 
 
@@ -142,12 +160,19 @@ const font_t * font_get(font_name_t name)
  * @param letter a letter
  * @return  pointer to the bitmap of the letter
  */
-const uint8_t * font_get_bitmap(const font_t * font_p, uint8_t letter)
+const uint8_t * font_get_bitmap(const font_t * font_p, uint32_t letter)
 {
-    if(letter < font_p->start_ascii || letter >= font_p->start_ascii + font_p->letter_cnt) return NULL;
+    const font_t * font_i = font_p;
+    while(font_i != NULL) {
+        if(letter >= font_i->start_ascii && letter < font_i->start_ascii + font_i->letter_cnt) {
+            uint32_t index = (letter - font_i->start_ascii) * font_i->height_row * font_i->width_byte;
+            return &font_i->bitmaps_a[index];
+        }
 
-    uint32_t index = (letter - font_p->start_ascii) * font_p->height_row * font_p->width_byte;
-    return &font_p->bitmaps_a[index];
+        font_i = font_i->next_page;
+    }
+
+    return NULL;
 }
 
 /**
@@ -156,18 +181,18 @@ const uint8_t * font_get_bitmap(const font_t * font_p, uint8_t letter)
  * @param letter a letter
  * @return the width of a letter
  */
-uint8_t font_get_width(const font_t * font_p, uint8_t letter)
+uint8_t font_get_width(const font_t * font_p, uint32_t letter)
 {
-    if(letter < font_p->start_ascii) return 0;
-
-    letter -= font_p->start_ascii;
-    uint8_t w = 0;
-    if(letter < font_p->letter_cnt) {
-        w = font_p->fixed_width != 0 ? font_p->fixed_width :
-                                      font_p->width_bit_a[letter];
+    const font_t * font_i = font_p;
+    while(font_i != NULL) {
+        if(letter >= font_i->start_ascii && letter < font_i->start_ascii + font_i->letter_cnt) {
+            uint8_t  w = font_i->fixed_width != 0 ? font_i->fixed_width : font_i->width_bit_a[letter - font_i->start_ascii];
+            return w;
+        }
+        font_i = font_i->next_page;
     }
 
-    return w;
+    return 0;
 }
 
 /**********************
