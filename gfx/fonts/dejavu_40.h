@@ -1,23 +1,17 @@
 #ifndef DEJAVU_40_H
 #define DEJAVU_40_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+/*Use UTF-8 encoding in the IDE*/
 
+#include "misc_conf.h"
 
-/*Use ISO8859-1 encoding in the IDE*/
-
-#include "../../../misc_conf.h"
-#if USE_FONT_DEJAVU_40 != 0
-
+#if  USE_FONT_DEJAVU_40 != 0
 
 #include <stdint.h>
 #include "../font.h"
 
+font_t * dejavu_40_get_dsc(void);
 
-const font_t * dejavu_40_get_dsc(void);
+#endif   /*USE_FONT_DEJAVU_40 != 0*/
 
-#endif
-
-#endif
+#endif   /*DEJAVU_40_H*/

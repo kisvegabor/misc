@@ -95,39 +95,71 @@ cord_t txt_get_width(const char * txt, uint16_t char_num,
 bool txt_is_cmd(txt_cmd_state_t * state, uint32_t c);
 
 /**
- * Decode an UTF-8 character from text.
- * @param txt pointer to '\0' terminated string
- * @param i start index in 'txt'. After the call it will point to the net byte in 'txt'
- * @return the decoded Unicode character or 0 on invalid UTF-8 code
+ * Insert a string into an other
+ * @param txt_buf the original text (must be big enough for the result text)
+ * @param pos position to insert (0: before the original text, 1: after the first char etc.)
+ * @param ins_txt text to insert
  */
-uint32_t txt_unicode_next(const char * txt, uint32_t * i);
+void txt_ins(char * txt_buf, uint32_t pos, const char * ins_txt);
 
 /**
- * Decode an UTF-8 character from text.
+ * Delete a part of a string
+ * @param txt string to modify
+ * @param pos position where to start the deleting (0: before the first char, 1: after the first char etc.)
+ * @param len number of characters to delete
+ */
+void txt_cut(char * txt, uint32_t pos, uint32_t len);
+
+/**
+ * Give the size of an UTF-8 coded character
+ * @param c A character where the UTF-8 character starts
+ * @return length of the UTF-8 character (1,2,3 or 4). O on invalid code
+ */
+uint8_t txt_utf8_size(uint8_t c);
+
+
+/**
+ * Convert an Unicode letter to UTF-8.
+ * @param letter_uni an Unicode letter
+ * @return UTF-8 coded character in Little Endian to be compatible with C chars (e.g. 'Á', 'Ű')
+ */
+uint32_t txt_unicode_to_utf8(uint32_t letter_uni);
+
+/**
+ * Decode an UTF-8 character from a string.
  * @param txt pointer to '\0' terminated string
- * @param i start index in 'txt'. After the call it will point to the net byte in 'txt'
+ * @param i start index in 'txt' where to start.
+ *                After the call it will point to the next UTF-8 char in 'txt'.
+ *                NULL to use txt[0] as index
  * @return the decoded Unicode character or 0 on invalid UTF-8 code
  */
 uint32_t txt_utf8_next(const char * txt, uint32_t * i);
 
+/**
+ * Get previous UTF-8 character form a string.
+ * @param txt pointer to '\0' terminated string
+ * @param i_start index in 'txt' where to start. After the call it will point to the next UTF-8 char in 'txt'.
+ * @return the decoded Unicode character or 0 on invalid UTF-8 code
+ */
+uint32_t txt_utf8_prev(const char * txt, uint32_t * i_start);
 
-uint32_t txt_utf8_prev(const char * txt, uint32_t * i);
-
-uint8_t txt_utf8_size(uint8_t c);
-
+/**
+ * Convert a letter index (in an UTF-8 text) to byte index.
+ * E.g. in "AÁRT" index of 'R' is 2 but start at byte 3 because 'Á' is 2 bytes long
+ * @param txt a '\0' terminated UTF-8 string
+ * @param utf8_id letter index
+ * @return byte index of the 'utf8_id'th letter
+ */
 uint32_t txt_utf8_get_id(const char * txt, uint32_t utf8_id);
 
 /**
- * Get the number of characters (and NOT bytes) in a string. Decode it with UTF-8 if enabled
- * E.g.: ÁBC is 3 character (but 4 bytes)
+ * Get the number of characters (and NOT bytes) in a string. Decode it with UTF-8 if enabled.
+ * E.g.: "ÁBC" is 3 characters (but 4 bytes)
  * @param txt a '\0' terminated char string
  * @return number of characters
  */
 uint32_t txt_len(const char * txt);
 
-
-void txt_ins(char * txt_buf, uint32_t pos, const char * ins_txt);
-void txt_cut(char * txt, uint32_t pos, uint32_t len);
 /**********************
  *      MACROS
  **********************/

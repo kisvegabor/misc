@@ -242,6 +242,12 @@ bool txt_is_cmd(txt_cmd_state_t * state, uint32_t c)
    return ret;
 }
 
+/**
+ * Insert a string into an other
+ * @param txt_buf the original text (must be big enough for the result text)
+ * @param pos position to insert (0: before the original text, 1: after the first char etc.)
+ * @param ins_txt text to insert
+ */
 void txt_ins(char * txt_buf, uint32_t pos, const char * ins_txt)
 {
     uint32_t old_len = strlen(txt_buf);
@@ -260,6 +266,12 @@ void txt_ins(char * txt_buf, uint32_t pos, const char * ins_txt)
     memcpy(txt_buf + pos, ins_txt, ins_len);
 }
 
+/**
+ * Delete a part of a string
+ * @param txt string to modify
+ * @param pos position where to start the deleting (0: before the first char, 1: after the first char etc.)
+ * @param len number of characters to delete
+ */
 void txt_cut(char * txt, uint32_t pos, uint32_t len)
 {
 
@@ -276,7 +288,11 @@ void txt_cut(char * txt, uint32_t pos, uint32_t len)
     }
 }
 
-
+/**
+ * Give the size of an UTF-8 coded character
+ * @param c A character where the UTF-8 character starts
+ * @return length of the UTF-8 character (1,2,3 or 4). O on invalid code
+ */
 uint8_t txt_utf8_size(uint8_t c)
 {
     if((c & 0b10000000) == 0) return 1;
@@ -287,20 +303,49 @@ uint8_t txt_utf8_size(uint8_t c)
 }
 
 
+/**
+ * Convert an Unicode letter to UTF-8.
+ * @param letter_uni an Unicode letter
+ * @return UTF-8 coded character in Little Endian to be compatible with C chars (e.g. 'Á', 'Ű')
+ */
 uint32_t txt_unicode_to_utf8(uint32_t letter_uni)
 {
-    return 0;
+    if(letter_uni < 128) return letter_uni;
+    uint8_t bytes[4];
+
+    if (letter_uni < 0x0800) {
+        bytes[0] = ((letter_uni>>6)  & 0x1F) | 0xC0;
+        bytes[1] = ((letter_uni>>0)  & 0x3F) | 0x80;
+        bytes[2] = 0;
+        bytes[3] = 0;
+    }
+    else if (letter_uni < 0x010000) {
+        bytes[0] = ((letter_uni>>12) & 0x0F) | 0xE0;
+        bytes[1] = ((letter_uni>>6)  & 0x3F) | 0x80;
+        bytes[2] = ((letter_uni>>0)  & 0x3F) | 0x80;
+        bytes[3] = 0;
+    }
+    else if (letter_uni < 0x110000) {
+        bytes[0] = ((letter_uni>>18) & 0x07) | 0xF0;
+        bytes[1] = ((letter_uni>>12) & 0x3F) | 0x80;
+        bytes[2] = ((letter_uni>>6)  & 0x3F) | 0x80;
+        bytes[3] = ((letter_uni>>0)  & 0x3F) | 0x80;
+    }
+
+    return *((uint32_t *) bytes);
 }
 
 /**
- * Decode an UTF-8 character from text.
+ * Decode an UTF-8 character from a string.
  * @param txt pointer to '\0' terminated string
- * @param i start index in 'txt'. After the call it will point to the net byte in 'txt'
+ * @param i start index in 'txt' where to start.
+ *                After the call it will point to the next UTF-8 char in 'txt'.
+ *                NULL to use txt[0] as index
  * @return the decoded Unicode character or 0 on invalid UTF-8 code
  */
 uint32_t txt_utf8_next(const char * txt, uint32_t * i)
 {
-    /* UTF-8 to Unicode
+    /* Unicode to UTF-8
      * 00000000 00000000 00000000 0xxxxxxx -> 0xxxxxxx
      * 00000000 00000000 00000yyy yyxxxxxx -> 110yyyyy 10xxxxxx
      * 00000000 00000000 zzzzyyyy yyxxxxxx -> 1110zzzz 10yyyyyy 10xxxxxx
@@ -308,6 +353,8 @@ uint32_t txt_utf8_next(const char * txt, uint32_t * i)
      * */
 
     uint32_t result = 0;
+
+    /*Dummy 'i' pointer is required*/
     uint32_t i_tmp = 0;
     if(i == NULL) i = &i_tmp;
 
@@ -362,25 +409,43 @@ uint32_t txt_utf8_next(const char * txt, uint32_t * i)
     return result;
 }
 
-
-uint32_t txt_utf8_prev(const char * txt, uint32_t * i)
+/**
+ * Get previous UTF-8 character form a string.
+ * @param txt pointer to '\0' terminated string
+ * @param i_start index in 'txt' where to start. After the call it will point to the next UTF-8 char in 'txt'.
+ * @return the decoded Unicode character or 0 on invalid UTF-8 code
+ */
+uint32_t txt_utf8_prev(const char * txt, uint32_t * i_start)
 {
     uint8_t c_size;
-    (*i)--;
+    uint8_t cnt = 0;
+
+    /*Try to find a !0 long UTF-8 char by stepping one character back*/
+    (*i_start)--;
     do {
-        c_size = txt_utf8_size(txt[*i]);
+        if(cnt >= 4) return 0;      /*No UTF-8 char found before the initial*/
+
+        c_size = txt_utf8_size(txt[*i_start]);
         if(c_size == 0) {
-            if(*i != 0) (*i)--;
+            if(*i_start != 0) (*i_start)--;
             else return 0;
         }
+        cnt++;
     } while(c_size == 0);
 
-    uint32_t i_tmp = *i;
-    uint32_t letter = txt_utf8_next(txt, &i_tmp);
+    uint32_t i_tmp = *i_start;
+    uint32_t letter = txt_utf8_next(txt, &i_tmp);   /*Character found, get it*/
 
     return letter;
 }
 
+/**
+ * Convert a letter index (in an UTF-8 text) to byte index.
+ * E.g. in "AÁRT" index of 'R' is 2 but start at byte 3 because 'Á' is 2 bytes long
+ * @param txt a '\0' terminated UTF-8 string
+ * @param utf8_id letter index
+ * @return byte index of the 'utf8_id'th letter
+ */
 uint32_t txt_utf8_get_id(const char * txt, uint32_t utf8_id)
 {
     uint32_t i;
@@ -393,8 +458,8 @@ uint32_t txt_utf8_get_id(const char * txt, uint32_t utf8_id)
 }
 
 /**
- * Get the number of characters (and NOT bytes) in a string. Decode it with UTF-8 if enabled
- * E.g.: ÁBC is 3 character (but 4 bytes)
+ * Get the number of characters (and NOT bytes) in a string. Decode it with UTF-8 if enabled.
+ * E.g.: "ÁBC" is 3 characters (but 4 bytes)
  * @param txt a '\0' terminated char string
  * @return number of characters
  */

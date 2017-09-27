@@ -30,39 +30,240 @@ extern "C" {
 
 typedef enum
 {
-#if USE_FONT_DEJAVU_8 != 0
-    FONT_DEJAVU_8,
-#endif
+    /*DEJAVU 10*/
 #if USE_FONT_DEJAVU_10 != 0
     FONT_DEJAVU_10,
 #endif
-#if USE_FONT_DEJAVU_14 != 0
-    FONT_DEJAVU_14,
+
+#if USE_FONT_DEJAVU_10_SUP != 0
+    FONT_DEJAVU_10_SUP,
 #endif
+
+#if USE_FONT_DEJAVU_10_LATIN_EXT_A != 0
+    FONT_DEJAVU_10_LATIN_EXT_A,
+#endif
+
+#if USE_FONT_DEJAVU_10_LATIN_EXT_B != 0
+    FONT_DEJAVU_10_LATIN_EXT_B,
+#endif
+
+#if USE_FONT_DEJAVU_10_CYRILLIC != 0
+    FONT_DEJAVU_10_CYRILLIC,
+#endif
+
+    /*DEJAVU 15*/
+ #if USE_FONT_DEJAVU_15 != 0
+     FONT_DEJAVU_15,
+ #endif
+
+ #if USE_FONT_DEJAVU_15_SUP != 0
+     FONT_DEJAVU_15_SUP,
+ #endif
+
+ #if USE_FONT_DEJAVU_15_LATIN_EXT_A != 0
+     FONT_DEJAVU_15_LATIN_EXT_A,
+ #endif
+
+ #if USE_FONT_DEJAVU_15_LATIN_EXT_B != 0
+     FONT_DEJAVU_15_LATIN_EXT_B,
+ #endif
+
+ #if USE_FONT_DEJAVU_15_CYRILLIC != 0
+     FONT_DEJAVU_15_CYRILLIC,
+ #endif
+
+     /*DEJAVU 20*/
 #if USE_FONT_DEJAVU_20 != 0
-    FONT_DEJAVU_20,
+     FONT_DEJAVU_20,
 #endif
+
+#if USE_FONT_DEJAVU_20_SUP != 0
+     FONT_DEJAVU_20_SUP,
+#endif
+
+#if USE_FONT_DEJAVU_20_LATIN_EXT_A != 0
+     FONT_DEJAVU_20_LATIN_EXT_A,
+#endif
+
+#if USE_FONT_DEJAVU_20_LATIN_EXT_B != 0
+     FONT_DEJAVU_20_LATIN_EXT_B,
+#endif
+
+#if USE_FONT_DEJAVU_20_CYRILLIC != 0
+     FONT_DEJAVU_20_CYRILLIC,
+#endif
+
+  /*DEJAVU 25*/
+#if USE_FONT_DEJAVU_25 != 0
+   FONT_DEJAVU_25,
+#endif
+
+#if USE_FONT_DEJAVU_25_SUP != 0
+   FONT_DEJAVU_25_SUP,
+#endif
+
+#if USE_FONT_DEJAVU_25_LATIN_EXT_A != 0
+   FONT_DEJAVU_25_LATIN_EXT_A,
+#endif
+
+#if USE_FONT_DEJAVU_25_LATIN_EXT_B != 0
+   FONT_DEJAVU_25_LATIN_EXT_B,
+#endif
+
+#if USE_FONT_DEJAVU_25_CYRILLIC != 0
+   FONT_DEJAVU_25_CYRILLIC,
+#endif
+
+   /*DEJAVU 30*/
 #if USE_FONT_DEJAVU_30 != 0
-    FONT_DEJAVU_30,
+   FONT_DEJAVU_30,
 #endif
+
+#if USE_FONT_DEJAVU_30_SUP != 0
+   FONT_DEJAVU_30_SUP,
+#endif
+
 #if USE_FONT_DEJAVU_30_LATIN_EXT_A != 0
-    FONT_DEJAVU_30_LATIN_EXT_A,
+   FONT_DEJAVU_30_LATIN_EXT_A,
 #endif
+
 #if USE_FONT_DEJAVU_30_LATIN_EXT_B != 0
-    FONT_DEJAVU_30_LATIN_EXT_B,
+   FONT_DEJAVU_30_LATIN_EXT_B,
 #endif
+
+#if USE_FONT_DEJAVU_30_CYRILLIC != 0
+   FONT_DEJAVU_30_CYRILLIC,
+#endif
+
+    /*DEJAVU 40*/
 #if USE_FONT_DEJAVU_40 != 0
     FONT_DEJAVU_40,
 #endif
+
+#if USE_FONT_DEJAVU_40_SUP != 0
+    FONT_DEJAVU_40_SUP,
+#endif
+
+#if USE_FONT_DEJAVU_40_LATIN_EXT_A != 0
+    FONT_DEJAVU_40_LATIN_EXT_A,
+#endif
+
+#if USE_FONT_DEJAVU_40_LATIN_EXT_B != 0
+    FONT_DEJAVU_40_LATIN_EXT_B,
+#endif
+
+#if USE_FONT_DEJAVU_40_CYRILLIC != 0
+    FONT_DEJAVU_40_CYRILLIC,
+#endif
+
+    /*DEJAVU 50*/
+#if USE_FONT_DEJAVU_50 != 0
+    FONT_DEJAVU_50,
+#endif
+
+#if USE_FONT_DEJAVU_50_SUP != 0
+    FONT_DEJAVU_50_SUP,
+#endif
+
+#if USE_FONT_DEJAVU_50_LATIN_EXT_A != 0
+    FONT_DEJAVU_50_LATIN_EXT_A,
+#endif
+
+#if USE_FONT_DEJAVU_50_LATIN_EXT_B != 0
+    FONT_DEJAVU_50_LATIN_EXT_B,
+#endif
+
+#if USE_FONT_DEJAVU_50_CYRILLIC != 0
+    FONT_DEJAVU_50_CYRILLIC,
+#endif
+
+    /*DEJAVU 60*/
 #if USE_FONT_DEJAVU_60 != 0
     FONT_DEJAVU_60,
 #endif
+
+#if USE_FONT_DEJAVU_60_SUP != 0
+    FONT_DEJAVU_60_SUP,
+#endif
+
+#if USE_FONT_DEJAVU_60_LATIN_EXT_A != 0
+    FONT_DEJAVU_60_LATIN_EXT_A,
+#endif
+
+#if USE_FONT_DEJAVU_60_LATIN_EXT_B != 0
+    FONT_DEJAVU_60_LATIN_EXT_B,
+#endif
+
+#if USE_FONT_DEJAVU_60_CYRILLIC != 0
+    FONT_DEJAVU_60_CYRILLIC,
+#endif
+
+    /*DEJAVU 80*/
 #if USE_FONT_DEJAVU_80 != 0
     FONT_DEJAVU_80,
 #endif
+
+#if USE_FONT_DEJAVU_80_SUP != 0
+    FONT_DEJAVU_80_SUP,
+#endif
+
+#if USE_FONT_DEJAVU_80_LATIN_EXT_A != 0
+    FONT_DEJAVU_80_LATIN_EXT_A,
+#endif
+
+#if USE_FONT_DEJAVU_80_LATIN_EXT_B != 0
+    FONT_DEJAVU_80_LATIN_EXT_B,
+#endif
+
+#if USE_FONT_DEJAVU_80_CYRILLIC != 0
+    FONT_DEJAVU_80_CYRILLIC,
+#endif
+
+    /*DEJAVU 100*/
+#if USE_FONT_DEJAVU_100 != 0
+    FONT_DEJAVU_100,
+#endif
+
+#if USE_FONT_DEJAVU_100_SUP != 0
+    FONT_DEJAVU_100_SUP,
+#endif
+
+#if USE_FONT_DEJAVU_100_LATIN_EXT_A != 0
+    FONT_DEJAVU_100_LATIN_EXT_A,
+#endif
+
+#if USE_FONT_DEJAVU_100_LATIN_EXT_B != 0
+    FONT_DEJAVU_100_LATIN_EXT_B,
+#endif
+
+#if USE_FONT_DEJAVU_100_CYRILLIC != 0
+    FONT_DEJAVU_100_CYRILLIC,
+#endif
+
+    /*DEJAVU 120*/
 #if USE_FONT_DEJAVU_120 != 0
     FONT_DEJAVU_120,
 #endif
+
+#if USE_FONT_DEJAVU_120_SUP != 0
+    FONT_DEJAVU_120_SUP,
+#endif
+
+#if USE_FONT_DEJAVU_120_LATIN_EXT_A != 0
+    FONT_DEJAVU_120_LATIN_EXT_A,
+#endif
+
+#if USE_FONT_DEJAVU_120_LATIN_EXT_B != 0
+    FONT_DEJAVU_120_LATIN_EXT_B,
+#endif
+
+#if USE_FONT_DEJAVU_120_CYRILLIC != 0
+    FONT_DEJAVU_120_CYRILLIC,
+#endif
+
+
+
+    /*SYMBOL FONTS*/
 #if USE_FONT_SYMBOL_30 != 0
     FONT_SYMBOL_30,
 #endif
@@ -83,13 +284,12 @@ struct _font_struct;
 
 typedef struct _font_struct
 {
-    uint32_t letter_cnt;
-    uint32_t start_ascii;
-    uint8_t width_byte;
+    uint32_t first_ascii;
+    uint32_t last_ascii;
     uint8_t height_row;
-    uint8_t fixed_width;
-    const uint8_t * width_bit_a;
-    const uint8_t * bitmaps_a;
+    const uint8_t * bitmap;
+    const uint32_t * map;
+    const uint8_t * width;
     struct _font_struct * next_page;    /*Pointer to a font extension*/
 }font_t;
 
