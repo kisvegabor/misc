@@ -13,7 +13,7 @@
 
 #include "ptask.h"
 #include <stddef.h>
-#include "../../hal/systick/systick.h"
+#include MISC_SYSTICK_INCLUDE
 
 /*********************
  *      DEFINES
@@ -63,9 +63,9 @@ void ptask_handler(void)
 
 	static uint32_t idle_tick = 0;
     static uint32_t used_tick = 0;
-    uint32_t start_tick = systick_get();
+    uint32_t start_tick = MISC_SYSTICK_GET();
 
-	if(idle_tick == 0) idle_tick = systick_get();
+	if(idle_tick == 0) idle_tick = MISC_SYSTICK_GET();
 
     ptask_t* ptask_prio_a[PTASK_PRIO_NUM]; /*Lists for all prio.*/
     ptask_prio_t prio_act;
@@ -111,9 +111,9 @@ void ptask_handler(void)
         }
     }
 
-    used_tick += systick_elaps(start_tick);
-    if(systick_elaps(idle_tick) > PTASK_IDLE_PERIOD) {
-        idle_last = (uint32_t)((uint32_t) used_tick * 100) / systick_elaps(idle_tick);  /*Calculate the busy time*/
+    used_tick += MISC_SYSTICK_ELAPS(start_tick);
+    if(MISC_SYSTICK_ELAPS(idle_tick) > PTASK_IDLE_PERIOD) {
+        idle_last = (uint32_t)((uint32_t) used_tick * 100) / MISC_SYSTICK_ELAPS(idle_tick);  /*Calculate the busy time*/
         idle_last = idle_last > 100 ? 0 : 100 - idle_last;  /*Convert he busy time to idle time*/
         idle_tick = 0;
         used_tick = 0;
@@ -140,7 +140,7 @@ ptask_t* ptask_create(void (*task) (void *), uint32_t period, ptask_prio_t prio,
     new_ptask->prio = prio;
     new_ptask->param = param;
     new_ptask->once = 0;
-    new_ptask->last_run = systick_get();
+    new_ptask->last_run = MISC_SYSTICK_GET();
 
     return new_ptask;
 }
@@ -182,7 +182,7 @@ void ptask_set_period(ptask_t* ptask_p, uint32_t period)
  */
 void ptask_ready(ptask_t* ptask_p)
 {
-    ptask_p->last_run = systick_get() - ptask_p->period - 1;
+    ptask_p->last_run = MISC_SYSTICK_GET() - ptask_p->period - 1;
 }
 
 /**
@@ -201,7 +201,7 @@ void ptask_once(ptask_t * ptask_p)
  */
 void ptask_reset(ptask_t* ptask_p)
 {
-    ptask_p->last_run = systick_get();
+    ptask_p->last_run = MISC_SYSTICK_GET();
 }
 
 /**
@@ -240,9 +240,9 @@ static bool ptask_exec (ptask_t* ptask_p, ptask_prio_t prio_act)
     /*Execute ptask if its prio is 'prio_act'*/
     if(ptask_p->prio == prio_act) {
         /*Execute if at least 'period' time elapsed*/
-        uint32_t elp = systick_elaps(ptask_p->last_run);
+        uint32_t elp = MISC_SYSTICK_ELAPS(ptask_p->last_run);
         if(elp >= ptask_p->period) {
-            ptask_p->last_run = systick_get();
+            ptask_p->last_run = MISC_SYSTICK_GET();
             ptask_p->task(ptask_p->param);
 
             /*Delete if it was a one shot ptask*/

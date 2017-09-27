@@ -14,7 +14,7 @@
 
 #if USE_ANIM != 0
 #include "../math/math_base.h"
-#include "../../hal/systick/systick.h"
+#include MISC_SYSTICK_INCLUDE
 
 /*********************
  *      DEFINES
@@ -67,7 +67,7 @@ static anim_path_t anim_path_step[] =
 void anim_init(void)
 {
 	ll_init(&anim_ll, sizeof(anim_t));
-	last_task_run = systick_get();
+	last_task_run = MISC_SYSTICK_GET();
 	ptask_create(anim_task, ANIM_REFR_PERIOD, PTASK_PRIO_MID, NULL);
 }
 
@@ -171,8 +171,7 @@ anim_path_t * anim_get_path(anim_path_name_t name)
 static void anim_task (void * param)
 {
 	volatile uint32_t elaps;
-	elaps = systick_elaps(last_task_run);
-
+	elaps = MISC_SYSTICK_ELAPS(last_task_run);
 
 	anim_t * a;
 	anim_t * a_next;
@@ -214,7 +213,7 @@ static void anim_task (void * param)
 		a = a_next;
 	}
 
-	last_task_run = systick_get();
+	last_task_run = MISC_SYSTICK_GET();
 }
 
 /**

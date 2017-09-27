@@ -8,10 +8,20 @@
 #ifndef MISC_CONF_H
 #define MISC_CONF_H
 
+/*====================
+ * SYSTICK INTERFACE
+ *===================*/
+/*Some modules (e.g. ptask) uses systick*/
+#define MISC_SYSTICK_INCLUDE    "lvgl/hal/systick/systick.h"
+#define MISC_SYSTICK_GET        systick_get
+#define MISC_SYSTICK_ELAPS      systick_elaps
+#define MISC_SYSTICK_ADD_CB     systick_add_cb
+#define MISC_SYSTICK_REM_CB     systick_rem_cb
+
 /*=========================================
  *  Logging (add external log functions)
  *=========================================*/
-#define USE_MISC_LOG    1
+#define USE_MISC_LOG    0
 #if USE_MISC_LOG  !=  0
 #define MISC_LOG_INCLUDE    "hw/dev/ui/log.h"   /*Include of log headers*/
 #define MISC_LOG_MSG        SMSG                /*Log simple messages. (printf-like variable paremter list)*/

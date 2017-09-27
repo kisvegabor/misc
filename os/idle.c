@@ -12,7 +12,7 @@
 #include "misc_conf.h"
 #if USE_IDLE != 0
 
-#include "hal/systick/systick.h"
+#include MISC_SYSTICK_INCLUDE
 
 /*********************
  *      DEFINES
@@ -53,7 +53,7 @@ void idle_init(void)
     /*Set the reference measurement time*/
     idle_meas_interval = IDLE_REF_MEAS_TIME;
     
-    systick_add_cb(idle_meas_cb);
+    MISC_SYSTICK_ADD_CB(idle_meas_cb);
     
     while(idle_cnt_last == 0) {
         idle_meas();
