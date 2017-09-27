@@ -345,6 +345,12 @@ uint32_t txt_unicode_to_utf8(uint32_t letter_uni)
  */
 uint32_t txt_utf8_next(const char * txt, uint32_t * i)
 {
+#if TXT_UTF8 == 0
+    if(i == NULL) return txt[1];
+
+    (*i)++;
+    return txt[*i];
+#else
     /* Unicode to UTF-8
      * 00000000 00000000 00000000 0xxxxxxx -> 0xxxxxxx
      * 00000000 00000000 00000yyy yyxxxxxx -> 110yyyyy 10xxxxxx
@@ -407,6 +413,7 @@ uint32_t txt_utf8_next(const char * txt, uint32_t * i)
         }
     }
     return result;
+#endif
 }
 
 /**
