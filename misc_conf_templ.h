@@ -180,23 +180,80 @@
  *----------------*/
 #define USE_FONT    1
 #if USE_FONT != 0
-#define FONT_BUILTIN_LATIN_EXT  0
 #define FONT_ANTIALIAS          0
-/*Built-in font usage*/
-#define USE_FONT_DEJAVU_8    0
-#define USE_FONT_DEJAVU_10   0
-#define USE_FONT_DEJAVU_14   0
-#define USE_FONT_DEJAVU_20   0
-#define USE_FONT_DEJAVU_30   1
-#define USE_FONT_DEJAVU_40   0
-#define USE_FONT_DEJAVU_60   0
-#define USE_FONT_DEJAVU_80   0
-#define USE_FONT_DEJAVU_120  0
-#define USE_FONT_SYMBOL_30   1
-#define USE_FONT_SYMBOL_60   0
 
-/*Always set a default font from the built-in fonts*/
+/*Always set a default font from the built-in fonts below*/
 #define FONT_DEFAULT      FONT_DEJAVU_30
+
+/*Built-in font usage*/
+#define USE_FONT_DEJAVU_10              0
+#define USE_FONT_DEJAVU_10_SUP          0
+#define USE_FONT_DEJAVU_10_LATIN_EXT_A  0
+#define USE_FONT_DEJAVU_10_LATIN_EXT_B  0
+#define USE_FONT_DEJAVU_10_CYRILLIC     0
+
+#define USE_FONT_DEJAVU_15              0
+#define USE_FONT_DEJAVU_15_SUP          0
+#define USE_FONT_DEJAVU_15_LATIN_EXT_A  0
+#define USE_FONT_DEJAVU_15_LATIN_EXT_B  0
+#define USE_FONT_DEJAVU_15_CYRILLIC     0
+
+#define USE_FONT_DEJAVU_20              0
+#define USE_FONT_DEJAVU_20_SUP          0
+#define USE_FONT_DEJAVU_20_LATIN_EXT_A  0
+#define USE_FONT_DEJAVU_20_LATIN_EXT_B  0
+#define USE_FONT_DEJAVU_20_CYRILLIC     0
+
+#define USE_FONT_DEJAVU_25              0
+#define USE_FONT_DEJAVU_25_SUP          0
+#define USE_FONT_DEJAVU_25_LATIN_EXT_A  0
+#define USE_FONT_DEJAVU_25_LATIN_EXT_B  0
+#define USE_FONT_DEJAVU_25_CYRILLIC     0
+
+#define USE_FONT_DEJAVU_30              1
+#define USE_FONT_DEJAVU_30_SUP          0
+#define USE_FONT_DEJAVU_30_LATIN_EXT_A  0
+#define USE_FONT_DEJAVU_30_LATIN_EXT_B  0
+#define USE_FONT_DEJAVU_30_CYRILLIC     0
+
+#define USE_FONT_DEJAVU_40              0
+#define USE_FONT_DEJAVU_40_SUP          0
+#define USE_FONT_DEJAVU_40_LATIN_EXT_A  0
+#define USE_FONT_DEJAVU_40_LATIN_EXT_B  0
+#define USE_FONT_DEJAVU_40_CYRILLIC     0
+
+#define USE_FONT_DEJAVU_50              0
+#define USE_FONT_DEJAVU_50_SUP          0
+#define USE_FONT_DEJAVU_50_LATIN_EXT_A  0
+#define USE_FONT_DEJAVU_50_LATIN_EXT_B  0
+#define USE_FONT_DEJAVU_50_CYRILLIC     0
+
+#define USE_FONT_DEJAVU_60              0
+#define USE_FONT_DEJAVU_60_SUP          0
+#define USE_FONT_DEJAVU_60_LATIN_EXT_A  0
+#define USE_FONT_DEJAVU_60_LATIN_EXT_B  0
+#define USE_FONT_DEJAVU_60_CYRILLIC     0
+
+#define USE_FONT_DEJAVU_80              0
+#define USE_FONT_DEJAVU_80_SUP          0
+#define USE_FONT_DEJAVU_80_LATIN_EXT_A  0
+#define USE_FONT_DEJAVU_80_LATIN_EXT_B  0
+#define USE_FONT_DEJAVU_80_CYRILLIC     0
+
+#define USE_FONT_DEJAVU_100              0
+#define USE_FONT_DEJAVU_100_SUP          0
+#define USE_FONT_DEJAVU_100_LATIN_EXT_A  0
+#define USE_FONT_DEJAVU_100_LATIN_EXT_B  0
+#define USE_FONT_DEJAVU_100_CYRILLIC     0
+
+#define USE_FONT_DEJAVU_120              0
+#define USE_FONT_DEJAVU_120_SUP          0
+#define USE_FONT_DEJAVU_120_LATIN_EXT_A  0
+#define USE_FONT_DEJAVU_120_LATIN_EXT_B  0
+#define USE_FONT_DEJAVU_120_CYRILLIC     0
+
+#define USE_FONT_SYMBOL_30   0
+#define USE_FONT_SYMBOL_60   0
 
 /*Enumerate the name of the external fonts. E.g: MY_FONT_1, MY_FONT_2, (comma at the end!)*/
 #define FONT_NEW_NAMES
@@ -208,9 +265,9 @@
  *----------------*/
 #define USE_TEXT    1
 #if USE_TEXT != 0
-#define TXT_BREAK_CHARS  " ,.;-_" /*Can break texts on these chars*/
+#define TXT_BREAK_CHARS " ,.;-_"    /*Can break texts on these chars*/
+#define TXT_UTF8        0           /*Enable UTF-8 support*/
 #endif /*USE_TEXT*/
-
 
 /*----------------
  *     Animation
