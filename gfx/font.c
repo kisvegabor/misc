@@ -78,6 +78,10 @@
 #include "fonts/dejavu_120_latin_ext_b.h"
 #include "fonts/dejavu_120_cyrillic.h"
 
+
+#include "fonts/symbol_30.h"
+#include "fonts/symbol_60.h"
+
 /*********************
  *      DEFINES
  *********************/
