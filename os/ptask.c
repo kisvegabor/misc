@@ -13,8 +13,7 @@
 
 #include "ptask.h"
 #include <stddef.h>
-#include MISC_SYSTICK_INCLUDE
-
+#include<lvgl/lv_hal/lv_hal_tick.h>
 /*********************
  *      DEFINES
  *********************/

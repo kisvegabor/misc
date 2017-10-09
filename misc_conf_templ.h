@@ -9,14 +9,14 @@
 #define MISC_CONF_H
 
 /*====================
- * SYSTICK INTERFACE
+ * TICK INTERFACE
  *===================*/
 /*Some modules (e.g. ptask) uses systick*/
-#define MISC_SYSTICK_INCLUDE    "lvgl/hal/systick/systick.h"
-#define MISC_SYSTICK_GET        systick_get
-#define MISC_SYSTICK_ELAPS      systick_elaps
-#define MISC_SYSTICK_ADD_CB     systick_add_cb
-#define MISC_SYSTICK_REM_CB     systick_rem_cb
+#define MISC_SYSTICK_INCLUDE    "lvgl/lv_hal/lv_hal_tick.h"
+#define MISC_SYSTICK_GET        lv_tick_get
+#define MISC_SYSTICK_ELAPS      lv_tick_elaps
+#define MISC_SYSTICK_ADD_CB     lv_tick_add_cb
+#define MISC_SYSTICK_REM_CB     lv_tick_rem_cb
 
 /*=========================================
  *  Logging (add external log functions)
