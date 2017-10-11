@@ -111,7 +111,6 @@ uint16_t txt_get_next_line(const char * txt, const font_t * font,
     txt_cmd_state_t cmd_state = TXT_CMD_STATE_WAIT;
     uint32_t letter = 0;
     
-
     while(txt[i] != '\0') {
         letter = txt_utf8_next(txt, &i);
 
@@ -126,7 +125,7 @@ uint16_t txt_get_next_line(const char * txt, const font_t * font,
             /*Handle \n\r and \r\n as well*/
             uint32_t i_tmp = i;
             letter = txt_utf8_next(txt, &i_tmp);
-            if(letter == '\r' || letter == '\r') i = i_tmp;
+            if(letter == '\r' || letter == '\n') i = i_tmp;
 
 
             return i;    /*Return with the first letter of the next line*/
@@ -136,9 +135,19 @@ uint16_t txt_get_next_line(const char * txt, const font_t * font,
 
             /*If the txt is too long then finish, this is the line end*/
             if(act_l > max_width) {
+                /*If this a break char then break here.*/
+                if(txt_is_break_char(letter)) {
+                    /* Now 'i' points to the next char because of txt_utf8_next()
+                     * But we need the first char of the next line so keep it.
+                     * Hence do nothing here*/
+                }
                 /*If already a break character is found, then break there*/
-                if(last_break != TXT_NO_BREAK_FOUND && txt_is_break_char(letter) == false) {
+                else if(last_break != TXT_NO_BREAK_FOUND ) {
                     i = last_break;
+                } else {
+                    /* Now this character is out of the area but 'i' points to the next char because of txt_utf8_next()
+                     * So step back one char*/
+                    txt_utf8_prev(txt, &i);
                 }
 
                 /* Do not let to return without doing nothing.
