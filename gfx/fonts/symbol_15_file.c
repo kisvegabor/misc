@@ -142,41 +142,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0xc0, 0x00,  // OO-------.......
     0x00, 0x00,  // ---------.......
 
-    // ASCII: 57384, char width: 15
-    0x00, 0x00,  // ---------------.
-    0xc0, 0x00,  // OO-------------.
-    0xc1, 0x86,  // OO-----OO----OO.
-    0xc3, 0x8e,  // OO----OOO---OOO.
-    0xc7, 0x9e,  // OO---OOOO--OOOO.
-    0xcf, 0xbe,  // OO--OOOOO-OOOOO.
-    0xdf, 0xfe,  // OO-OOOOOOOOOOOO.
-    0xff, 0xfe,  // OOOOOOOOOOOOOOO.
-    0xff, 0xfe,  // OOOOOOOOOOOOOOO.
-    0xcf, 0xbe,  // OO--OOOOO-OOOOO.
-    0xc7, 0x9e,  // OO---OOOO--OOOO.
-    0xc3, 0x8e,  // OO----OOO---OOO.
-    0xc1, 0x86,  // OO-----OO----OO.
-    0xc0, 0x02,  // OO------------O.
-    0x00, 0x00,  // ---------------.
-
-    // ASCII: 57385, char width: 14
-    0x00, 0x00,  // --------------..
-    0x00, 0x00,  // --------------..
-    0x03, 0x0c,  // ------OO----OO..
-    0x07, 0x1c,  // -----OOO---OOO..
-    0x0f, 0x3c,  // ----OOOO--OOOO..
-    0x1f, 0x7c,  // ---OOOOO-OOOOO..
-    0x3f, 0xfc,  // --OOOOOOOOOOOO..
-    0x7f, 0xfc,  // -OOOOOOOOOOOOO..
-    0x3f, 0xfc,  // --OOOOOOOOOOOO..
-    0x1f, 0x7c,  // ---OOOOO-OOOOO..
-    0x0f, 0x3c,  // ----OOOO--OOOO..
-    0x07, 0x1c,  // -----OOO---OOO..
-    0x03, 0x0c,  // ------OO----OO..
-    0x00, 0x04,  // -------------O..
-    0x00, 0x00,  // --------------..
-
-    // ASCII: 57386, char width: 12
+    // ASCII: 57384, char width: 12
     0x00, 0x00,  // ------------....
     0x80, 0x00,  // O-----------....
     0xe0, 0x00,  // OOO---------....
@@ -193,7 +159,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0xc0, 0x00,  // OO----------....
     0x00, 0x00,  // ------------....
 
-    // ASCII: 57387, char width: 13
+    // ASCII: 57385, char width: 13
     0x00, 0x00,  // -------------...
     0xf8, 0xf8,  // OOOOO---OOOOO...
     0xf8, 0xf8,  // OOOOO---OOOOO...
@@ -210,7 +176,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0xf8, 0xf8,  // OOOOO---OOOOO...
     0x00, 0x00,  // -------------...
 
-    // ASCII: 57388, char width: 13
+    // ASCII: 57386, char width: 13
     0x00, 0x00,  // -------------...
     0xff, 0xf8,  // OOOOOOOOOOOOO...
     0xff, 0xf8,  // OOOOOOOOOOOOO...
@@ -227,41 +193,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0xff, 0xf8,  // OOOOOOOOOOOOO...
     0x00, 0x00,  // -------------...
 
-    // ASCII: 57389, char width: 14
-    0x00, 0x00,  // --------------..
-    0x00, 0x00,  // --------------..
-    0xc3, 0x00,  // OO----OO------..
-    0xe3, 0x80,  // OOO---OOO-----..
-    0xf3, 0xc0,  // OOOO--OOOO----..
-    0xfb, 0xe0,  // OOOOO-OOOOO---..
-    0xff, 0xf0,  // OOOOOOOOOOOO--..
-    0xff, 0xf8,  // OOOOOOOOOOOOO-..
-    0xff, 0xf0,  // OOOOOOOOOOOO--..
-    0xfb, 0xe0,  // OOOOO-OOOOO---..
-    0xf3, 0xc0,  // OOOO--OOOO----..
-    0xe3, 0x80,  // OOO---OOO-----..
-    0xc3, 0x00,  // OO----OO------..
-    0x82, 0x00,  // O-----O-------..
-    0x00, 0x00,  // --------------..
-
-    // ASCII: 57390, char width: 15
-    0x00, 0x00,  // ---------------.
-    0x00, 0x06,  // -------------OO.
-    0xc3, 0x06,  // OO----OO-----OO.
-    0xe3, 0x86,  // OOO---OOO----OO.
-    0xf3, 0xc6,  // OOOO--OOOO---OO.
-    0xfb, 0xe6,  // OOOOO-OOOOO--OO.
-    0xff, 0xf6,  // OOOOOOOOOOOO-OO.
-    0xff, 0xfe,  // OOOOOOOOOOOOOOO.
-    0xff, 0xfe,  // OOOOOOOOOOOOOOO.
-    0xfb, 0xe6,  // OOOOO-OOOOO--OO.
-    0xf3, 0xc6,  // OOOO--OOOO---OO.
-    0xe3, 0x86,  // OOO---OOO----OO.
-    0xc3, 0x06,  // OO----OO-----OO.
-    0x80, 0x06,  // O------------OO.
-    0x00, 0x00,  // ---------------.
-
-    // ASCII: 57391, char width: 9
+    // ASCII: 57387, char width: 9
     0x00, 0x00,  // ---------.......
     0x03, 0x00,  // ------OO-.......
     0x83, 0x00,  // O-----OO-.......
@@ -278,7 +210,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0x03, 0x00,  // ------OO-.......
     0x00, 0x00,  // ---------.......
 
-    // ASCII: 57392, char width: 13
+    // ASCII: 57388, char width: 13
     0x00, 0x00,  // -------------...
     0x00, 0x00,  // -------------...
     0x02, 0x00,  // ------O------...
@@ -295,7 +227,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0x00, 0x00,  // -------------...
     0x00, 0x00,  // -------------...
 
-    // ASCII: 57393, char width: 15
+    // ASCII: 57389, char width: 15
     0x00, 0x00,  // ---------------.
     0x00, 0x0c,  // ------------OO-.
     0xf0, 0xfe,  // OOOO----OOOOOOO.
@@ -312,7 +244,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0x00, 0x00,  // ---------------.
     0x00, 0x00,  // ---------------.
 
-    // ASCII: 57394, char width: 16
+    // ASCII: 57390, char width: 16
     0x00, 0x00,  // ----------------
     0x00, 0x00,  // ----------------
     0x00, 0x00,  // ----------------
@@ -329,7 +261,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0x00, 0x00,  // ----------------
     0x00, 0x00,  // ----------------
 
-    // ASCII: 57395, char width: 14
+    // ASCII: 57391, char width: 14
     0x00, 0x00,  // --------------..
     0x78, 0x00,  // -OOOO---------..
     0xfc, 0x00,  // OOOOOO--------..
@@ -346,24 +278,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0x00, 0x00,  // --------------..
     0x00, 0x00,  // --------------..
 
-    // ASCII: 57396, char width: 16
-    0x00, 0x00,  // ----------------
-    0xfc, 0x00,  // OOOOOO----------
-    0xfc, 0x00,  // OOOOOO----------
-    0xff, 0xf0,  // OOOOOOOOOOOO----
-    0xff, 0xf8,  // OOOOOOOOOOOOO---
-    0xff, 0xf8,  // OOOOOOOOOOOOO---
-    0xf8, 0x00,  // OOOOO-----------
-    0xe0, 0x00,  // OOO-------------
-    0xcf, 0xff,  // OO--OOOOOOOOOOOO
-    0x9f, 0xfe,  // O--OOOOOOOOOOOO-
-    0x3f, 0xfc,  // --OOOOOOOOOOOO--
-    0x7f, 0xf8,  // -OOOOOOOOOOOO---
-    0x7f, 0xf0,  // -OOOOOOOOOOO----
-    0x00, 0x00,  // ----------------
-    0x00, 0x00,  // ----------------
-
-    // ASCII: 57397, char width: 14
+    // ASCII: 57392, char width: 14
     0x00, 0x00,  // --------------..
     0x03, 0x00,  // ------OO------..
     0x07, 0x80,  // -----OOOO-----..
@@ -380,7 +295,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0xff, 0xfc,  // OOOOOOOOOOOOOO..
     0x00, 0x00,  // --------------..
 
-    // ASCII: 57398, char width: 15
+    // ASCII: 57393, char width: 15
     0x00, 0x00,  // ---------------.
     0x00, 0x00,  // ---------------.
     0x70, 0x00,  // -OOO-----------.
@@ -397,7 +312,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0x70, 0x00,  // -OOO-----------.
     0x00, 0x00,  // ---------------.
 
-    // ASCII: 57399, char width: 15
+    // ASCII: 57394, char width: 15
     0x0f, 0xc0,  // ----OOOOOO-----.
     0x18, 0x40,  // ---OO----O-----.
     0x28, 0x40,  // --O-O----O-----.
@@ -414,7 +329,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0x04, 0x02,  // -----O--------O.
     0x07, 0xfe,  // -----OOOOOOOOOO.
 
-    // ASCII: 57400, char width: 13
+    // ASCII: 57395, char width: 13
     0x00, 0x00,  // -------------...
     0xff, 0xc0,  // OOOOOOOOOO---...
     0xb8, 0xe0,  // O-OOO---OOO--...
@@ -431,7 +346,7 @@ static const uint8_t symbol_15_file_bitmap[] =
     0xff, 0xf8,  // OOOOOOOOOOOOO...
     0x00, 0x00,  // -------------...
 
-    // ASCII: 57401, char width: 13
+    // ASCII: 57396, char width: 13
     0xff, 0x00,  // OOOOOOOO-----...
     0xff, 0x40,  // OOOOOOOO-O---...
     0xff, 0x60,  // OOOOOOOO-OO--...
@@ -454,17 +369,15 @@ static const uint32_t symbol_15_file_map[] =
 {
      0, 30, 60, 90, 120, 150, 180, 210, 
     240, 270, 300, 330, 360, 390, 420, 450, 
-    480, 510, 540, 570, 600, 630, 660, 690, 
-    720, 750, 
+    480, 510, 540, 570, 600, 
 };
 
 /*Store the width (column count) of each glyph*/
 static const uint8_t symbol_15_file_width[] = 
 {
     13, 16, 12, 14, 13, 16, 13,  9, 
-    15, 14, 12, 13, 13, 14, 15,  9, 
-    13, 15, 16, 14, 16, 14, 15, 15, 
-    13, 13, 
+    12, 13, 13,  9, 13, 15, 16, 14, 
+    14, 15, 15, 13, 13, 
 };
 
 static font_t symbol_15_file_dsc = 
