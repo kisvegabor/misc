@@ -8,7 +8,7 @@
 #if  USE_FONT_DEJAVU_15_CYRILLIC != 0
 
 #include <stdint.h>
-#include "../font.h"
+#include "misc/gfx/font.h"
 
 font_t * dejavu_15_cyrillic_get_dsc(void);
 

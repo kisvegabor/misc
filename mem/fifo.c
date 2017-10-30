@@ -51,7 +51,7 @@ void fifo_init(fifo_t * fifo_p, void * buf_p, uint32_t item_size, uint32_t item_
     fifo_p->item_size = item_size;
     fifo_p->rp = 0;
     fifo_p->wp = 0;
-    fifo_p->empty = 1;
+    fifo_p->body.empty = 1;
     fifo_p->full = 0;
 }
 
@@ -79,7 +79,7 @@ bool fifo_push(fifo_t * fifo_p, const void * data_p)
     if(fifo_p->rp == fifo_p->wp) fifo_p->full = 1;
     
     /*The fifo surely will not be empty after that*/
-    fifo_p->empty = 0;
+    fifo_p->body.empty = 0;
     
     return true;
 }
@@ -120,7 +120,7 @@ uint32_t fifo_push_mult(fifo_t * fifo_p, const void * data_p, uint32_t num)
  */
 bool fifo_pop(fifo_t * fifo_p, void * data_p)
 {
-    if(fifo_p->empty != 0) return false;
+    if(fifo_p->body.empty != 0) return false;
     
     /* Copy data into the fifo */
     uint8_t  * rd_begin = fifo_p->buf;
@@ -133,7 +133,7 @@ bool fifo_pop(fifo_t * fifo_p, void * data_p)
     if(fifo_p->rp >= fifo_p->item_num)  fifo_p->rp = 0;
     
     /*Set the fifo empty if necessary*/
-    if(fifo_p->rp == fifo_p->wp) fifo_p->empty = 1;
+    if(fifo_p->rp == fifo_p->wp) fifo_p->body.empty = 1;
     
     /*The fifo surely will not be full after that*/
     fifo_p->full = 0;
@@ -177,7 +177,7 @@ void fifo_clear(fifo_t * fifo_p)
 {
     fifo_p->rp = 0;
     fifo_p->wp = 0;
-    fifo_p->empty = 1;
+    fifo_p->body.empty = 1;
     fifo_p->full = 0;
 }
 
@@ -196,7 +196,7 @@ uint32_t fifo_get_free(fifo_t * fifo_p)
         free_num = fifo_p->item_num - 
                    (fifo_p->wp - fifo_p->rp);
     } else {
-        if(fifo_p->empty != 0) {
+        if(fifo_p->body.empty != 0) {
             free_num = fifo_p->item_num;
         } else {
             free_num = 0;

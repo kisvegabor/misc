@@ -8,7 +8,7 @@
 #if  USE_FONT_DEJAVU_100_LATIN_EXT_A != 0
 
 #include <stdint.h>
-#include "../font.h"
+#include "misc/gfx/font.h"
 
 font_t * dejavu_100_latin_ext_a_get_dsc(void);
 

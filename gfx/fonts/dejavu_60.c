@@ -1,9 +1,9 @@
 #include "misc_conf.h"
 #if  USE_FONT_DEJAVU_60 != 0
 #include <stdint.h>
-#include "../font.h"
+#include "misc/gfx/font.h"
 
-/*Store the image (glyph) of the letters*/
+/*Store the image of the letters (glyph) */
 static const uint8_t dejavu_60_bitmap[] = 
 {
     // ASCII: 32, char width: 17

@@ -51,8 +51,8 @@ extern "C" {
 #define OPA_70        178
 #define OPA_80        204
 #define OPA_90        229
-#define OPA_100       255
-#define OPA_COVER     255
+#define OPA_100       256
+#define OPA_COVER     256
 
 
 /**********************
@@ -116,7 +116,7 @@ typedef color24_t color_t;
 #error "Invalid COLOR_DEPTH in misc_conf.h! Set it to 1, 8, 16 or 24!"
 #endif
 
-typedef uint8_t opa_t;
+typedef uint16_t opa_t;     /* uint8_t is not enough because needs to store 0..256. (to use '>> 8' for division by 256 */
 
 /**********************
  * GLOBAL PROTOTYPES
@@ -233,7 +233,7 @@ static inline uint32_t color_to24(color_t color)
 #endif
 }
 
-static inline color_t color_mix(color_t c1, color_t c2, uint8_t mix)
+static inline color_t color_mix(color_t c1, color_t c2, uint16_t mix)
 {
     color_t ret;
     ret.red =   (uint16_t)((uint16_t) c1.red * mix + (c2.red * (256 - mix))) >> 8;  
@@ -264,6 +264,8 @@ static inline uint8_t color_brightness(color_t color)
 #elif COLOR_DEPTH == 24
 #define COLOR_MAKE(r8, g8, b8) ((color_t){{b8, g8, r8}})
 #endif
+
+#define COLOR_HEX(c) COLOR_MAKE((uint32_t)((uint32_t)c >> 16) & 0xFF, (uint32_t)((uint32_t)c >> 8) & 0xFF, (uint32_t)c & 0xFF)
 
 /**********************
  *      MACROS

@@ -44,12 +44,12 @@ static bool txt_is_break_char(uint32_t letter);
  * @param text pointer to a text
  * @param font pinter to font of the text
  * @param letter_space letter space of the text
- * @param line_space line space of the text
+ * @param txt.space_line line space of the text
  * @param flags settings for the text from 'txt_flag_t' enum
  * @param max_width max with of the text (break the lines to fit this size) Set CORD_MAX to avoid line breaks
  */
 void txt_get_size(point_t * size_res, const char * text, const font_t * font,
-                    cord_t letter_space, cord_t line_space, cord_t max_width, txt_flag_t flag)
+                    cord_t letter_space, cord_t space_line, cord_t max_width, txt_flag_t flag)
 {
     size_res->x = 0;
     size_res->y = 0;
@@ -68,7 +68,7 @@ void txt_get_size(point_t * size_res, const char * text, const font_t * font,
     while (text[line_start] != '\0') {
         new_line_start += txt_get_next_line(&text[line_start], font, letter_space, max_width, flag);
         size_res->y += letter_height ;
-        size_res->y += line_space;
+        size_res->y += space_line;
 
         /*Calculate the the longest line*/
         act_line_length = txt_get_width(&text[line_start], new_line_start - line_start,
@@ -79,12 +79,12 @@ void txt_get_size(point_t * size_res, const char * text, const font_t * font,
     }
 
     if(line_start != 0 && (text[line_start - 1] == '\n' || text[line_start - 1] == '\r')) {
-        size_res->y += letter_height + line_space;
+        size_res->y += letter_height + space_line;
     }
 
     /*Correction with the last line space or set the height manually if the text is empty*/
     if(size_res->y == 0) size_res->y = letter_height;
-    else size_res->y -= line_space;
+    else size_res->y -= space_line;
 
 }
 
@@ -355,10 +355,11 @@ uint32_t txt_unicode_to_utf8(uint32_t letter_uni)
 uint32_t txt_utf8_next(const char * txt, uint32_t * i)
 {
 #if TXT_UTF8 == 0
-    if(i == NULL) return txt[1];
+    if(i == NULL) return txt[1];    /*Get the next char */
 
+    uint8_t letter = txt[*i] ;
     (*i)++;
-    return txt[*i];
+    return letter;
 #else
     /* Unicode to UTF-8
      * 00000000 00000000 00000000 0xxxxxxx -> 0xxxxxxx
@@ -389,7 +390,7 @@ uint32_t txt_utf8_next(const char * txt, uint32_t * i)
             (*i)++;
         }
         /*3 bytes UTF-8 code*/
-        else if((txt[*i] & 0b11111000) == 0b11110000) {
+        else if((txt[*i] & 0b11110000) == 0b11100000) {
             result = (txt[*i] & 0b00001111) << 12;
             (*i)++;
 
@@ -402,7 +403,7 @@ uint32_t txt_utf8_next(const char * txt, uint32_t * i)
             (*i)++;
         }
         /*3 bytes UTF-8 code*/
-        else if((txt[*i] & 0b11110000) == 0b11100000) {
+        else if((txt[*i] & 0b11111000) == 0b11110000) {
             result = (txt[*i] & 0b00001111) << 18;
             (*i)++;
 

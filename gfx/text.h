@@ -54,12 +54,12 @@ typedef enum
  * @param text pointer to a text
  * @param font pinter to font of the text
  * @param letter_space letter space of the text
- * @param line_space line space of the text
+ * @param txt.space_line line space of the text
  * @param flags settings for the text from 'txt_flag_t' enum
  * @param max_width max with of the text (break the lines to fit this size) Set CORD_MAX to avoid line breaks
  */
 void txt_get_size(point_t * size_res, const char * text, const font_t * font,
-                    cord_t letter_space, cord_t line_space, cord_t max_width, txt_flag_t flag);
+                    cord_t letter_space, cord_t space_line, cord_t max_width, txt_flag_t flag);
 
 /**
  * Get the next line of text. Check line length and break chars too.

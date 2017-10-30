@@ -5,45 +5,77 @@
 extern "C" {
 #endif
 
+#include "misc_conf.h"
 
-/*Use ISO8859-1 encoding in the IDE*/
-#if  USE_FONT_SYMBOL_30 != 0 || USE_FONT_SYMBOL_60 != 0
+/*
+ * With no UTF-8 support (128-255)
+ * - Basic symbols: 0x80..0x9F
+ * - File symbols:  0xA0..0xBF
+ * - Basic symbols: 0xC0..0xDF
+ * - Reserved:      0xE0..0xFF
+ *
+ * With UTF-8 support (in Supplemental Private Use Area-A)
+ * - Basic symbols: 0xF0000..0xF001F
+ * - File symbols:  0xF0020..0xF003F
+ * - Basic symbols: 0xF0040..0xF005F
+ * - Reserved:      0xF0060..0xF007F
+ */
 
-#define SYMBOL_PLAY     "Z"
-#define SYMBOL_STOP     "["
-#define SYMBOL_PAUSE    "|"
-#define SYMBOL_PREV     "]"
-#define SYMBOL_NEXT     "^"
-#define SYMBOL_SPMUTE   "_"
-#define SYMBOL_SPUNMUTE "`"
-#define SYMBOL_DRIVE	"a"
-#define SYMBOL_FILE	    "b"
-#define SYMBOL_FOLDER	"c"
-#define SYMBOL_DELETE	"d"
-#define SYMBOL_SAVE	    "e"
-#define SYMBOL_EDIT	    "f"
-#define SYMBOL_OK		"g"
-#define SYMBOL_CLOSE	"h"
-#define SYMBOL_DOWN	    "i"
-#define SYMBOL_LEFT	    "j"
-#define SYMBOL_RIGHT	"k"
-#define SYMBOL_UP		"l"
-#define SYMBOL_BT		"m"
-#define SYMBOL_THERM	"n"
-#define SYMBOL_GPS	    "o"
-#define SYMBOL_WARN	    "p"
-#define SYMBOL_INFO	    "q"
-#define SYMBOL_BATT1	"r"
-#define SYMBOL_BATT2	"s"
-#define SYMBOL_BATT3	"t"
-#define SYMBOL_BATT4	"u"
-#define SYMBOL_BATTCH	"v"
-#define SYMBOL_HELP	    "w"
-#define SYMBOL_POWER	"x"
-#define SYMBOL_SETUP	"y"
-#define SYMBOL_WIFI	    "z"
+/*Basic symbols*/
+extern const char symbol_list[];
+extern const char symbol_ok[];
+extern const char symbol_close[];
+extern const char symbol_shutdown[];
+extern const char symbol_settings[];
+extern const char symbol_home[];
+extern const char symbol_refresh[];
+extern const char symbol_left[];
+extern const char symbol_right[];
+extern const char symbol_plus[];
+extern const char symbol_minus[];
+extern const char symbol_up[];
+extern const char symbol_down[];
+extern const char symbol_keyboard[];
 
-#endif
+/*File symbols*/
+extern const char symbol_audio[];
+extern const char symbol_video[];
+extern const char symbol_trash[];
+extern const char symbol_download[];
+extern const char symbol_drive[];
+extern const char symbol_image[];
+extern const char symbol_prev[];
+extern const char symbol_play[];
+extern const char symbol_pause[];
+extern const char symbol_stop[];
+extern const char symbol_next[];
+extern const char symbol_eject[];
+extern const char symbol_shuffle[];
+extern const char symbol_loop[];
+extern const char symbol_directory[];
+extern const char symbol_upload[];
+extern const char symbol_cut[];
+extern const char symbol_copy[];
+extern const char symbol_save[];
+extern const char symbol_file[];
+
+/*Feedback symbols*/
+extern const char symbol_mute[];
+extern const char symbol_volume_mid[];
+extern const char symbol_volume_max[];
+extern const char symbol_warning[];
+extern const char symbol_call[];
+extern const char symbol_charge[];
+extern const char symbol_bell[];
+extern const char symbol_gps[];
+extern const char symbol_wifi[];
+extern const char symbol_battery_full[];
+extern const char symbol_battery_3[];
+extern const char symbol_battery_2[];
+extern const char symbol_battery_1[];
+extern const char symbol_battery_empty[];
+extern const char symbol_bluetooth[];
+
 
 #ifdef __cplusplus
 } /* extern "C" */

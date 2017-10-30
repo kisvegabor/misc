@@ -8,7 +8,7 @@
 #if  USE_FONT_DEJAVU_80_SUP != 0
 
 #include <stdint.h>
-#include "../font.h"
+#include "misc/gfx/font.h"
 
 font_t * dejavu_80_sup_get_dsc(void);
 

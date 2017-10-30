@@ -51,6 +51,19 @@ typedef enum
     FONT_DEJAVU_10_CYRILLIC,
 #endif
 
+    /*SYMBOL 10*/
+#if USE_FONT_SYMBOL_10_BASIC != 0
+    FONT_SYMBOL_10_BASIC,
+#endif
+
+#if USE_FONT_SYMBOL_10_FILE != 0
+    FONT_SYMBOL_10_FILE,
+#endif
+
+#if USE_FONT_SYMBOL_10_FEEDBACK != 0
+    FONT_SYMBOL_10_FEEDBACK,
+#endif
+
     /*DEJAVU 15*/
  #if USE_FONT_DEJAVU_15 != 0
      FONT_DEJAVU_15,
@@ -70,6 +83,19 @@ typedef enum
 
  #if USE_FONT_DEJAVU_15_CYRILLIC != 0
      FONT_DEJAVU_15_CYRILLIC,
+ #endif
+
+     /*SYMBOL 15*/
+ #if USE_FONT_SYMBOL_15_BASIC != 0
+     FONT_SYMBOL_15_BASIC,
+ #endif
+
+ #if USE_FONT_SYMBOL_15_FILE != 0
+     FONT_SYMBOL_15_FILE,
+ #endif
+
+ #if USE_FONT_SYMBOL_15_FEEDBACK != 0
+     FONT_SYMBOL_15_FEEDBACK,
  #endif
 
      /*DEJAVU 20*/
@@ -93,6 +119,19 @@ typedef enum
      FONT_DEJAVU_20_CYRILLIC,
 #endif
 
+     /*SYMBOL 20*/
+ #if USE_FONT_SYMBOL_20_BASIC != 0
+     FONT_SYMBOL_10_BASIC,
+ #endif
+
+ #if USE_FONT_SYMBOL_20_FILE != 0
+     FONT_SYMBOL_20_FILE,
+ #endif
+
+ #if USE_FONT_SYMBOL_20_FEEDBACK != 0
+     FONT_SYMBOL_20_FEEDBACK,
+ #endif
+
   /*DEJAVU 25*/
 #if USE_FONT_DEJAVU_25 != 0
    FONT_DEJAVU_25,
@@ -112,6 +151,19 @@ typedef enum
 
 #if USE_FONT_DEJAVU_25_CYRILLIC != 0
    FONT_DEJAVU_25_CYRILLIC,
+#endif
+
+   /*SYMBOL 25*/
+#if USE_FONT_SYMBOL_25_BASIC != 0
+   FONT_SYMBOL_25_BASIC,
+#endif
+
+#if USE_FONT_SYMBOL_25_FILE != 0
+   FONT_SYMBOL_25_FILE,
+#endif
+
+#if USE_FONT_SYMBOL_25_FEEDBACK != 0
+   FONT_SYMBOL_25_FEEDBACK,
 #endif
 
    /*DEJAVU 30*/
@@ -135,6 +187,19 @@ typedef enum
    FONT_DEJAVU_30_CYRILLIC,
 #endif
 
+   /*SYMBOL 30*/
+#if USE_FONT_SYMBOL_30_BASIC != 0
+   FONT_SYMBOL_30_BASIC,
+#endif
+
+#if USE_FONT_SYMBOL_30_FILE != 0
+   FONT_SYMBOL_30_FILE,
+#endif
+
+#if USE_FONT_SYMBOL_30_FEEDBACK != 0
+   FONT_SYMBOL_30_FEEDBACK,
+#endif
+
     /*DEJAVU 40*/
 #if USE_FONT_DEJAVU_40 != 0
     FONT_DEJAVU_40,
@@ -154,6 +219,19 @@ typedef enum
 
 #if USE_FONT_DEJAVU_40_CYRILLIC != 0
     FONT_DEJAVU_40_CYRILLIC,
+#endif
+
+    /*SYMBOL 40*/
+#if USE_FONT_SYMBOL_40_BASIC != 0
+    FONT_SYMBOL_40_BASIC,
+#endif
+
+#if USE_FONT_SYMBOL_40_FILE != 0
+    FONT_SYMBOL_40_FILE,
+#endif
+
+#if USE_FONT_SYMBOL_40_FEEDBACK != 0
+    FONT_SYMBOL_40_FEEDBACK,
 #endif
 
     /*DEJAVU 50*/
@@ -177,6 +255,19 @@ typedef enum
     FONT_DEJAVU_50_CYRILLIC,
 #endif
 
+    /*SYMBOL 50*/
+#if USE_FONT_SYMBOL_50_BASIC != 0
+    FONT_SYMBOL_50_BASIC,
+#endif
+
+#if USE_FONT_SYMBOL_50_FILE != 0
+    FONT_SYMBOL_50_FILE,
+#endif
+
+#if USE_FONT_SYMBOL_50_FEEDBACK != 0
+    FONT_SYMBOL_50_FEEDBACK,
+#endif
+
     /*DEJAVU 60*/
 #if USE_FONT_DEJAVU_60 != 0
     FONT_DEJAVU_60,
@@ -196,6 +287,19 @@ typedef enum
 
 #if USE_FONT_DEJAVU_60_CYRILLIC != 0
     FONT_DEJAVU_60_CYRILLIC,
+#endif
+
+    /*SYMBOL 60*/
+#if USE_FONT_SYMBOL_60_BASIC != 0
+    FONT_SYMBOL_60_BASIC,
+#endif
+
+#if USE_FONT_SYMBOL_60_FILE != 0
+    FONT_SYMBOL_60_FILE,
+#endif
+
+#if USE_FONT_SYMBOL_60_FEEDBACK != 0
+    FONT_SYMBOL_60_FEEDBACK,
 #endif
 
     /*DEJAVU 80*/
@@ -219,6 +323,19 @@ typedef enum
     FONT_DEJAVU_80_CYRILLIC,
 #endif
 
+    /*SYMBOL 80*/
+#if USE_FONT_SYMBOL_80_BASIC != 0
+    FONT_SYMBOL_80_BASIC,
+#endif
+
+#if USE_FONT_SYMBOL_80_FILE != 0
+    FONT_SYMBOL_80_FILE,
+#endif
+
+#if USE_FONT_SYMBOL_80_FEEDBACK != 0
+    FONT_SYMBOL_80_FEEDBACK,
+#endif
+
     /*DEJAVU 100*/
 #if USE_FONT_DEJAVU_100 != 0
     FONT_DEJAVU_100,
@@ -238,6 +355,19 @@ typedef enum
 
 #if USE_FONT_DEJAVU_100_CYRILLIC != 0
     FONT_DEJAVU_100_CYRILLIC,
+#endif
+
+    /*SYMBOL 100*/
+#if USE_FONT_SYMBOL_100_BASIC != 0
+    FONT_SYMBOL_100_BASIC,
+#endif
+
+#if USE_FONT_SYMBOL_100_FILE != 0
+    FONT_SYMBOL_100_FILE,
+#endif
+
+#if USE_FONT_SYMBOL_100_FEEDBACK != 0
+    FONT_SYMBOL_100_FEEDBACK,
 #endif
 
     /*DEJAVU 120*/
@@ -261,14 +391,17 @@ typedef enum
     FONT_DEJAVU_120_CYRILLIC,
 #endif
 
-
-
-    /*SYMBOL FONTS*/
-#if USE_FONT_SYMBOL_30 != 0
-    FONT_SYMBOL_30,
+    /*SYMBOL 120*/
+#if USE_FONT_SYMBOL_120_BASIC != 0
+    FONT_SYMBOL_120_BASIC,
 #endif
-#if USE_FONT_SYMBOL_60 != 0
-    FONT_SYMBOL_60,
+
+#if USE_FONT_SYMBOL_120_FILE != 0
+    FONT_SYMBOL_120_FILE,
+#endif
+
+#if USE_FONT_SYMBOL_120_FEEDBACK != 0
+    FONT_SYMBOL_120_FEEDBACK,
 #endif
 
     /*Insert the user defined font names*/
