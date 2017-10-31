@@ -279,7 +279,7 @@ static const uint8_t symbol_15_feedback_width[] =
 static font_t symbol_15_feedback_dsc = 
 {
 #if TXT_UTF8 == 0
-    192,            /*First letter's unicode */
+    208,            /*First letter's unicode */
     223,            /*Last letter's unicode */
 #else
     57408,        /*First letter's unicode */

@@ -278,8 +278,8 @@ static const uint8_t symbol_10_file_width[] =
 static font_t symbol_10_file_dsc = 
 {
 #if TXT_UTF8 == 0
-    160,            /*First letter's unicode */
-    191,            /*Last letter's unicode */
+    224,            /*First letter's unicode */
+    255,            /*Last letter's unicode */
 #else
     57376,        /*First letter's unicode */
     57397,        /*Last letter's unicode */

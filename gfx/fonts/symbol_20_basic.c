@@ -332,8 +332,8 @@ static const uint8_t symbol_20_basic_width[] =
 static font_t symbol_20_basic_dsc = 
 {
 #if TXT_UTF8 == 0
-    128,        /*First letter's unicode */
-    159,        /*Last letter's unicode */
+    192,        /*First letter's unicode */
+    207,        /*Last letter's unicode */
 #else
     57344,        /*First letter's unicode */
     57358,        /*Last letter's unicode */

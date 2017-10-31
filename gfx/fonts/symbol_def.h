@@ -8,11 +8,10 @@ extern "C" {
 #include "misc_conf.h"
 
 /*
- * With no UTF-8 support (128-255)
- * - Basic symbols: 0x80..0x9F
- * - File symbols:  0xA0..0xBF
- * - Basic symbols: 0xC0..0xDF
- * - Reserved:      0xE0..0xFF
+ * With no UTF-8 support (192-255)
+ * - Basic symbols:         0xC0..0xCF
+ * - Feedback symbols:      0xD0..0xDF
+ * - File symbols:          0xE0..0xFF
  *
  * With UTF-8 support (in Supplemental Private Use Area-A)
  * - Basic symbols:     0xE000..0xE01F
@@ -22,7 +21,7 @@ extern "C" {
  */
 
 #if TXT_UTF8 == 0
-#define SYMBOL_GLYPH_FIRST  0x80
+#define SYMBOL_GLYPH_FIRST  0xC0
 #define SYMBOL_GLYPH_LAST   0xFF
 #else
 #define SYMBOL_GLYPH_FIRST  0xE000
