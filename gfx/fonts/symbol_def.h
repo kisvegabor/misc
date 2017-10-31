@@ -15,11 +15,19 @@ extern "C" {
  * - Reserved:      0xE0..0xFF
  *
  * With UTF-8 support (in Supplemental Private Use Area-A)
- * - Basic symbols: 0xF0000..0xF001F
- * - File symbols:  0xF0020..0xF003F
- * - Basic symbols: 0xF0040..0xF005F
- * - Reserved:      0xF0060..0xF007F
+ * - Basic symbols:     0xE000..0xE01F
+ * - File symbols:      0xE020..0xE03F
+ * - Feedback symbols:  0xE040..0xE05F
+ * - Reserved:          0xE060..0xE07F
  */
+
+#if TXT_UTF8 == 0
+#define SYMBOL_GLYPH_FIRST  0x80
+#define SYMBOL_GLYPH_LAST   0xFF
+#else
+#define SYMBOL_GLYPH_FIRST  0xE000
+#define SYMBOL_GLYPH_LAST   0xE080
+#endif
 
 /*Basic symbols*/
 extern const char symbol_list[];

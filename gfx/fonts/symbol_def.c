@@ -16,61 +16,64 @@
  */
 
 #if TXT_UTF8 == 0
+/* Insert a dummy non-printable character
+ * to avoid arbitrary string start*/
 
 /*Basic symbols*/
-const char symbol_list[] =      {0x80, 0x00};
-const char symbol_ok[] =        {0x81, 0x00};
-const char symbol_close[] =     {0x82, 0x00};
-const char symbol_shutdown[] =  {0x83, 0x00};
-const char symbol_settings[] =  {0x84, 0x00};
-const char symbol_home[] =      {0x85, 0x00};
-const char symbol_refresh[] =   {0x86, 0x00};
-const char symbol_left[] =      {0x87, 0x00};
-const char symbol_right[] =     {0x88, 0x00};
-const char symbol_plus[] =      {0x89, 0x00};
-const char symbol_minus[] =     {0x8A, 0x00};
-const char symbol_up[] =        {0x8B, 0x00};
-const char symbol_down[] =      {0x8C, 0x00};
-const char symbol_keyboard[] =  {0x8D, 0x00};
+const char symbol_list[] =      {0x01, 0x80, 0x00};
+const char symbol_ok[] =        {0x01, 0x81, 0x00};
+const char symbol_close[] =     {0x01, 0x82, 0x00};
+const char symbol_shutdown[] =  {0x01, 0x83, 0x00};
+const char symbol_settings[] =  {0x01, 0x84, 0x00};
+const char symbol_home[] =      {0x01, 0x85, 0x00};
+const char symbol_refresh[] =   {0x01, 0x86, 0x00};
+const char symbol_left[] =      {0x01, 0x87, 0x00};
+const char symbol_right[] =     {0x01, 0x88, 0x00};
+const char symbol_plus[] =      {0x01, 0x89, 0x00};
+const char symbol_minus[] =     {0x01, 0x8A, 0x00};
+const char symbol_up[] =        {0x01, 0x8B, 0x00};
+const char symbol_down[] =      {0x01, 0x8C, 0x00};
+const char symbol_keyboard[] =  {0x01, 0x8D, 0x00};
 
 /*File symbols*/
-const char symbol_audio[] =        {0xA0, 0x00};
-const char symbol_video[] =        {0xA1, 0x00};
-const char symbol_trash[] =        {0xA2, 0x00};
-const char symbol_download[] =     {0xA3, 0x00};
-const char symbol_drive[] =        {0xA4, 0x00};
-const char symbol_image[] =        {0xA5, 0x00};
-const char symbol_prev[] =         {0xA6, 0x00};
-const char symbol_play[] =         {0xA7, 0x00};
-const char symbol_pause[] =        {0xA8, 0x00};
-const char symbol_stop[] =         {0xA9, 0x00};
-const char symbol_next[] =         {0xAA, 0x00};
-const char symbol_eject[] =        {0xAB, 0x00};
-const char symbol_shuffle[] =      {0xAC, 0x00};
-const char symbol_loop[] =         {0xAD, 0x00};
-const char symbol_directory[] =    {0xAE, 0x00};
-const char symbol_upload[] =       {0xAF, 0x00};
-const char symbol_cut[] =          {0xB0, 0x00};
-const char symbol_copy[] =         {0xB1, 0x00};
-const char symbol_save[] =         {0xB3, 0x00};
-const char symbol_file[] =         {0xB4, 0x00};
+const char symbol_audio[] =        {0x01, 0xA0, 0x00};
+const char symbol_video[] =        {0x01, 0xA1, 0x00};
+const char symbol_trash[] =        {0x01, 0xA2, 0x00};
+const char symbol_download[] =     {0x01, 0xA3, 0x00};
+const char symbol_drive[] =        {0x01, 0xA4, 0x00};
+const char symbol_image[] =        {0x01, 0xA5, 0x00};
+const char symbol_edit[] =         {0x01, 0xA6, 0x00};
+const char symbol_prev[] =         {0x01, 0xA7, 0x00};
+const char symbol_play[] =         {0x01, 0xA8, 0x00};
+const char symbol_pause[] =        {0x01, 0xA9, 0x00};
+const char symbol_stop[] =         {0x01, 0xAA, 0x00};
+const char symbol_next[] =         {0x01, 0xAB, 0x00};
+const char symbol_eject[] =        {0x01, 0xAC, 0x00};
+const char symbol_shuffle[] =      {0x01, 0xAD, 0x00};
+const char symbol_loop[] =         {0x01, 0xAE, 0x00};
+const char symbol_directory[] =    {0x01, 0xAF, 0x00};
+const char symbol_upload[] =       {0x01, 0xB0, 0x00};
+const char symbol_cut[] =          {0x01, 0xB1, 0x00};
+const char symbol_copy[] =         {0x01, 0xB2, 0x00};
+const char symbol_save[] =         {0x01, 0xB3, 0x00};
+const char symbol_file[] =         {0x01, 0xB4, 0x00};
 
 /*Feedback symbols*/
-const char symbol_mute[] =          {0xC0, 0x00};
-const char symbol_volume_mid[] =    {0xC1, 0x00};
-const char symbol_volume_max[] =    {0xC2, 0x00};
-const char symbol_warning[] =       {0xC3, 0x00};
-const char symbol_call[] =          {0xC4, 0x00};
-const char symbol_charge[] =        {0xC5, 0x00};
-const char symbol_bell[] =          {0xC6, 0x00};
-const char symbol_gps[] =           {0xC7, 0x00};
-const char symbol_wifi[] =          {0xC8, 0x00};
-const char symbol_battery_full[] =  {0xC9, 0x00};
-const char symbol_battery_3[] =     {0xCA, 0x00};
-const char symbol_battery_2[] =     {0xCB, 0x00};
-const char symbol_battery_1[] =     {0xCC, 0x00};
-const char symbol_battery_empty[] = {0xCD, 0x00};
-const char symbol_bluetooth[] =     {0xCE, 0x00};
+const char symbol_mute[] =          {0x01, 0xC0, 0x00};
+const char symbol_volume_mid[] =    {0x01, 0xC1, 0x00};
+const char symbol_volume_max[] =    {0x01, 0xC2, 0x00};
+const char symbol_warning[] =       {0x01, 0xC3, 0x00};
+const char symbol_call[] =          {0x01, 0xC4, 0x00};
+const char symbol_charge[] =        {0x01, 0xC5, 0x00};
+const char symbol_bell[] =          {0x01, 0xC6, 0x00};
+const char symbol_gps[] =           {0x01, 0xC7, 0x00};
+const char symbol_wifi[] =          {0x01, 0xC8, 0x00};
+const char symbol_battery_full[] =  {0x01, 0xC9, 0x00};
+const char symbol_battery_3[] =     {0x01, 0xCA, 0x00};
+const char symbol_battery_2[] =     {0x01, 0xCB, 0x00};
+const char symbol_battery_1[] =     {0x01, 0xCC, 0x00};
+const char symbol_battery_empty[] = {0x01, 0xCD, 0x00};
+const char symbol_bluetooth[] =     {0x01, 0xCE, 0x00};
 #else
 
 /*Basic symbols*/
