@@ -116,7 +116,14 @@ typedef color24_t color_t;
 #error "Invalid COLOR_DEPTH in misc_conf.h! Set it to 1, 8, 16 or 24!"
 #endif
 
-typedef uint16_t opa_t;     /* uint8_t is not enough because needs to store 0..256. (to use '>> 8' for division by 256 */
+typedef uint16_t opa_t;     /* 0..256 (not 255 to cab be normalized with >> 8*/
+
+typedef struct
+{
+    uint16_t h;
+    uint8_t s;
+    uint8_t v;
+} color_hsv_t;
 
 /**********************
  * GLOBAL PROTOTYPES
@@ -273,6 +280,25 @@ static inline uint8_t color_brightness(color_t color)
 #define COLOR_HEX3(c) COLOR_MAKE((((c >> 4) & 0xF0) | ((c >> 8) & 0xF)),   \
                                 ((uint32_t)(c & 0xF0)       | ((c & 0xF0) >> 4)), \
                                 ((uint32_t)(c & 0xF)         | ((c & 0xF) << 4)))
+
+
+/**
+ * Convert a HSV color to RGB
+ * @param h hue [0..359]
+ * @param s saturation [0..100]
+ * @param v value [0..100]
+ * @return the given RGB color in RGB (with COLOR_DEPTH depth)
+ */
+color_t color_hsv_to_rgb(uint16_t h, uint8_t s, uint8_t v);
+
+/**
+ * Convert an RGB color to HSV
+ * @param r red
+ * @param g green
+ * @param b blue
+ * @return the given RGB color n HSV
+ */
+color_hsv_t color_rgb_to_hsv(uint8_t r, uint8_t g, uint8_t b);
 
 
 /**********************
