@@ -351,26 +351,19 @@ static const uint8_t symbol_20_feedback_width[] =
     23, 26, 26, 26, 26, 26, 17, 
 };
 
-static font_t symbol_20_feedback_dsc = 
+font_t font_symbol_20_feedback = 
 {
 #if TXT_UTF8 == 0
-    208,            /*First letter's unicode */
-    223,            /*Last letter's unicode */
+    208,        /*First letter's unicode */
+    223,        /*Last letter's unicode */
 #else
     57408,        /*First letter's unicode */
-    57439,        /*Last letter's unicode */
+    57423,        /*Last letter's unicode */
 #endif
     20,        /*Letters height (rows) */
     symbol_20_feedback_bitmap,    /*Glyph's bitmap*/
     symbol_20_feedback_map,    /*Glyph start indexes in the bitmap*/
     symbol_20_feedback_width,    /*Glyph widths (columns)*/
 };
-
-/*Function pointer which gives a pointer to the dsc. variable*/
-font_t * symbol_20_feedback_get_dsc(void)
-{
-    return &symbol_20_feedback_dsc;
-}
-
 
 #endif /*SYMBOL_20_FEEDBACK_H*/

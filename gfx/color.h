@@ -265,7 +265,15 @@ static inline uint8_t color_brightness(color_t color)
 #define COLOR_MAKE(r8, g8, b8) ((color_t){{b8, g8, r8}})
 #endif
 
-#define COLOR_HEX(c) COLOR_MAKE((uint32_t)((uint32_t)c >> 16) & 0xFF, (uint32_t)((uint32_t)c >> 8) & 0xFF, (uint32_t)c & 0xFF)
+#define COLOR_HEX(c) COLOR_MAKE(((uint32_t)((uint32_t)c >> 16) & 0xFF), \
+                                ((uint32_t)((uint32_t)c >> 8) & 0xFF), \
+                                ((uint32_t) c & 0xFF))
+
+/*Usage COLOR_HEX3(0x16C) which means COLOR_HEX(0x1166CC)*/
+#define COLOR_HEX3(c) COLOR_MAKE((((c >> 4) & 0xF0) | ((c >> 8) & 0xF)),   \
+                                ((uint32_t)(c & 0xF0)       | ((c & 0xF0) >> 4)), \
+                                ((uint32_t)(c & 0xF)         | ((c & 0xF) << 4)))
+
 
 /**********************
  *      MACROS

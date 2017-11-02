@@ -905,11 +905,11 @@ static const uint8_t symbol_40_file_width[] =
     37, 40, 40, 34, 34, 
 };
 
-static font_t symbol_40_file_dsc = 
+font_t font_symbol_40_file = 
 {
 #if TXT_UTF8 == 0
-    224,            /*First letter's unicode */
-    255,            /*Last letter's unicode */
+    224,        /*First letter's unicode */
+    255,        /*Last letter's unicode */
 #else
     57376,        /*First letter's unicode */
     57397,        /*Last letter's unicode */
@@ -919,12 +919,5 @@ static font_t symbol_40_file_dsc =
     symbol_40_file_map,    /*Glyph start indexes in the bitmap*/
     symbol_40_file_width,    /*Glyph widths (columns)*/
 };
-
-/*Function pointer which gives a pointer to the dsc. variable*/
-font_t * symbol_40_file_get_dsc(void)
-{
-    return &symbol_40_file_dsc;
-}
-
 
 #endif /*SYMBOL_40_FILE_H*/

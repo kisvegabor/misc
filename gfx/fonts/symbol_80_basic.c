@@ -1169,7 +1169,7 @@ static const uint8_t symbol_80_basic_width[] =
     57, 63, 63, 80, 80, 86, 
 };
 
-static font_t symbol_80_basic_dsc = 
+font_t font_symbol_80_basic = 
 {
 #if TXT_UTF8 == 0
     192,        /*First letter's unicode */
@@ -1183,12 +1183,5 @@ static font_t symbol_80_basic_dsc =
     symbol_80_basic_map,    /*Glyph start indexes in the bitmap*/
     symbol_80_basic_width,    /*Glyph widths (columns)*/
 };
-
-/*Function pointer which gives a pointer to the dsc. variable*/
-font_t * symbol_80_basic_get_dsc(void)
-{
-    return &symbol_80_basic_dsc;
-}
-
 
 #endif /*SYMBOL_80_BASIC_H*/

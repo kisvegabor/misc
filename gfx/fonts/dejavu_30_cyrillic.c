@@ -8273,7 +8273,7 @@ static const uint8_t dejavu_30_cyrillic_width[] =
     23, 21, 18, 16, 18, 15, 18, 15, 
 };
 
-static font_t dejavu_30_cyrillic_dsc = 
+font_t font_dejavu_30_cyrillic = 
 {
     1024,        /*First letter's unicode */
     1279,        /*Last letter's unicode */
@@ -8282,12 +8282,5 @@ static font_t dejavu_30_cyrillic_dsc =
     dejavu_30_cyrillic_map,    /*Glyph start indexes in the bitmap*/
     dejavu_30_cyrillic_width,    /*Glyph widths (columns)*/
 };
-
-/*Function pointer which gives a pointer to the dsc. variable*/
-font_t * dejavu_30_cyrillic_get_dsc(void)
-{
-    return &dejavu_30_cyrillic_dsc;
-}
-
 
 #endif /*DEJAVU_30_CYRILLIC_H*/

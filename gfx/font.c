@@ -12,106 +12,6 @@
 #include <stddef.h>
 #include "font.h"
 
-#include "fonts/dejavu_10.h"
-#include "fonts/dejavu_10_sup.h"
-#include "fonts/dejavu_10_latin_ext_a.h"
-#include "fonts/dejavu_10_latin_ext_b.h"
-#include "fonts/dejavu_10_cyrillic.h"
-#include "fonts/symbol_10_basic.h"
-#include "fonts/symbol_10_file.h"
-#include "fonts/symbol_10_feedback.h"
-
-#include "fonts/dejavu_15.h"
-#include "fonts/dejavu_15_sup.h"
-#include "fonts/dejavu_15_latin_ext_a.h"
-#include "fonts/dejavu_15_latin_ext_b.h"
-#include "fonts/dejavu_15_cyrillic.h"
-#include "fonts/symbol_15_basic.h"
-#include "fonts/symbol_15_file.h"
-#include "fonts/symbol_15_feedback.h"
-
-#include "fonts/dejavu_20.h"
-#include "fonts/dejavu_20_sup.h"
-#include "fonts/dejavu_20_latin_ext_a.h"
-#include "fonts/dejavu_20_latin_ext_b.h"
-#include "fonts/dejavu_20_cyrillic.h"
-#include "fonts/symbol_20_basic.h"
-#include "fonts/symbol_20_file.h"
-#include "fonts/symbol_20_feedback.h"
-
-#include "fonts/dejavu_25.h"
-#include "fonts/dejavu_25_sup.h"
-#include "fonts/dejavu_25_latin_ext_a.h"
-#include "fonts/dejavu_25_latin_ext_b.h"
-#include "fonts/dejavu_25_cyrillic.h"
-#include "fonts/symbol_25_basic.h"
-#include "fonts/symbol_25_file.h"
-#include "fonts/symbol_25_feedback.h"
-
-#include "fonts/dejavu_30.h"
-#include "fonts/dejavu_30_sup.h"
-#include "fonts/dejavu_30_latin_ext_a.h"
-#include "fonts/dejavu_30_latin_ext_b.h"
-#include "fonts/dejavu_30_cyrillic.h"
-#include "fonts/symbol_30_basic.h"
-#include "fonts/symbol_30_file.h"
-#include "fonts/symbol_30_feedback.h"
-
-#include "fonts/dejavu_40.h"
-#include "fonts/dejavu_40_sup.h"
-#include "fonts/dejavu_40_latin_ext_a.h"
-#include "fonts/dejavu_40_latin_ext_b.h"
-#include "fonts/dejavu_40_cyrillic.h"
-#include "fonts/symbol_40_basic.h"
-#include "fonts/symbol_40_file.h"
-#include "fonts/symbol_40_feedback.h"
-
-#include "fonts/dejavu_50.h"
-#include "fonts/dejavu_50_sup.h"
-#include "fonts/dejavu_50_latin_ext_a.h"
-#include "fonts/dejavu_50_latin_ext_b.h"
-#include "fonts/dejavu_50_cyrillic.h"
-#include "fonts/symbol_50_basic.h"
-#include "fonts/symbol_50_file.h"
-#include "fonts/symbol_50_feedback.h"
-
-#include "fonts/dejavu_60.h"
-#include "fonts/dejavu_60_sup.h"
-#include "fonts/dejavu_60_latin_ext_a.h"
-#include "fonts/dejavu_60_latin_ext_b.h"
-#include "fonts/dejavu_60_cyrillic.h"
-#include "fonts/symbol_60_basic.h"
-#include "fonts/symbol_60_file.h"
-#include "fonts/symbol_60_feedback.h"
-
-#include "fonts/dejavu_80.h"
-#include "fonts/dejavu_80_sup.h"
-#include "fonts/dejavu_80_latin_ext_a.h"
-#include "fonts/dejavu_80_latin_ext_b.h"
-#include "fonts/dejavu_80_cyrillic.h"
-#include "fonts/symbol_80_basic.h"
-#include "fonts/symbol_80_file.h"
-#include "fonts/symbol_80_feedback.h"
-
-#include "fonts/dejavu_100.h"
-#include "fonts/dejavu_100_sup.h"
-#include "fonts/dejavu_100_latin_ext_a.h"
-#include "fonts/dejavu_100_latin_ext_b.h"
-#include "fonts/dejavu_100_cyrillic.h"
-#include "fonts/symbol_100_basic.h"
-#include "fonts/symbol_100_file.h"
-#include "fonts/symbol_100_feedback.h"
-
-#include "fonts/dejavu_120.h"
-#include "fonts/dejavu_120_sup.h"
-#include "fonts/dejavu_120_latin_ext_a.h"
-#include "fonts/dejavu_120_latin_ext_b.h"
-#include "fonts/dejavu_120_cyrillic.h"
-#include "fonts/symbol_120_basic.h"
-#include "fonts/symbol_120_file.h"
-#include "fonts/symbol_120_feedback.h"
-
-
 /*********************
  *      DEFINES
  *********************/
@@ -127,8 +27,6 @@
 /**********************
  *  STATIC VARIABLES
  **********************/
-font_t * (*font_map[FONT_NAME_NUM])(void);
-
 
 /**********************
  * GLOBAL PROTOTYPES
@@ -150,376 +48,206 @@ void font_init(void)
 
     /*DEJAVU 10*/
 #if USE_FONT_DEJAVU_10 != 0
-    font_add(FONT_DEJAVU_10, dejavu_10_get_dsc, NULL);
+    font_add(&font_dejavu_10, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_10_SUP != 0
-    font_add(FONT_DEJAVU_10_SUP, dejavu_10_sup_get_dsc, dejavu_10_get_dsc());
+    font_add(&font_dejavu_10_sup, &font_dejavu_10);
 #endif
 
 #if USE_FONT_DEJAVU_10_LATIN_EXT_A != 0
-    font_add(FONT_DEJAVU_10_LATIN_EXT_A, dejavu_10_latin_ext_a_get_dsc, dejavu_10_get_dsc());
+    font_add(&font_dejavu_10_latin_ext_a, &font_dejavu_10);
 #endif
 
 #if USE_FONT_DEJAVU_10_LATIN_EXT_B != 0
-    font_add(FONT_DEJAVU_10_LATIN_EXT_B, dejavu_10_latin_ext_b_get_dsc, dejavu_10_get_dsc());
+    font_add(&font_dejavu_10_latin_ext_b, &font_dejavu_10);
 #endif
 
 #if USE_FONT_DEJAVU_10_CYRILLIC != 0
-    font_add(FONT_DEJAVU_10_CYRILLIC, dejavu_10_cyrillic_get_dsc, dejavu_10_get_dsc());
+    font_add(&font_dejavu_10_cyrillic, &font_dejavu_10);
 #endif
 
     /*SYMBOL 10*/
 #if USE_FONT_SYMBOL_10_BASIC != 0
-    font_add(FONT_SYMBOL_10_BASIC, symbol_10_basic_get_dsc, dejavu_10_get_dsc());
+    font_add(&font_symbol_10_basic, &font_dejavu_10);
 #endif
 
 #if USE_FONT_SYMBOL_10_FILE != 0
-    font_add(FONT_SYMBOL_10_FILE, symbol_10_file_get_dsc, dejavu_10_get_dsc());
+    font_add(&font_symbol_10_file, &font_symbol_10_basic);
 #endif
 
 #if USE_FONT_SYMBOL_10_FEEDBACK != 0
-    font_add(FONT_SYMBOL_10_FEEDBACK, symbol_10_feedback_get_dsc, dejavu_10_get_dsc());
-#endif
-
-    /*DEJAVU 15*/
-#if USE_FONT_DEJAVU_15 != 0
-    font_add(FONT_DEJAVU_15, dejavu_15_get_dsc, NULL);
-#endif
-
-#if USE_FONT_DEJAVU_15_SUP != 0
-    font_add(FONT_DEJAVU_15_SUP, dejavu_15_sup_get_dsc, dejavu_15_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_15_LATIN_EXT_A != 0
-    font_add(FONT_DEJAVU_15_LATIN_EXT_A, dejavu_15_latin_ext_a_get_dsc, dejavu_15_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_15_LATIN_EXT_B != 0
-    font_add(FONT_DEJAVU_15_LATIN_EXT_B, dejavu_15_latin_ext_b_get_dsc, dejavu_15_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_15_CYRILLIC != 0
-    font_add(FONT_DEJAVU_15_CYRILLIC, dejavu_15_cyrillic_get_dsc, dejavu_15_get_dsc());
-#endif
-
-    /*SYMBOL 15*/
-#if USE_FONT_SYMBOL_15_BASIC != 0
-    font_add(FONT_SYMBOL_15_BASIC, symbol_15_basic_get_dsc, dejavu_15_get_dsc());
-#endif
-
-#if USE_FONT_SYMBOL_15_FILE != 0
-    font_add(FONT_SYMBOL_15_FILE, symbol_15_file_get_dsc, dejavu_15_get_dsc());
-#endif
-
-#if USE_FONT_SYMBOL_15_FEEDBACK != 0
-    font_add(FONT_SYMBOL_15_FEEDBACK, symbol_15_feedback_get_dsc, dejavu_15_get_dsc());
+    font_add(&font_symbol_10_feedback, &font_symbol_10_basic);
 #endif
 
     /*DEJAVU 20*/
 #if USE_FONT_DEJAVU_20 != 0
-    font_add(FONT_DEJAVU_20, dejavu_20_get_dsc, NULL);
+    font_add(&font_dejavu_20, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_20_SUP != 0
-    font_add(FONT_DEJAVU_20_SUP, dejavu_20_sup_get_dsc, dejavu_20_get_dsc());
+    font_add(&font_dejavu_20_sup, &font_dejavu_20);
 #endif
 
 #if USE_FONT_DEJAVU_20_LATIN_EXT_A != 0
-    font_add(FONT_DEJAVU_20_LATIN_EXT_A, dejavu_20_latin_ext_a_get_dsc, dejavu_20_get_dsc());
+    font_add(&font_dejavu_20_latin_ext_a, &font_dejavu_20);
 #endif
 
 #if USE_FONT_DEJAVU_20_LATIN_EXT_B != 0
-    font_add(FONT_DEJAVU_20_LATIN_EXT_B, dejavu_20_latin_ext_b_get_dsc, dejavu_20_get_dsc());
+    font_add(&font_dejavu_20_latin_ext_b, &font_dejavu_20);
 #endif
 
 #if USE_FONT_DEJAVU_20_CYRILLIC != 0
-    font_add(FONT_DEJAVU_20_CYRILLIC, dejavu_20_cyrillic_get_dsc, dejavu_20_get_dsc());
+    font_add(&font_dejavu_20_cyrillic, &font_dejavu_20);
 #endif
 
     /*SYMBOL 20*/
 #if USE_FONT_SYMBOL_20_BASIC != 0
-    font_add(FONT_SYMBOL_20_BASIC, symbol_20_basic_get_dsc, dejavu_20_get_dsc());
+    font_add(&font_symbol_20_basic, &font_dejavu_20);
 #endif
 
 #if USE_FONT_SYMBOL_20_FILE != 0
-    font_add(FONT_SYMBOL_20_FILE, symbol_20_file_get_dsc, dejavu_20_get_dsc());
+    font_add(&font_symbol_20_file, &font_symbol_20_basic);
 #endif
 
 #if USE_FONT_SYMBOL_20_FEEDBACK != 0
-    font_add(FONT_SYMBOL_20_FEEDBACK, symbol_20_feedback_get_dsc, dejavu_20_get_dsc());
-#endif
-
-    /*DEJAVU 25*/
-#if USE_FONT_DEJAVU_25 != 0
-    font_add(FONT_DEJAVU_25, dejavu_25_get_dsc, NULL);
-#endif
-
-#if USE_FONT_DEJAVU_25_SUP != 0
-    font_add(FONT_DEJAVU_25_SUP, dejavu_25_sup_get_dsc, dejavu_25_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_25_LATIN_EXT_A != 0
-    font_add(FONT_DEJAVU_25_LATIN_EXT_A, dejavu_25_latin_ext_a_get_dsc, dejavu_25_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_25_LATIN_EXT_B != 0
-    font_add(FONT_DEJAVU_25_LATIN_EXT_B, dejavu_25_latin_ext_b_get_dsc, dejavu_25_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_25_CYRILLIC != 0
-    font_add(FONT_DEJAVU_25_CYRILLIC, dejavu_25_cyrillic_get_dsc, dejavu_25_get_dsc());
-#endif
-
-    /*SYMBOL 25*/
-#if USE_FONT_SYMBOL_25_BASIC != 0
-    font_add(FONT_SYMBOL_25_BASIC, symbol_25_basic_get_dsc, dejavu_25_get_dsc());
-#endif
-
-#if USE_FONT_SYMBOL_25_FILE != 0
-    font_add(FONT_SYMBOL_25_FILE, symbol_25_file_get_dsc, dejavu_25_get_dsc());
-#endif
-
-#if USE_FONT_SYMBOL_25_FEEDBACK != 0
-    font_add(FONT_SYMBOL_25_FEEDBACK, symbol_25_feedback_get_dsc, dejavu_25_get_dsc());
+    font_add(&font_symbol_20_feedback, &font_symbol_20_basic);
 #endif
 
     /*DEJAVU 30*/
 #if USE_FONT_DEJAVU_30 != 0
-    font_add(FONT_DEJAVU_30, dejavu_30_get_dsc, NULL);
+    font_add(&font_dejavu_30, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_30_SUP != 0
-    font_add(FONT_DEJAVU_30_SUP, dejavu_30_sup_get_dsc, dejavu_30_get_dsc());
+    font_add(&font_dejavu_30_sup, &font_dejavu_30);
 #endif
 
 #if USE_FONT_DEJAVU_30_LATIN_EXT_A != 0
-    font_add(FONT_DEJAVU_30_LATIN_EXT_A, dejavu_30_latin_ext_a_get_dsc, dejavu_30_get_dsc());
+    font_add(&font_dejavu_30_latin_ext_a, &font_dejavu_30);
 #endif
 
 #if USE_FONT_DEJAVU_30_LATIN_EXT_B != 0
-    font_add(FONT_DEJAVU_30_LATIN_EXT_B, dejavu_30_latin_ext_b_get_dsc, dejavu_30_get_dsc());
+    font_add(&font_dejavu_30_latin_ext_b, &font_dejavu_30);
 #endif
 
 #if USE_FONT_DEJAVU_30_CYRILLIC != 0
-    font_add(FONT_DEJAVU_30_CYRILLIC, dejavu_30_cyrillic_get_dsc, dejavu_30_get_dsc());
+    font_add(&font_dejavu_30_cyrillic, &font_dejavu_30);
 #endif
 
     /*SYMBOL 30*/
 #if USE_FONT_SYMBOL_30_BASIC != 0
-    font_add(FONT_SYMBOL_30_BASIC, symbol_30_basic_get_dsc, dejavu_30_get_dsc());
+    font_add(&font_symbol_30_basic, &font_dejavu_30);
 #endif
 
 #if USE_FONT_SYMBOL_30_FILE != 0
-    font_add(FONT_SYMBOL_30_FILE, symbol_30_file_get_dsc, dejavu_30_get_dsc());
+    font_add(&font_symbol_30_file, &font_symbol_30_basic);
 #endif
 
 #if USE_FONT_SYMBOL_30_FEEDBACK != 0
-    font_add(FONT_SYMBOL_30_FEEDBACK, symbol_30_feedback_get_dsc, dejavu_30_get_dsc());
+    font_add(&font_symbol_30_feedback, &font_symvol_30_basic);
 #endif
 
     /*DEJAVU 40*/
 #if USE_FONT_DEJAVU_40 != 0
-    font_add(FONT_DEJAVU_40, dejavu_40_get_dsc, NULL);
+    font_add(&font_dejavu_40, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_40_SUP != 0
-    font_add(FONT_DEJAVU_40_SUP, dejavu_40_sup_get_dsc, dejavu_40_get_dsc());
+    font_add(&font_dejavu_40_sup, &font_dejavu_40);
 #endif
 
 #if USE_FONT_DEJAVU_40_LATIN_EXT_A != 0
-    font_add(FONT_DEJAVU_40_LATIN_EXT_A, dejavu_40_latin_ext_a_get_dsc, dejavu_40_get_dsc());
+    font_add(&font_dejavu_40_latin_ext_a, &font_dejavu_40);
 #endif
 
 #if USE_FONT_DEJAVU_40_LATIN_EXT_B != 0
-    font_add(FONT_DEJAVU_40_LATIN_EXT_B, dejavu_40_latin_ext_b_get_dsc, dejavu_40_get_dsc());
+    font_add(&font_dejavu_40_latin_ext_b, &font_dejavu_40);
 #endif
 
 #if USE_FONT_DEJAVU_40_CYRILLIC != 0
-    font_add(FONT_DEJAVU_40_CYRILLIC, dejavu_40_cyrillic_get_dsc, dejavu_40_get_dsc());
+    font_add(&font_dejavu_40_cyrillic, &font_dejavu_40);
 #endif
 
     /*SYMBOL 40*/
 #if USE_FONT_SYMBOL_40_BASIC != 0
-    font_add(FONT_SYMBOL_40_BASIC, symbol_40_basic_get_dsc, dejavu_40_get_dsc());
+    font_add(&font_symbol_40_basic, &font_dejavu_40);
 #endif
 
 #if USE_FONT_SYMBOL_40_FILE != 0
-    font_add(FONT_SYMBOL_40_FILE, symbol_40_file_get_dsc, dejavu_40_get_dsc());
+    font_add(&font_symbol_40_file, &font_symbol_40_basic);
 #endif
 
 #if USE_FONT_SYMBOL_40_FEEDBACK != 0
-    font_add(FONT_SYMBOL_40_FEEDBACK, symbol_40_feedback_get_dsc, dejavu_40_get_dsc());
-#endif
-
-    /*DEJAVU 50*/
-#if USE_FONT_DEJAVU_50 != 0
-    font_add(FONT_DEJAVU_50, dejavu_50_get_dsc, NULL);
-#endif
-
-#if USE_FONT_DEJAVU_50_SUP != 0
-    font_add(FONT_DEJAVU_50_SUP, dejavu_50_sup_get_dsc, dejavu_50_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_50_LATIN_EXT_A != 0
-    font_add(FONT_DEJAVU_50_LATIN_EXT_A, dejavu_50_latin_ext_a_get_dsc, dejavu_50_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_50_LATIN_EXT_B != 0
-    font_add(FONT_DEJAVU_50_LATIN_EXT_B, dejavu_50_latin_ext_b_get_dsc, dejavu_50_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_50_CYRILLIC != 0
-    font_add(FONT_DEJAVU_50_CYRILLIC, dejavu_50_cyrillic_get_dsc, dejavu_50_get_dsc());
-#endif
-
-    /*SYMBOL 50*/
-#if USE_FONT_SYMBOL_50_BASIC != 0
-    font_add(FONT_SYMBOL_50_BASIC, symbol_50_basic_get_dsc, dejavu_50_get_dsc());
-#endif
-
-#if USE_FONT_SYMBOL_50_FILE != 0
-    font_add(FONT_SYMBOL_50_FILE, symbol_50_file_get_dsc, dejavu_50_get_dsc());
-#endif
-
-#if USE_FONT_SYMBOL_50_FEEDBACK != 0
-    font_add(FONT_SYMBOL_50_FEEDBACK, symbol_50_feedback_get_dsc, dejavu_50_get_dsc());
+    font_add(&font_symbol_40_feedback, &font_symbol_40_basic);
 #endif
 
     /*DEJAVU 60*/
 #if USE_FONT_DEJAVU_60 != 0
-    font_add(FONT_DEJAVU_60, dejavu_60_get_dsc, NULL);
+    font_add(&font_dejavu_60, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_60_SUP != 0
-    font_add(FONT_DEJAVU_60_SUP, dejavu_60_sup_get_dsc, dejavu_60_get_dsc());
+    font_add(&font_dejavu_60_sup, &font_dejavu_60);
 #endif
 
 #if USE_FONT_DEJAVU_60_LATIN_EXT_A != 0
-    font_add(FONT_DEJAVU_60_LATIN_EXT_A, dejavu_60_latin_ext_a_get_dsc, dejavu_60_get_dsc());
+    font_add(&font_dejavu_60_latin_ext_a, &font_dejavu_60);
 #endif
 
 #if USE_FONT_DEJAVU_60_LATIN_EXT_B != 0
-    font_add(FONT_DEJAVU_60_LATIN_EXT_B, dejavu_60_latin_ext_b_get_dsc, dejavu_60_get_dsc());
+    font_add(&font_dejavu_60_latin_ext_b, &font_dejavu_60);
 #endif
 
 #if USE_FONT_DEJAVU_60_CYRILLIC != 0
-    font_add(FONT_DEJAVU_60_CYRILLIC, dejavu_60_cyrillic_get_dsc, dejavu_60_get_dsc());
+    font_add(&font_dejavu_60_cyrillic, &font_dejavu_60);
 #endif
 
     /*SYMBOL 60*/
 #if USE_FONT_SYMBOL_60_BASIC != 0
-    font_add(FONT_SYMBOL_60_BASIC, symbol_60_basic_get_dsc, dejavu_60_get_dsc());
+    font_add(&font_symbol_60_basic, &font_dejavu_60);
 #endif
 
 #if USE_FONT_SYMBOL_60_FILE != 0
-    font_add(FONT_SYMBOL_60_FILE, symbol_60_file_get_dsc, dejavu_60_get_dsc());
+    font_add(&font_symbol_60_file, &font_symbol_60_basic);
 #endif
 
 #if USE_FONT_SYMBOL_60_FEEDBACK != 0
-    font_add(FONT_SYMBOL_60_FEEDBACK, symbol_60_feedback_get_dsc, dejavu_60_get_dsc());
+    font_add(&font_symbol_60_feedback, &font_symbol_60_basic);
 #endif
 
     /*DEJAVU 80*/
 #if USE_FONT_DEJAVU_80 != 0
-    font_add(FONT_DEJAVU_80, dejavu_80_get_dsc, NULL);
+    font_add(&font_dejavu_80, NULL);
 #endif
 
 #if USE_FONT_DEJAVU_80_SUP != 0
-    font_add(FONT_DEJAVU_80_SUP, dejavu_80_sup_get_dsc, dejavu_80_get_dsc());
+    font_add(&font_dejavu_80_sup, &font_dejavu_80);
 #endif
 
 #if USE_FONT_DEJAVU_80_LATIN_EXT_A != 0
-    font_add(FONT_DEJAVU_80_LATIN_EXT_A, dejavu_80_latin_ext_a_get_dsc, dejavu_80_get_dsc());
+    font_add(&font_dejavu_80_latin_ext_a, &font_dejavu_80);
 #endif
 
 #if USE_FONT_DEJAVU_80_LATIN_EXT_B != 0
-    font_add(FONT_DEJAVU_80_LATIN_EXT_B, dejavu_80_latin_ext_b_get_dsc, dejavu_80_get_dsc());
+    font_add(&font_dejavu_80_latin_ext_b, &font_dejavu_80);
 #endif
 
 #if USE_FONT_DEJAVU_80_CYRILLIC != 0
-    font_add(FONT_DEJAVU_80_CYRILLIC, dejavu_80_cyrillic_get_dsc, dejavu_80_get_dsc());
+    font_add(&font_dejavu_80_cyrillic, &font_dejavu_80);
 #endif
 
     /*SYMBOL 80*/
 #if USE_FONT_SYMBOL_80_BASIC != 0
-    font_add(FONT_SYMBOL_80_BASIC, symbol_80_basic_get_dsc, dejavu_80_get_dsc());
+    font_add(&font_symbol_80_basic, &font_dejavu_80);
 #endif
 
 #if USE_FONT_SYMBOL_80_FILE != 0
-    font_add(FONT_SYMBOL_80_FILE, symbol_80_file_get_dsc, dejavu_80_get_dsc());
+    font_add(&font_symbol_80_file, &font_symbol_80_basic);
 #endif
 
 #if USE_FONT_SYMBOL_80_FEEDBACK != 0
-    font_add(FONT_SYMBOL_80_FEEDBACK, symbol_80_feedback_get_dsc, dejavu_80_get_dsc());
-#endif
-
-    /*DEJAVU 100*/
-#if USE_FONT_DEJAVU_100 != 0
-    font_add(FONT_DEJAVU_100, dejavu_100_get_dsc, NULL);
-#endif
-
-#if USE_FONT_DEJAVU_100_SUP != 0
-    font_add(FONT_DEJAVU_100_SUP, dejavu_100_sup_get_dsc, dejavu_100_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_100_LATIN_EXT_A != 0
-    font_add(FONT_DEJAVU_100_LATIN_EXT_A, dejavu_100_latin_ext_a_get_dsc, dejavu_100_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_100_LATIN_EXT_B != 0
-    font_add(FONT_DEJAVU_100_LATIN_EXT_B, dejavu_100_latin_ext_b_get_dsc, dejavu_100_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_100_CYRILLIC != 0
-    font_add(FONT_DEJAVU_100_CYRILLIC, dejavu_100_cyrillic_get_dsc, dejavu_100_get_dsc());
-#endif
-
-    /*SYMBOL 100*/
-#if USE_FONT_SYMBOL_100_BASIC != 0
-    font_add(FONT_SYMBOL_100_BASIC, symbol_100_basic_get_dsc, dejavu_100_get_dsc());
-#endif
-
-#if USE_FONT_SYMBOL_100_FILE != 0
-    font_add(FONT_SYMBOL_100_FILE, symbol_100_file_get_dsc, dejavu_100_get_dsc());
-#endif
-
-#if USE_FONT_SYMBOL_100_FEEDBACK != 0
-    font_add(FONT_SYMBOL_100_FEEDBACK, symbol_100_feedback_get_dsc, dejavu_100_get_dsc());
-#endif
-
-    /*DEJAVU 120*/
-#if USE_FONT_DEJAVU_120 != 0
-    font_add(FONT_DEJAVU_120, dejavu_120_get_dsc, NULL);
-#endif
-
-#if USE_FONT_DEJAVU_120_SUP != 0
-    font_add(FONT_DEJAVU_120_SUP, dejavu_120_sup_get_dsc, dejavu_120_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_120_LATIN_EXT_A != 0
-    font_add(FONT_DEJAVU_120_LATIN_EXT_A, dejavu_120_latin_ext_a_get_dsc, dejavu_120_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_120_LATIN_EXT_B != 0
-    font_add(FONT_DEJAVU_120_LATIN_EXT_B, dejavu_120_latin_ext_b_get_dsc, dejavu_120_get_dsc());
-#endif
-
-#if USE_FONT_DEJAVU_120_CYRILLIC != 0
-    font_add(FONT_DEJAVU_120_CYRILLIC, dejavu_120_cyrillic_get_dsc, dejavu_120_get_dsc());
-#endif
-
-    /*SYMBOL 120*/
-#if USE_FONT_SYMBOL_120_BASIC != 0
-    font_add(FONT_SYMBOL_120_BASIC, symbol_120_basic_get_dsc, dejavu_120_get_dsc());
-#endif
-
-#if USE_FONT_SYMBOL_120_FILE != 0
-    font_add(FONT_SYMBOL_120_FILE, symbol_120_file_get_dsc, dejavu_120_get_dsc());
-#endif
-
-#if USE_FONT_SYMBOL_120_FEEDBACK != 0
-    font_add(FONT_SYMBOL_120_FEEDBACK, symbol_120_feedback_get_dsc, dejavu_120_get_dsc());
+    font_add(&font_symbol_80_feedback, &font_symbol_80_basic);
 #endif
 }
 
@@ -529,39 +257,16 @@ void font_init(void)
  * @param dsc_get_fp the font descriptor get function
  * @param parent add this font as charter set extension of 'parent'
  */
-void font_add(font_name_t name, font_t * (*dsc_get_fp)(void), font_t * parent)
+void font_add(font_t *child, font_t *parent)
 {
-    if(name >= FONT_NAME_NUM) return;
-    if(dsc_get_fp == NULL) return;
+    if(parent == NULL) return;
 
-    font_map[name] = dsc_get_fp;
-
-    font_t * font = dsc_get_fp();
-    font->next_page = NULL;
-
-    if(parent) {
-        while(parent->next_page != NULL) parent = parent->next_page; /*Got to the last page and as the new one there*/
-
-        parent->next_page = dsc_get_fp();
+    while(parent->next_page != NULL) {
+        parent = parent->next_page; /*Got to the last page and add the new font there*/
     }
-}
 
+    parent->next_page = child;
 
-/**
- * Get the font from its id 
- * @param name: name of a font (form 'font_name_t' enum)
- * @return pointer to a font descriptor
- */
-const font_t * font_get(font_name_t name)
-{
-
-    if(name >= FONT_NAME_NUM) return font_map[FONT_DEFAULT]();
-
-    const font_t * font_p = font_map[name]();
-
-    if(font_p == NULL) font_p = font_map[FONT_DEFAULT]();
-
-    return font_p;
 }
 
 /**

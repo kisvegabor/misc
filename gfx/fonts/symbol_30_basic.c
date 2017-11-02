@@ -469,7 +469,7 @@ static const uint8_t symbol_30_basic_width[] =
     21, 24, 24, 30, 30, 32, 
 };
 
-static font_t symbol_30_basic_dsc = 
+font_t font_symbol_30_basic = 
 {
 #if TXT_UTF8 == 0
     192,        /*First letter's unicode */
@@ -483,12 +483,5 @@ static font_t symbol_30_basic_dsc =
     symbol_30_basic_map,    /*Glyph start indexes in the bitmap*/
     symbol_30_basic_width,    /*Glyph widths (columns)*/
 };
-
-/*Function pointer which gives a pointer to the dsc. variable*/
-font_t * symbol_30_basic_get_dsc(void)
-{
-    return &symbol_30_basic_dsc;
-}
-
 
 #endif /*SYMBOL_30_BASIC_H*/

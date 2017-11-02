@@ -20,6 +20,8 @@ extern "C" {
 #include <stdint.h>
 #include <stddef.h>
 
+#include "fonts/symbol_def.h"
+
 /*********************
  *      DEFINES
  *********************/
@@ -27,391 +29,6 @@ extern "C" {
 /**********************
  *      TYPEDEFS
  **********************/
-
-typedef enum
-{
-    /*DEJAVU 10*/
-#if USE_FONT_DEJAVU_10 != 0
-    FONT_DEJAVU_10,
-#endif
-
-#if USE_FONT_DEJAVU_10_SUP != 0
-    FONT_DEJAVU_10_SUP,
-#endif
-
-#if USE_FONT_DEJAVU_10_LATIN_EXT_A != 0
-    FONT_DEJAVU_10_LATIN_EXT_A,
-#endif
-
-#if USE_FONT_DEJAVU_10_LATIN_EXT_B != 0
-    FONT_DEJAVU_10_LATIN_EXT_B,
-#endif
-
-#if USE_FONT_DEJAVU_10_CYRILLIC != 0
-    FONT_DEJAVU_10_CYRILLIC,
-#endif
-
-    /*SYMBOL 10*/
-#if USE_FONT_SYMBOL_10_BASIC != 0
-    FONT_SYMBOL_10_BASIC,
-#endif
-
-#if USE_FONT_SYMBOL_10_FILE != 0
-    FONT_SYMBOL_10_FILE,
-#endif
-
-#if USE_FONT_SYMBOL_10_FEEDBACK != 0
-    FONT_SYMBOL_10_FEEDBACK,
-#endif
-
-    /*DEJAVU 15*/
- #if USE_FONT_DEJAVU_15 != 0
-     FONT_DEJAVU_15,
- #endif
-
- #if USE_FONT_DEJAVU_15_SUP != 0
-     FONT_DEJAVU_15_SUP,
- #endif
-
- #if USE_FONT_DEJAVU_15_LATIN_EXT_A != 0
-     FONT_DEJAVU_15_LATIN_EXT_A,
- #endif
-
- #if USE_FONT_DEJAVU_15_LATIN_EXT_B != 0
-     FONT_DEJAVU_15_LATIN_EXT_B,
- #endif
-
- #if USE_FONT_DEJAVU_15_CYRILLIC != 0
-     FONT_DEJAVU_15_CYRILLIC,
- #endif
-
-     /*SYMBOL 15*/
- #if USE_FONT_SYMBOL_15_BASIC != 0
-     FONT_SYMBOL_15_BASIC,
- #endif
-
- #if USE_FONT_SYMBOL_15_FILE != 0
-     FONT_SYMBOL_15_FILE,
- #endif
-
- #if USE_FONT_SYMBOL_15_FEEDBACK != 0
-     FONT_SYMBOL_15_FEEDBACK,
- #endif
-
-     /*DEJAVU 20*/
-#if USE_FONT_DEJAVU_20 != 0
-     FONT_DEJAVU_20,
-#endif
-
-#if USE_FONT_DEJAVU_20_SUP != 0
-     FONT_DEJAVU_20_SUP,
-#endif
-
-#if USE_FONT_DEJAVU_20_LATIN_EXT_A != 0
-     FONT_DEJAVU_20_LATIN_EXT_A,
-#endif
-
-#if USE_FONT_DEJAVU_20_LATIN_EXT_B != 0
-     FONT_DEJAVU_20_LATIN_EXT_B,
-#endif
-
-#if USE_FONT_DEJAVU_20_CYRILLIC != 0
-     FONT_DEJAVU_20_CYRILLIC,
-#endif
-
-     /*SYMBOL 20*/
- #if USE_FONT_SYMBOL_20_BASIC != 0
-     FONT_SYMBOL_10_BASIC,
- #endif
-
- #if USE_FONT_SYMBOL_20_FILE != 0
-     FONT_SYMBOL_20_FILE,
- #endif
-
- #if USE_FONT_SYMBOL_20_FEEDBACK != 0
-     FONT_SYMBOL_20_FEEDBACK,
- #endif
-
-  /*DEJAVU 25*/
-#if USE_FONT_DEJAVU_25 != 0
-   FONT_DEJAVU_25,
-#endif
-
-#if USE_FONT_DEJAVU_25_SUP != 0
-   FONT_DEJAVU_25_SUP,
-#endif
-
-#if USE_FONT_DEJAVU_25_LATIN_EXT_A != 0
-   FONT_DEJAVU_25_LATIN_EXT_A,
-#endif
-
-#if USE_FONT_DEJAVU_25_LATIN_EXT_B != 0
-   FONT_DEJAVU_25_LATIN_EXT_B,
-#endif
-
-#if USE_FONT_DEJAVU_25_CYRILLIC != 0
-   FONT_DEJAVU_25_CYRILLIC,
-#endif
-
-   /*SYMBOL 25*/
-#if USE_FONT_SYMBOL_25_BASIC != 0
-   FONT_SYMBOL_25_BASIC,
-#endif
-
-#if USE_FONT_SYMBOL_25_FILE != 0
-   FONT_SYMBOL_25_FILE,
-#endif
-
-#if USE_FONT_SYMBOL_25_FEEDBACK != 0
-   FONT_SYMBOL_25_FEEDBACK,
-#endif
-
-   /*DEJAVU 30*/
-#if USE_FONT_DEJAVU_30 != 0
-   FONT_DEJAVU_30,
-#endif
-
-#if USE_FONT_DEJAVU_30_SUP != 0
-   FONT_DEJAVU_30_SUP,
-#endif
-
-#if USE_FONT_DEJAVU_30_LATIN_EXT_A != 0
-   FONT_DEJAVU_30_LATIN_EXT_A,
-#endif
-
-#if USE_FONT_DEJAVU_30_LATIN_EXT_B != 0
-   FONT_DEJAVU_30_LATIN_EXT_B,
-#endif
-
-#if USE_FONT_DEJAVU_30_CYRILLIC != 0
-   FONT_DEJAVU_30_CYRILLIC,
-#endif
-
-   /*SYMBOL 30*/
-#if USE_FONT_SYMBOL_30_BASIC != 0
-   FONT_SYMBOL_30_BASIC,
-#endif
-
-#if USE_FONT_SYMBOL_30_FILE != 0
-   FONT_SYMBOL_30_FILE,
-#endif
-
-#if USE_FONT_SYMBOL_30_FEEDBACK != 0
-   FONT_SYMBOL_30_FEEDBACK,
-#endif
-
-    /*DEJAVU 40*/
-#if USE_FONT_DEJAVU_40 != 0
-    FONT_DEJAVU_40,
-#endif
-
-#if USE_FONT_DEJAVU_40_SUP != 0
-    FONT_DEJAVU_40_SUP,
-#endif
-
-#if USE_FONT_DEJAVU_40_LATIN_EXT_A != 0
-    FONT_DEJAVU_40_LATIN_EXT_A,
-#endif
-
-#if USE_FONT_DEJAVU_40_LATIN_EXT_B != 0
-    FONT_DEJAVU_40_LATIN_EXT_B,
-#endif
-
-#if USE_FONT_DEJAVU_40_CYRILLIC != 0
-    FONT_DEJAVU_40_CYRILLIC,
-#endif
-
-    /*SYMBOL 40*/
-#if USE_FONT_SYMBOL_40_BASIC != 0
-    FONT_SYMBOL_40_BASIC,
-#endif
-
-#if USE_FONT_SYMBOL_40_FILE != 0
-    FONT_SYMBOL_40_FILE,
-#endif
-
-#if USE_FONT_SYMBOL_40_FEEDBACK != 0
-    FONT_SYMBOL_40_FEEDBACK,
-#endif
-
-    /*DEJAVU 50*/
-#if USE_FONT_DEJAVU_50 != 0
-    FONT_DEJAVU_50,
-#endif
-
-#if USE_FONT_DEJAVU_50_SUP != 0
-    FONT_DEJAVU_50_SUP,
-#endif
-
-#if USE_FONT_DEJAVU_50_LATIN_EXT_A != 0
-    FONT_DEJAVU_50_LATIN_EXT_A,
-#endif
-
-#if USE_FONT_DEJAVU_50_LATIN_EXT_B != 0
-    FONT_DEJAVU_50_LATIN_EXT_B,
-#endif
-
-#if USE_FONT_DEJAVU_50_CYRILLIC != 0
-    FONT_DEJAVU_50_CYRILLIC,
-#endif
-
-    /*SYMBOL 50*/
-#if USE_FONT_SYMBOL_50_BASIC != 0
-    FONT_SYMBOL_50_BASIC,
-#endif
-
-#if USE_FONT_SYMBOL_50_FILE != 0
-    FONT_SYMBOL_50_FILE,
-#endif
-
-#if USE_FONT_SYMBOL_50_FEEDBACK != 0
-    FONT_SYMBOL_50_FEEDBACK,
-#endif
-
-    /*DEJAVU 60*/
-#if USE_FONT_DEJAVU_60 != 0
-    FONT_DEJAVU_60,
-#endif
-
-#if USE_FONT_DEJAVU_60_SUP != 0
-    FONT_DEJAVU_60_SUP,
-#endif
-
-#if USE_FONT_DEJAVU_60_LATIN_EXT_A != 0
-    FONT_DEJAVU_60_LATIN_EXT_A,
-#endif
-
-#if USE_FONT_DEJAVU_60_LATIN_EXT_B != 0
-    FONT_DEJAVU_60_LATIN_EXT_B,
-#endif
-
-#if USE_FONT_DEJAVU_60_CYRILLIC != 0
-    FONT_DEJAVU_60_CYRILLIC,
-#endif
-
-    /*SYMBOL 60*/
-#if USE_FONT_SYMBOL_60_BASIC != 0
-    FONT_SYMBOL_60_BASIC,
-#endif
-
-#if USE_FONT_SYMBOL_60_FILE != 0
-    FONT_SYMBOL_60_FILE,
-#endif
-
-#if USE_FONT_SYMBOL_60_FEEDBACK != 0
-    FONT_SYMBOL_60_FEEDBACK,
-#endif
-
-    /*DEJAVU 80*/
-#if USE_FONT_DEJAVU_80 != 0
-    FONT_DEJAVU_80,
-#endif
-
-#if USE_FONT_DEJAVU_80_SUP != 0
-    FONT_DEJAVU_80_SUP,
-#endif
-
-#if USE_FONT_DEJAVU_80_LATIN_EXT_A != 0
-    FONT_DEJAVU_80_LATIN_EXT_A,
-#endif
-
-#if USE_FONT_DEJAVU_80_LATIN_EXT_B != 0
-    FONT_DEJAVU_80_LATIN_EXT_B,
-#endif
-
-#if USE_FONT_DEJAVU_80_CYRILLIC != 0
-    FONT_DEJAVU_80_CYRILLIC,
-#endif
-
-    /*SYMBOL 80*/
-#if USE_FONT_SYMBOL_80_BASIC != 0
-    FONT_SYMBOL_80_BASIC,
-#endif
-
-#if USE_FONT_SYMBOL_80_FILE != 0
-    FONT_SYMBOL_80_FILE,
-#endif
-
-#if USE_FONT_SYMBOL_80_FEEDBACK != 0
-    FONT_SYMBOL_80_FEEDBACK,
-#endif
-
-    /*DEJAVU 100*/
-#if USE_FONT_DEJAVU_100 != 0
-    FONT_DEJAVU_100,
-#endif
-
-#if USE_FONT_DEJAVU_100_SUP != 0
-    FONT_DEJAVU_100_SUP,
-#endif
-
-#if USE_FONT_DEJAVU_100_LATIN_EXT_A != 0
-    FONT_DEJAVU_100_LATIN_EXT_A,
-#endif
-
-#if USE_FONT_DEJAVU_100_LATIN_EXT_B != 0
-    FONT_DEJAVU_100_LATIN_EXT_B,
-#endif
-
-#if USE_FONT_DEJAVU_100_CYRILLIC != 0
-    FONT_DEJAVU_100_CYRILLIC,
-#endif
-
-    /*SYMBOL 100*/
-#if USE_FONT_SYMBOL_100_BASIC != 0
-    FONT_SYMBOL_100_BASIC,
-#endif
-
-#if USE_FONT_SYMBOL_100_FILE != 0
-    FONT_SYMBOL_100_FILE,
-#endif
-
-#if USE_FONT_SYMBOL_100_FEEDBACK != 0
-    FONT_SYMBOL_100_FEEDBACK,
-#endif
-
-    /*DEJAVU 120*/
-#if USE_FONT_DEJAVU_120 != 0
-    FONT_DEJAVU_120,
-#endif
-
-#if USE_FONT_DEJAVU_120_SUP != 0
-    FONT_DEJAVU_120_SUP,
-#endif
-
-#if USE_FONT_DEJAVU_120_LATIN_EXT_A != 0
-    FONT_DEJAVU_120_LATIN_EXT_A,
-#endif
-
-#if USE_FONT_DEJAVU_120_LATIN_EXT_B != 0
-    FONT_DEJAVU_120_LATIN_EXT_B,
-#endif
-
-#if USE_FONT_DEJAVU_120_CYRILLIC != 0
-    FONT_DEJAVU_120_CYRILLIC,
-#endif
-
-    /*SYMBOL 120*/
-#if USE_FONT_SYMBOL_120_BASIC != 0
-    FONT_SYMBOL_120_BASIC,
-#endif
-
-#if USE_FONT_SYMBOL_120_FILE != 0
-    FONT_SYMBOL_120_FILE,
-#endif
-
-#if USE_FONT_SYMBOL_120_FEEDBACK != 0
-    FONT_SYMBOL_120_FEEDBACK,
-#endif
-
-    /*Insert the user defined font names*/
-#ifdef FONT_NEW_NAMES
-    FONT_NEW_NAMES
-#endif
-
-    FONT_NAME_NUM,
-}font_name_t;
-
 
 struct _font_struct;
 
@@ -437,19 +54,10 @@ void font_init(void);
 
 /**
  * Create a pair from font name and font dsc. get function. After it 'font_get' can be used for this font
- * @param name name of the font
- * @param dsc_get_fp the font descriptor get function
- * @param parent add this font the charter set extension of 'parent'
+ * @param child pointer to a font to join to the 'parent'
+ * @param parent pointer to a font. 'child' will be joined here
  */
-void font_add(font_name_t name, font_t * (*dsc_get_fp)(void), font_t * parent);
-
-/**
- * Get the font from its id
- * @param font_id: the id of a font (an element of font_types_t enum)
- * @return pointer to a font descriptor
- */
-const font_t * font_get(font_name_t font_id);
-
+void font_add(font_t *child, font_t *parent);
 
 /**
  * Return with the bitmap of a font.
@@ -482,6 +90,65 @@ uint8_t font_get_width(const font_t * font_p, uint32_t letter);
 /**********************
  *      MACROS
  **********************/
+
+/***********************
+ *   POST INCLUDES
+ ***********************/
+/*Add built-in fonts*/
+
+#include "fonts/dejavu_10.h"
+#include "fonts/dejavu_10_sup.h"
+#include "fonts/dejavu_10_latin_ext_a.h"
+#include "fonts/dejavu_10_latin_ext_b.h"
+#include "fonts/dejavu_10_cyrillic.h"
+#include "fonts/symbol_10_basic.h"
+#include "fonts/symbol_10_file.h"
+#include "fonts/symbol_10_feedback.h"
+
+#include "fonts/dejavu_20.h"
+#include "fonts/dejavu_20_sup.h"
+#include "fonts/dejavu_20_latin_ext_a.h"
+#include "fonts/dejavu_20_latin_ext_b.h"
+#include "fonts/dejavu_20_cyrillic.h"
+#include "fonts/symbol_20_basic.h"
+#include "fonts/symbol_20_file.h"
+#include "fonts/symbol_20_feedback.h"
+
+#include "fonts/dejavu_30.h"
+#include "fonts/dejavu_30_sup.h"
+#include "fonts/dejavu_30_latin_ext_a.h"
+#include "fonts/dejavu_30_latin_ext_b.h"
+#include "fonts/dejavu_30_cyrillic.h"
+#include "fonts/symbol_30_basic.h"
+#include "fonts/symbol_30_file.h"
+#include "fonts/symbol_30_feedback.h"
+
+#include "fonts/dejavu_40.h"
+#include "fonts/dejavu_40_sup.h"
+#include "fonts/dejavu_40_latin_ext_a.h"
+#include "fonts/dejavu_40_latin_ext_b.h"
+#include "fonts/dejavu_40_cyrillic.h"
+#include "fonts/symbol_40_basic.h"
+#include "fonts/symbol_40_file.h"
+#include "fonts/symbol_40_feedback.h"
+
+#include "fonts/dejavu_60.h"
+#include "fonts/dejavu_60_sup.h"
+#include "fonts/dejavu_60_latin_ext_a.h"
+#include "fonts/dejavu_60_latin_ext_b.h"
+#include "fonts/dejavu_60_cyrillic.h"
+#include "fonts/symbol_60_basic.h"
+#include "fonts/symbol_60_file.h"
+#include "fonts/symbol_60_feedback.h"
+
+#include "fonts/dejavu_80.h"
+#include "fonts/dejavu_80_sup.h"
+#include "fonts/dejavu_80_latin_ext_a.h"
+#include "fonts/dejavu_80_latin_ext_b.h"
+#include "fonts/dejavu_80_cyrillic.h"
+#include "fonts/symbol_80_basic.h"
+#include "fonts/symbol_80_file.h"
+#include "fonts/symbol_80_feedback.h"
 
 #endif /*USE_FONT*/
 

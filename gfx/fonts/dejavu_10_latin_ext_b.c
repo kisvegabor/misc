@@ -2565,7 +2565,7 @@ static const uint8_t dejavu_10_latin_ext_b_width[] =
      3,  3,  7,  6,  6,  4,  6,  5, 
 };
 
-static font_t dejavu_10_latin_ext_b_dsc = 
+font_t font_dejavu_10_latin_ext_b = 
 {
     384,        /*First letter's unicode */
     591,        /*Last letter's unicode */
@@ -2574,12 +2574,5 @@ static font_t dejavu_10_latin_ext_b_dsc =
     dejavu_10_latin_ext_b_map,    /*Glyph start indexes in the bitmap*/
     dejavu_10_latin_ext_b_width,    /*Glyph widths (columns)*/
 };
-
-/*Function pointer which gives a pointer to the dsc. variable*/
-font_t * dejavu_10_latin_ext_b_get_dsc(void)
-{
-    return &dejavu_10_latin_ext_b_dsc;
-}
-
 
 #endif /*DEJAVU_10_LATIN_EXT_B_H*/

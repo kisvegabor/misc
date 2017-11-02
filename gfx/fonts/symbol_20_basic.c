@@ -329,7 +329,7 @@ static const uint8_t symbol_20_basic_width[] =
     14, 16, 16, 20, 20, 21, 
 };
 
-static font_t symbol_20_basic_dsc = 
+font_t font_symbol_20_basic = 
 {
 #if TXT_UTF8 == 0
     192,        /*First letter's unicode */
@@ -343,12 +343,5 @@ static font_t symbol_20_basic_dsc =
     symbol_20_basic_map,    /*Glyph start indexes in the bitmap*/
     symbol_20_basic_width,    /*Glyph widths (columns)*/
 };
-
-/*Function pointer which gives a pointer to the dsc. variable*/
-font_t * symbol_20_basic_get_dsc(void)
-{
-    return &symbol_20_basic_dsc;
-}
-
 
 #endif /*SYMBOL_20_BASIC_H*/

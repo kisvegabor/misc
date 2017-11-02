@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include "misc/gfx/font.h"
 
-font_t * dejavu_10_sup_get_dsc(void);
+extern font_t font_dejavu_10_sup;
 
 #endif   /*USE_FONT_DEJAVU_10_SUP != 0*/
 

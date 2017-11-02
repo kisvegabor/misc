@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include "misc/gfx/font.h"
 
-font_t * dejavu_20_latin_ext_a_get_dsc(void);
+extern font_t font_dejavu_20_latin_ext_a;
 
 #endif   /*USE_FONT_DEJAVU_20_LATIN_EXT_A != 0*/
 

@@ -3081,7 +3081,7 @@ static const uint8_t dejavu_30_width[] =
     15, 15, 14, 17,  9, 17, 22, 
 };
 
-static font_t dejavu_30_dsc = 
+font_t font_dejavu_30 = 
 {
     32,        /*First letter's unicode */
     126,        /*Last letter's unicode */
@@ -3090,12 +3090,5 @@ static font_t dejavu_30_dsc =
     dejavu_30_map,    /*Glyph start indexes in the bitmap*/
     dejavu_30_width,    /*Glyph widths (columns)*/
 };
-
-/*Function pointer which gives a pointer to the dsc. variable*/
-font_t * dejavu_30_get_dsc(void)
-{
-    return &dejavu_30_dsc;
-}
-
 
 #endif /*DEJAVU_30_H*/

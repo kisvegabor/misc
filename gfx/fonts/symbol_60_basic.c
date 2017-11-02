@@ -889,7 +889,7 @@ static const uint8_t symbol_60_basic_width[] =
     43, 47, 47, 60, 60, 64, 
 };
 
-static font_t symbol_60_basic_dsc = 
+font_t font_symbol_60_basic = 
 {
 #if TXT_UTF8 == 0
     192,        /*First letter's unicode */
@@ -903,12 +903,5 @@ static font_t symbol_60_basic_dsc =
     symbol_60_basic_map,    /*Glyph start indexes in the bitmap*/
     symbol_60_basic_width,    /*Glyph widths (columns)*/
 };
-
-/*Function pointer which gives a pointer to the dsc. variable*/
-font_t * symbol_60_basic_get_dsc(void)
-{
-    return &symbol_60_basic_dsc;
-}
-
 
 #endif /*SYMBOL_60_BASIC_H*/

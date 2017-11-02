@@ -7913,7 +7913,7 @@ static const uint8_t dejavu_80_sup_width[] =
     42, 44, 44, 44, 44, 41, 44, 41, 
 };
 
-static font_t dejavu_80_sup_dsc = 
+font_t font_dejavu_80_sup = 
 {
     160,        /*First letter's unicode */
     255,        /*Last letter's unicode */
@@ -7922,12 +7922,5 @@ static font_t dejavu_80_sup_dsc =
     dejavu_80_sup_map,    /*Glyph start indexes in the bitmap*/
     dejavu_80_sup_width,    /*Glyph widths (columns)*/
 };
-
-/*Function pointer which gives a pointer to the dsc. variable*/
-font_t * dejavu_80_sup_get_dsc(void)
-{
-    return &dejavu_80_sup_dsc;
-}
-
 
 #endif /*DEJAVU_80_SUP_H*/

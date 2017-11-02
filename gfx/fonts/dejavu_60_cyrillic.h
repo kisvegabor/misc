@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include "misc/gfx/font.h"
 
-font_t * dejavu_60_cyrillic_get_dsc(void);
+extern font_t font_dejavu_60_cyrillic;
 
 #endif   /*USE_FONT_DEJAVU_60_CYRILLIC != 0*/
 

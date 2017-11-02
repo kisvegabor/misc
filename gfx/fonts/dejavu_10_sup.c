@@ -1193,7 +1193,7 @@ static const uint8_t dejavu_10_sup_width[] =
      6,  6,  6,  6,  6,  5,  6,  5, 
 };
 
-static font_t dejavu_10_sup_dsc = 
+font_t font_dejavu_10_sup = 
 {
     160,        /*First letter's unicode */
     255,        /*Last letter's unicode */
@@ -1202,12 +1202,5 @@ static font_t dejavu_10_sup_dsc =
     dejavu_10_sup_map,    /*Glyph start indexes in the bitmap*/
     dejavu_10_sup_width,    /*Glyph widths (columns)*/
 };
-
-/*Function pointer which gives a pointer to the dsc. variable*/
-font_t * dejavu_10_sup_get_dsc(void)
-{
-    return &dejavu_10_sup_dsc;
-}
-
 
 #endif /*DEJAVU_10_SUP_H*/

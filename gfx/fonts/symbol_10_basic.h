@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include "misc/gfx/font.h"
 
-font_t * symbol_10_basic_get_dsc(void);
+extern font_t font_symbol_10_basic;
 
 #endif   /*USE_FONT_SYMBOL_10_BASIC != 0*/
 
