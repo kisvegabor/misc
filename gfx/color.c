@@ -46,7 +46,7 @@
  */
 color_t color_hsv_to_rgb(uint16_t h, uint8_t s, uint8_t v)
 {
-    h = (uint16_t)((uint16_t)h * 255) / 360;
+    h = (uint32_t)((uint32_t)h * 255) / 360;
     s = (uint16_t)((uint16_t)s * 255) / 100;
     v = (uint16_t)((uint16_t)v * 255) / 100;
 
