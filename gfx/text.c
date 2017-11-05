@@ -95,7 +95,7 @@ void txt_get_size(point_t * size_res, const char * text, const font_t * font,
  * @param letter_space letter space
  * @param max_width max with of the text (break the lines to fit this size) Set CORD_MAX to avoid line breaks
  * @param flags settings for the text from 'txt_flag_type' enum
- * @return the index of the first char of the new line
+ * @return the index of the first char of the new line (in byte index not letter index. With UTF-8 they are different)
  */
 uint16_t txt_get_next_line(const char * txt, const font_t * font,
                            cord_t letter_space, cord_t max_width, txt_flag_t flag)
@@ -122,11 +122,10 @@ uint16_t txt_get_next_line(const char * txt, const font_t * font,
         }
         /*Check for new line chars*/
         if((flag & TXT_FLAG_NO_BREAK) == 0 && (letter == '\n' || letter == '\r')) {
-            /*Handle \n\r and \r\n as well*/
+            /*Handle \r\n as well*/
             uint32_t i_tmp = i;
-            letter = txt_utf8_next(txt, &i_tmp);
-            if(letter == '\r' || letter == '\n') i = i_tmp;
-
+            uint32_t letter_next = txt_utf8_next(txt, &i_tmp);
+            if(letter == '\r' &&  letter_next == '\n') i = i_tmp;
 
             return i;    /*Return with the first letter of the next line*/
 
@@ -254,7 +253,8 @@ bool txt_is_cmd(txt_cmd_state_t * state, uint32_t c)
 /**
  * Insert a string into an other
  * @param txt_buf the original text (must be big enough for the result text)
- * @param pos position to insert (0: before the original text, 1: after the first char etc.)
+ * @param pos position to insert. Expressed in character index and not byte index (Different in UTF-8)
+ *            0: before the original text, 1: after the first char etc.
  * @param ins_txt text to insert
  */
 void txt_ins(char * txt_buf, uint32_t pos, const char * ins_txt)
@@ -263,7 +263,7 @@ void txt_ins(char * txt_buf, uint32_t pos, const char * ins_txt)
     uint32_t ins_len = strlen(ins_txt);
     uint32_t new_len = ins_len + old_len;
 #if TXT_UTF8 != 0
-    pos = txt_utf8_get_id(txt_buf, pos);   /*Convert to byte index instead of letter index*/
+    pos = txt_utf8_get_byte_id(txt_buf, pos);   /*Convert to byte index instead of letter index*/
 #endif
     /*Copy the second part into the end to make place to text to insert*/
     int32_t i;
@@ -286,8 +286,8 @@ void txt_cut(char * txt, uint32_t pos, uint32_t len)
 
     uint32_t old_len = strlen(txt);
 #if TXT_UTF8 != 0
-    pos = txt_utf8_get_id(txt, pos);   /*Convert to byte index instead of letter index*/
-    len = txt_utf8_get_id(&txt[pos], len);
+    pos = txt_utf8_get_byte_id(txt, pos);   /*Convert to byte index instead of letter index*/
+    len = txt_utf8_get_byte_id(&txt[pos], len);
 #endif
 
     /*Copy the second part into the end to make place to text to insert*/
@@ -457,14 +457,17 @@ uint32_t txt_utf8_prev(const char * txt, uint32_t * i_start)
 }
 
 /**
- * Convert a letter index (in an UTF-8 text) to byte index.
+ * Convert a character index (in an UTF-8 text) to byte index.
  * E.g. in "AÁRT" index of 'R' is 2 but start at byte 3 because 'Á' is 2 bytes long
  * @param txt a '\0' terminated UTF-8 string
  * @param utf8_id letter index
  * @return byte index of the 'utf8_id'th letter
  */
-uint32_t txt_utf8_get_id(const char * txt, uint32_t utf8_id)
+uint32_t txt_utf8_get_byte_id(const char * txt, uint32_t utf8_id)
 {
+#if TXT_UTF8 == 0
+    return byte_id;     /*In Non UTF-8 no difference*/
+#else
     uint32_t i;
     uint32_t byte_cnt = 0;
     for(i = 0; i < utf8_id; i++) {
@@ -472,6 +475,33 @@ uint32_t txt_utf8_get_id(const char * txt, uint32_t utf8_id)
     }
 
     return byte_cnt;
+#endif
+}
+
+
+/**
+ * Convert a byte index (in an UTF-8 text) to character index.
+ * E.g. in "AÁRT" index of 'R' is 2 but start at byte 3 because 'Á' is 2 bytes long
+ * @param txt a '\0' terminated UTF-8 string
+ * @param byte_id byte index
+ * @return character index of the letter at 'byte_id'th position
+ */
+uint32_t txt_utf8_get_char_id(const char * txt, uint32_t byte_id)
+{
+#if TXT_UTF8 == 0
+    return byte_id;     /*In Non UTF-8 no difference*/
+#else
+    uint32_t i = 0;
+    uint32_t char_cnt = 0;
+
+    while(i < byte_id) {
+        txt_utf8_next(txt, &i); /*'i' points to the next letter so use the prev. value*/
+        char_cnt++;
+    }
+
+#endif
+
+    return char_cnt;
 }
 
 /**

@@ -151,7 +151,16 @@ uint32_t txt_utf8_prev(const char * txt, uint32_t * i_start);
  * @param utf8_id letter index
  * @return byte index of the 'utf8_id'th letter
  */
-uint32_t txt_utf8_get_id(const char * txt, uint32_t utf8_id);
+uint32_t txt_utf8_get_byte_id(const char * txt, uint32_t utf8_id);
+
+/**
+ * Convert a byte index (in an UTF-8 text) to character index.
+ * E.g. in "AÁRT" index of 'R' is 2 but start at byte 3 because 'Á' is 2 bytes long
+ * @param txt a '\0' terminated UTF-8 string
+ * @param byte_id byte index
+ * @return character index of the letter at 'byte_id'th position
+ */
+uint32_t txt_utf8_get_char_id(const char * txt, uint32_t byte_id);
 
 /**
  * Get the number of characters (and NOT bytes) in a string. Decode it with UTF-8 if enabled.
