@@ -466,7 +466,7 @@ uint32_t txt_utf8_prev(const char * txt, uint32_t * i_start)
 uint32_t txt_utf8_get_byte_id(const char * txt, uint32_t utf8_id)
 {
 #if TXT_UTF8 == 0
-    return byte_id;     /*In Non UTF-8 no difference*/
+    return utf8_id;     /*In Non UTF-8 no difference*/
 #else
     uint32_t i;
     uint32_t byte_cnt = 0;
@@ -499,9 +499,9 @@ uint32_t txt_utf8_get_char_id(const char * txt, uint32_t byte_id)
         char_cnt++;
     }
 
+    return char_cnt;
 #endif
 
-    return char_cnt;
 }
 
 /**

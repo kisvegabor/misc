@@ -23,67 +23,127 @@ extern "C" {
 #if TXT_UTF8 == 0
 #define SYMBOL_GLYPH_FIRST  0xC0
 #define SYMBOL_GLYPH_LAST   0xFF
-#else
-#define SYMBOL_GLYPH_FIRST  0xE000
-#define SYMBOL_GLYPH_LAST   0xE080
-#endif
 
 /*Basic symbols*/
-extern const char symbol_list[];
-extern const char symbol_ok[];
-extern const char symbol_close[];
-extern const char symbol_shutdown[];
-extern const char symbol_settings[];
-extern const char symbol_home[];
-extern const char symbol_refresh[];
-extern const char symbol_left[];
-extern const char symbol_right[];
-extern const char symbol_plus[];
-extern const char symbol_minus[];
-extern const char symbol_up[];
-extern const char symbol_down[];
-extern const char symbol_keyboard[];
+#define SYMBOL_LIST      "\xC0"
+#define SYMBOL_OK        "\xC1"
+#define SYMBOL_CLOSE     "\xC2"
+#define SYMBOL_SHUTDOWN  "\xC3"
+#define SYMBOL_SETTINGS  "\xC4"
+#define SYMBOL_HOME      "\xC5"
+#define SYMBOL_REFRESH   "\xC6"
+#define SYMBOL_LEFT      "\xC7"
+#define SYMBOL_RIGHT     "\xC8"
+#define SYMBOL_PLUS      "\xC9"
+#define SYMBOL_MINUS     "\xCA"
+#define SYMBOL_UP        "\xCB"
+#define SYMBOL_DOWN      "\xCC"
+#define SYMBOL_KEYBOARD  "\xCD"
 
 /*File symbols*/
-extern const char symbol_audio[];
-extern const char symbol_video[];
-extern const char symbol_trash[];
-extern const char symbol_download[];
-extern const char symbol_drive[];
-extern const char symbol_image[];
-extern const char symbol_edit[];
-extern const char symbol_prev[];
-extern const char symbol_play[];
-extern const char symbol_pause[];
-extern const char symbol_stop[];
-extern const char symbol_next[];
-extern const char symbol_eject[];
-extern const char symbol_shuffle[];
-extern const char symbol_loop[];
-extern const char symbol_directory[];
-extern const char symbol_upload[];
-extern const char symbol_cut[];
-extern const char symbol_copy[];
-extern const char symbol_save[];
-extern const char symbol_file[];
+#define SYMBOL_AUDIO        "\xE0"
+#define SYMBOL_VIDEO        "\xE1"
+#define SYMBOL_TRASH        "\xE2"
+#define SYMBOL_DOWNLOAD     "\xE3"
+#define SYMBOL_DRIVE        "\xE4"
+#define SYMBOL_IMAGE        "\xE5"
+#define SYMBOL_EDIT         "\xE6"
+#define SYMBOL_PREV         "\xE7"
+#define SYMBOL_PLAY         "\xE8"
+#define SYMBOL_PAUSE        "\xE9"
+#define SYMBOL_STOP         "\xEA"
+#define SYMBOL_NEXT         "\xEB"
+#define SYMBOL_EJECT        "\xEC"
+#define SYMBOL_SHUFFLE      "\xED"
+#define SYMBOL_LOOP         "\xEE"
+#define SYMBOL_DIRECTORY    "\xEF"
+#define SYMBOL_UPLOAD       "\xF0"
+#define SYMBOL_CUT          "\xF1"
+#define SYMBOL_COPY         "\xF2"
+#define SYMBOL_SAVE         "\xF3"
+#define SYMBOL_FILE         "\xF4"
 
 /*Feedback symbols*/
-extern const char symbol_mute[];
-extern const char symbol_volume_mid[];
-extern const char symbol_volume_max[];
-extern const char symbol_warning[];
-extern const char symbol_call[];
-extern const char symbol_charge[];
-extern const char symbol_gps[];
-extern const char symbol_wifi[];
-extern const char symbol_bell[];
-extern const char symbol_battery_full[];
-extern const char symbol_battery_3[];
-extern const char symbol_battery_2[];
-extern const char symbol_battery_1[];
-extern const char symbol_battery_empty[];
-extern const char symbol_bluetooth[];
+#define SYMBOL_MUTE          "\xD0"
+#define SYMBOL_VOLUME_MID    "\xD1"
+#define SYMBOL_VOLUME_MAX    "\xD2"
+#define SYMBOL_WARNING       "\xD3"
+#define SYMBOL_CALL          "\xD4"
+#define SYMBOL_CHARGE        "\xD5"
+#define SYMBOL_BELL          "\xD6"
+#define SYMBOL_GPS           "\xD7"
+#define SYMBOL_WIFI          "\xD8"
+#define SYMBOL_BATTERY_FULL  "\xD9"
+#define SYMBOL_BATTERY_3     "\xDA"
+#define SYMBOL_BATTERY_2     "\xDB"
+#define SYMBOL_BATTERY_1     "\xDC"
+#define SYMBOL_BATTERY_EMPTY "\xDD"
+#define SYMBOL_BLUETOOTH     "\xDE"
 
+#else
+
+#define SYMBOL_GLYPH_FIRST  0xE000  /*Unicode*/
+#define SYMBOL_GLYPH_LAST   0xE080  /*Unicode*/
+
+/*Store the UTF8 code of the symbols*/
+
+/*Basic symbols*/
+#define SYMBOL_LIST      "\xEE\x80\x80"
+#define SYMBOL_OK        "\xEE\x80\x81"
+#define SYMBOL_CLOSE     "\xEE\x80\x82"
+#define SYMBOL_SHUTDOWN  "\xEE\x80\x83"
+#define SYMBOL_SETTINGS  "\xEE\x80\x84"
+#define SYMBOL_HOME      "\xEE\x80\x85"
+#define SYMBOL_REFRESH   "\xEE\x80\x86"
+#define SYMBOL_LEFT      "\xEE\x80\x87"
+#define SYMBOL_RIGHT     "\xEE\x80\x88"
+#define SYMBOL_PLUS      "\xEE\x80\x89"
+#define SYMBOL_MINUS     "\xEE\x80\x8A"
+#define SYMBOL_UP        "\xEE\x80\x8B"
+#define SYMBOL_DOWN      "\xEE\x80\x8C"
+#define SYMBOL_KEYBOARD  "\xEE\x80\x8D"
+
+/*File symbols*/
+#define SYMBOL_AUDIO        "\xEE\x80\xA0"
+#define SYMBOL_VIDEO        "\xEE\x80\xA1"
+#define SYMBOL_TRASH        "\xEE\x80\xA2"
+#define SYMBOL_DOWNLOAD     "\xEE\x80\xA3"
+#define SYMBOL_DRIVE        "\xEE\x80\xA4"
+#define SYMBOL_IMAGE        "\xEE\x80\xA5"
+#define SYMBOL_EDIT         "\xEE\x80\xA6"
+#define SYMBOL_PREV         "\xEE\x80\xA7"
+#define SYMBOL_PLAY         "\xEE\x80\xA8"
+#define SYMBOL_PAUSE        "\xEE\x80\xA9"
+#define SYMBOL_STOP         "\xEE\x80\xAA"
+#define SYMBOL_NEXT         "\xEE\x80\xAB"
+#define SYMBOL_EJECT        "\xEE\x80\xAC"
+#define SYMBOL_SHUFFLE      "\xEE\x80\xAD"
+#define SYMBOL_LOOP         "\xEE\x80\xAE"
+#define SYMBOL_DIRECTORY    "\xEE\x80\xAF"
+#define SYMBOL_UPLOAD       "\xEE\x80\xB0"
+#define SYMBOL_CUT          "\xEE\x80\xB1"
+#define SYMBOL_COPY         "\xEE\x80\xB2"
+#define SYMBOL_SAVE         "\xEE\x80\xB3"
+#define SYMBOL_FILE         "\xEE\x80\xB4"
+
+/*Feedback symbols*/
+#define SYMBOL_MUTE           "\xEE\x81\x80"
+#define SYMBOL_VOLUME_MID     "\xEE\x81\x81"
+#define SYMBOL_VOLUME_MAX     "\xEE\x81\x82"
+#define SYMBOL_WARNING        "\xEE\x81\x83"
+#define SYMBOL_CALL           "\xEE\x81\x84"
+#define SYMBOL_CHARGE         "\xEE\x81\x85"
+#define SYMBOL_BELL           "\xEE\x81\x86"
+#define SYMBOL_GPS            "\xEE\x81\x87"
+#define SYMBOL_WIFI           "\xEE\x81\x88"
+#define SYMBOL_BATTERY_FULL   "\xEE\x81\x89"
+#define SYMBOL_BATTERY_3      "\xEE\x81\x8A"
+#define SYMBOL_BATTERY_2      "\xEE\x81\x8B"
+#define SYMBOL_BATTERY_1      "\xEE\x81\x8C"
+#define SYMBOL_BATTERY_EMPTY  "\xEE\x81\x8D"
+#define SYMBOL_BLUETOOTH      "\xEE\x81\x8E"
+
+#endif /*TXT_UTF8*/
 
 #ifdef __cplusplus
 } /* extern "C" */
