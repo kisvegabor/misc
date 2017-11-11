@@ -62,7 +62,7 @@ void txt_get_size(point_t * size_res, const char * text, const font_t * font,
     uint32_t line_start = 0;
     uint32_t new_line_start = 0;
     cord_t act_line_length;
-    uint8_t letter_height = font_get_height(font) >> FONT_ANTIALIAS;
+    uint8_t letter_height = font_get_height_scale(font);
 
     /*Calc. the height and longest line*/
     while (text[line_start] != '\0') {

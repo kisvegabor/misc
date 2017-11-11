@@ -77,6 +77,16 @@ static inline uint8_t font_get_height(const font_t * font_p)
     return font_p->height_row;
 }
 
+/**
+ * Get the height of a font. Give the real size on the screen (half size if FONT_ANTIALIAS is enabled)
+ * @param font_p pointer to a font
+ * @return the height of a font
+ */
+static inline uint8_t font_get_height_scale(const font_t * font_p)
+{
+    return font_p->height_row >> FONT_ANTIALIAS;
+}
+
 
 /**
  * Get the width of a letter in a font
