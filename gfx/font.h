@@ -96,6 +96,13 @@ static inline uint8_t font_get_height_scale(const font_t * font_p)
  */
 uint8_t font_get_width(const font_t * font_p, uint32_t letter);
 
+/**
+ * Get the width of a letter in a font )Give the real size on the screen (half size if FONT_ANTIALIAS is enabled)
+ * @param font_p pointer to a font
+ * @param letter a letter
+ * @return the width of a letter
+ */
+uint8_t font_get_width_scale(const font_t * font_p, uint32_t letter);
 
 /**********************
  *      MACROS
