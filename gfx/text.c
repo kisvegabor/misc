@@ -130,7 +130,7 @@ uint16_t txt_get_next_line(const char * txt, const font_t * font,
             return i;    /*Return with the first letter of the next line*/
 
         } else { /*Check the actual length*/
-            act_l += font_get_width(font, letter) >> FONT_ANTIALIAS;
+            act_l += font_get_width_scale(font, letter);
 
             /*If the txt is too long then finish, this is the line end*/
             if(act_l > max_width) {
@@ -196,7 +196,7 @@ cord_t txt_get_width(const char * txt, uint16_t length,
                     continue;
                 }
             }
-            width += font_get_width(font, letter) >> FONT_ANTIALIAS;
+            width += font_get_width_scale(font, letter);
             width += letter_space;
         }
         
@@ -204,7 +204,7 @@ cord_t txt_get_width(const char * txt, uint16_t length,
         /*TODO really required?*/
         for(i = length - 1; i > 0; i--) {
             if(txt[i] == ' ') {
-                width -= font_get_width(font, txt[i]) >> FONT_ANTIALIAS;
+                width -= font_get_width_scale(font, txt[i]);
                 width -= letter_space;
             } else {
                 break;

@@ -145,7 +145,7 @@ void font_init(void)
 #endif
 
 #if USE_FONT_SYMBOL_30_FEEDBACK != 0
-    font_add(&font_symbol_30_feedback, &font_symvol_30_basic);
+    font_add(&font_symbol_30_feedback, &font_symbol_30_basic);
 #endif
 
     /*DEJAVU 40*/
