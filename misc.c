@@ -17,8 +17,6 @@
 #include "fs/linuxfs/linuxfs.h"
 #include "gfx/font.h"
 #include "gfx/anim.h"
-#include "comm/wifimng.h"
-#include "comm/gsmmng.h"
 
 /*********************
  *      DEFINES
@@ -84,15 +82,6 @@ void misc_init(void)
 
 #if USE_ANIM != 0
     anim_init();
-#endif
-
-#if USE_WIFIMNG != 0
-    wifimng_init();
-#endif
-
-
-#if USE_GSMMNG != 0
-    gsmmng_init();
 #endif
 }
 
