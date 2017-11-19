@@ -17,9 +17,10 @@ extern "C" {
 /*********************
  *      DEFINES
  *********************/
-#define MISC_VERSION_MAJOR  4
-#define MISC_VERSION_MINOR  2
+#define MISC_VERSION_MAJOR  5
+#define MISC_VERSION_MINOR  0
 #define MISC_VERSION_PATCH  0
+#define MISC_VERSION_INFO   "beta"
 
 /**********************
  *      TYPEDEFS
@@ -30,7 +31,7 @@ extern "C" {
  **********************/
 
 /**
- * Initialize the enabled misc modules
+ * Initialize the enabled misc. modules
  */
 void misc_init(void);
 
