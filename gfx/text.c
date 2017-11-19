@@ -200,8 +200,7 @@ cord_t txt_get_width(const char * txt, uint16_t length,
             width += letter_space;
         }
         
-        /*Trim closing spaces */
-        /*TODO really required?*/
+        /*Trim closing spaces. Important when the text is aligned to the middle */
         for(i = length - 1; i > 0; i--) {
             if(txt[i] == ' ') {
                 width -= font_get_width_scale(font, txt[i]);
