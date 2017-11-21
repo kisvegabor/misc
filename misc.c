@@ -47,6 +47,9 @@
  */
 void misc_init(void)
 {
+    static bool inited = false;
+
+    if(inited) return;
     
 #if USE_IDLE != 0
     idle_init();    /*Init. it as soon as possible*/
@@ -83,6 +86,7 @@ void misc_init(void)
 #if USE_ANIM != 0
     anim_init();
 #endif
+    inited = true;
 }
 
 /**********************

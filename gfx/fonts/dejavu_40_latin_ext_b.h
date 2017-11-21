@@ -8,7 +8,7 @@
 #if  USE_FONT_DEJAVU_40_LATIN_EXT_B != 0
 
 #include <stdint.h>
-#include "misc/gfx/font.h"
+#include "lvgl/misc/gfx/font.h"
 
 extern font_t font_dejavu_40_latin_ext_b;
 

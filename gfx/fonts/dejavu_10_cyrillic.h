@@ -8,7 +8,7 @@
 #if  USE_FONT_DEJAVU_10_CYRILLIC != 0
 
 #include <stdint.h>
-#include "misc/gfx/font.h"
+#include "lvgl/misc/gfx/font.h"
 
 extern font_t font_dejavu_10_cyrillic;
 

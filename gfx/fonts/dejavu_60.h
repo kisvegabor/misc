@@ -8,7 +8,7 @@
 #if  USE_FONT_DEJAVU_60 != 0
 
 #include <stdint.h>
-#include "misc/gfx/font.h"
+#include "lvgl/misc/gfx/font.h"
 
 extern font_t font_dejavu_60;
 
