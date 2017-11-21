@@ -1,7 +1,7 @@
 #include "misc_conf.h"
 #if  USE_FONT_DEJAVU_10_CYRILLIC != 0
 #include <stdint.h>
-#include "lvgl/misc/gfx/font.h"
+#include "misc/gfx/font.h"
 
 /*Store the image of the letters (glyph) */
 static const uint8_t dejavu_10_cyrillic_bitmap[] = 

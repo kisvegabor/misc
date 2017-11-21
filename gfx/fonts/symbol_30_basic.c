@@ -1,7 +1,7 @@
 #include "misc_conf.h"
 #if  USE_FONT_SYMBOL_30_BASIC != 0
 #include <stdint.h>
-#include "lvgl/misc/gfx/font.h"
+#include "misc/gfx/font.h"
 
 /*Store the image of the letters (glyph) */
 static const uint8_t symbol_30_basic_bitmap[] = 

@@ -8,7 +8,7 @@
 #if  USE_FONT_SYMBOL_60_FILE != 0
 
 #include <stdint.h>
-#include "lvgl/misc/gfx/font.h"
+#include "misc/gfx/font.h"
 
 extern font_t font_symbol_60_file;
 
