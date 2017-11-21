@@ -166,7 +166,7 @@
  *----------------*/
 #define  USE_COLOR      1
 #if USE_COLOR != 0
-#define COLOR_DEPTH     24
+#define COLOR_DEPTH     16
 #endif
 
 /*----------------
@@ -307,5 +307,7 @@
 #if USE_STRCMD != 0
 /*No settings*/
 #endif /*USE_STRCMD*/
+
+#endif /*MISC_CONF_H*/
 
 #endif /*Remove this to enable the content*/
