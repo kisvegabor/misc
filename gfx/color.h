@@ -51,8 +51,8 @@ extern "C" {
 #define OPA_70        178
 #define OPA_80        204
 #define OPA_90        229
-#define OPA_100       256
-#define OPA_COVER     256
+#define OPA_100       255
+#define OPA_COVER     255
 
 
 /**********************
@@ -116,7 +116,7 @@ typedef color24_t color_t;
 #error "Invalid COLOR_DEPTH in misc_conf.h! Set it to 1, 8, 16 or 24!"
 #endif
 
-typedef uint16_t opa_t;     /* 0..256 (not 255 to cab be normalized with >> 8*/
+typedef uint8_t opa_t;
 
 typedef struct
 {
@@ -240,12 +240,12 @@ static inline uint32_t color_to24(color_t color)
 #endif
 }
 
-static inline color_t color_mix(color_t c1, color_t c2, uint16_t mix)
+static inline color_t color_mix(color_t c1, color_t c2, uint8_t mix)
 {
     color_t ret;
-    ret.red =   (uint16_t)((uint16_t) c1.red * mix + (c2.red * (256 - mix))) >> 8;  
-    ret.green = (uint16_t)((uint16_t) c1.green * mix + (c2.green * (256 - mix))) >> 8;  
-    ret.blue =  (uint16_t)((uint16_t) c1.blue * mix + (c2.blue * (256 - mix))) >> 8;  
+    ret.red =   (uint16_t)((uint16_t) c1.red * mix + (c2.red * (255 - mix))) >> 8;
+    ret.green = (uint16_t)((uint16_t) c1.green * mix + (c2.green * (255 - mix))) >> 8;
+    ret.blue =  (uint16_t)((uint16_t) c1.blue * mix + (c2.blue * (255 - mix))) >> 8;
     return ret;
 }
 
