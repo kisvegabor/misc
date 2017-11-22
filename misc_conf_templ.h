@@ -248,24 +248,6 @@
 #define USE_FONT_SYMBOL_80_FILE         0
 #define USE_FONT_SYMBOL_80_FEEDBACK     0
 
-#define USE_FONT_DEJAVU_100              0
-#define USE_FONT_DEJAVU_100_SUP          0
-#define USE_FONT_DEJAVU_100_LATIN_EXT_A  0
-#define USE_FONT_DEJAVU_100_LATIN_EXT_B  0
-#define USE_FONT_DEJAVU_100_CYRILLIC     0
-#define USE_FONT_SYMBOL_100_BASIC        0
-#define USE_FONT_SYMBOL_100_FILE         0
-#define USE_FONT_SYMBOL_100_FEEDBACK     0
-
-#define USE_FONT_DEJAVU_120              0
-#define USE_FONT_DEJAVU_120_SUP          0
-#define USE_FONT_DEJAVU_120_LATIN_EXT_A  0
-#define USE_FONT_DEJAVU_120_LATIN_EXT_B  0
-#define USE_FONT_DEJAVU_120_CYRILLIC     0
-#define USE_FONT_SYMBOL_120_BASIC        0
-#define USE_FONT_SYMBOL_120_FILE         0
-#define USE_FONT_SYMBOL_120_FEEDBACK     0
-
 #endif /*USE_FONT*/
 
 /*----------------
