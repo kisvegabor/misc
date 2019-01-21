@@ -31,7 +31,3 @@ This library is written especially for the Littlev Graphics Library however its 
 
 If you find an issue, please report it via GitHub!
 
-## Donate
-If you are pleased with the Misc. Library and found it useful please support its further development:
-
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LWHHAQYZMRQJS)
