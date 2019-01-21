@@ -17,17 +17,3 @@ This library is written especially for the Littlev Graphics Library however its 
 4. Delete the first `#if 0` and the last `#endif` to enable the file
 5. Enable/disable or configure the components
 6. To initialize the library `#include misc/misc.h` and call `misc_init()`
-
-## Documentation
- * You will find **well commented** source and header files.
- * There are same documentation on the graphics library's webpage: http://gl.littlev.hu
- 
-## Contributing
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request!
-
-If you find an issue, please report it via GitHub!
-
