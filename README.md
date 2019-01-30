@@ -1,10 +1,8 @@
 # Miscellaneous Library
+[![GitHub stars](https://img.shields.io/github/stars/kisvegabor/misc.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/Naereen/StrapDown.js/stargazers/)
 
 
-![asd](https://img.shields.io/github/stars/badges/shields.svg?label=Stars&style=social)
-
-
-This library is written especially for the Littlev Graphics Library however its useful hardware independent software modules can be used in your non graphical projects too. Some of the most important components:
+Some of the most important components:
 * Dynamic memory manager with defrag. and memory monitoring 
 * Simple task scheduler with priority and idle measurement
 * File system interface to access different mediums easily  
