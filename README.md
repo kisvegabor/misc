@@ -1,6 +1,4 @@
 # Miscellaneous Library
-[![GitHub stars](https://img.shields.io/github/stars/kisvegabor/misc.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/Naereen/StrapDown.js/stargazers/)
-
 
 Some of the most important components:
 * Dynamic memory manager with defrag. and memory monitoring 
